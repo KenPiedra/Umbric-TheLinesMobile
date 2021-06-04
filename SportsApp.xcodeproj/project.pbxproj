@@ -23,6 +23,11 @@
 		DB564AA42656497C00E4DD2A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB564AA22656497C00E4DD2A /* LaunchScreen.storyboard */; };
 		DB564AAF2656497C00E4DD2A /* SportsAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB564AAE2656497C00E4DD2A /* SportsAppTests.swift */; };
 		DB564ABA2656497C00E4DD2A /* SportsAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB564AB92656497C00E4DD2A /* SportsAppUITests.swift */; };
+		F84F64BA2668CABE001F077C /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64B92668CABE001F077C /* NewsViewController.swift */; };
+		F84F64BE26690A71001F077C /* AllNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64BD26690A71001F077C /* AllNewsCell.swift */; };
+		F84F64C0266910C1001F077C /* NBANewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64BF266910C1001F077C /* NBANewsCell.swift */; };
+		F84F64C326691AFC001F077C /* AllNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64C226691AFC001F077C /* AllNewsTableCell.swift */; };
+		F84F64C926692230001F077C /* NewsFeedDaoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64C826692230001F077C /* NewsFeedDaoList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +76,11 @@
 		DB564AB92656497C00E4DD2A /* SportsAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsAppUITests.swift; sourceTree = "<group>"; };
 		DB564ABB2656497C00E4DD2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1A934F843560CAC4D33A61F /* Pods_SportsAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F84F64B92668CABE001F077C /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		F84F64BD26690A71001F077C /* AllNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNewsCell.swift; sourceTree = "<group>"; };
+		F84F64BF266910C1001F077C /* NBANewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBANewsCell.swift; sourceTree = "<group>"; };
+		F84F64C226691AFC001F077C /* AllNewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNewsTableCell.swift; sourceTree = "<group>"; };
+		F84F64C826692230001F077C /* NewsFeedDaoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedDaoList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +137,7 @@
 		DB560BA12656754700C863B4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F84F64C126691ADB001F077C /* News */,
 				DB560BA8265675F200C863B4 /* Home.swift */,
 			);
 			path = Controllers;
@@ -135,6 +146,7 @@
 		DB560BA22656755300C863B4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F84F64C7266921FD001F077C /* News */,
 				DB560BD026567AB100C863B4 /* SportsData.swift */,
 			);
 			path = Model;
@@ -249,6 +261,7 @@
 		DB564A932656497900E4DD2A /* SportsApp */ = {
 			isa = PBXGroup;
 			children = (
+				F84F64BB26690A2A001F077C /* Cells */,
 				DB560BB3265677D100C863B4 /* Utils */,
 				DB560BA32656755B00C863B4 /* App */,
 				DB560BA22656755300C863B4 /* Model */,
@@ -277,6 +290,48 @@
 				DB564ABB2656497C00E4DD2A /* Info.plist */,
 			);
 			path = SportsAppUITests;
+			sourceTree = "<group>";
+		};
+		F84F64BB26690A2A001F077C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F84F64BC26690A36001F077C /* NewsCells */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F84F64BC26690A36001F077C /* NewsCells */ = {
+			isa = PBXGroup;
+			children = (
+				F84F64BD26690A71001F077C /* AllNewsCell.swift */,
+				F84F64BF266910C1001F077C /* NBANewsCell.swift */,
+			);
+			path = NewsCells;
+			sourceTree = "<group>";
+		};
+		F84F64C126691ADB001F077C /* News */ = {
+			isa = PBXGroup;
+			children = (
+				F84F64C426691B4C001F077C /* AllNews */,
+				F84F64B92668CABE001F077C /* NewsViewController.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		F84F64C426691B4C001F077C /* AllNews */ = {
+			isa = PBXGroup;
+			children = (
+				F84F64C226691AFC001F077C /* AllNewsTableCell.swift */,
+			);
+			path = AllNews;
+			sourceTree = "<group>";
+		};
+		F84F64C7266921FD001F077C /* News */ = {
+			isa = PBXGroup;
+			children = (
+				F84F64C826692230001F077C /* NewsFeedDaoList.swift */,
+			);
+			path = News;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,6 +406,7 @@
 				TargetAttributes = {
 					DB564A902656497900E4DD2A = {
 						CreatedOnToolsVersion = 12.1;
+						LastSwiftMigration = 1250;
 					};
 					DB564AA92656497C00E4DD2A = {
 						CreatedOnToolsVersion = 12.1;
@@ -519,11 +575,16 @@
 			files = (
 				DB560BE126567C6D00C863B4 /* NetworkCall.swift in Sources */,
 				DB564A952656497900E4DD2A /* AppDelegate.swift in Sources */,
+				F84F64C0266910C1001F077C /* NBANewsCell.swift in Sources */,
 				DB560BA9265675F200C863B4 /* Home.swift in Sources */,
+				F84F64C926692230001F077C /* NewsFeedDaoList.swift in Sources */,
 				DB564A9F2656497900E4DD2A /* SportsApp.xcdatamodeld in Sources */,
 				DB564A972656497900E4DD2A /* SceneDelegate.swift in Sources */,
 				DB560BD126567AB100C863B4 /* SportsData.swift in Sources */,
+				F84F64C326691AFC001F077C /* AllNewsTableCell.swift in Sources */,
+				F84F64BA2668CABE001F077C /* NewsViewController.swift in Sources */,
 				DB560BB72656780200C863B4 /* NavigationBarExtension.swift in Sources */,
+				F84F64BE26690A71001F077C /* AllNewsCell.swift in Sources */,
 				DB560BE726567C9E00C863B4 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -701,16 +762,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 88Z8Y7Q863;
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = SoftyWare.SportsApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.demoSoftyApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Development PP Harshal Mac Mini (DemoSofty)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -720,16 +786,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 88Z8Y7Q863;
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = SoftyWare.SportsApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.demoSoftyApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Development PP Harshal Mac Mini (DemoSofty)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
