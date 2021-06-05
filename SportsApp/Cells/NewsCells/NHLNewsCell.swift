@@ -1,30 +1,27 @@
 //
-//  AllNewsCell.swift
+//  NHLNewsCell.swift
 //  SportsApp
 //
-//  Created by Apurva on 03/06/21.
+//  Created by Apurva on 05/06/21.
 //
-import UIKit
-import Foundation
 
-protocol AllNewsViewProtocolNew {
-    func rightAllNewsDir()
-}
-class AllNewsCell : UICollectionViewCell {
+import UIKit
+
+class NHLNewsCell: UICollectionViewCell {
     var delegate : AllNewsViewProtocolNew?
     
-    @IBOutlet weak var tblAllNews: UITableView!
+    @IBOutlet weak var tblNHLNews: UITableView!
     var VC:UIViewController?
     func preparelayout()
     {
-        if self.tblAllNews.delegate == nil{
-            self.tblAllNews.delegate = self
-            self.tblAllNews.dataSource = self
-            tblAllNews.reloadData()
+        if self.tblNHLNews.delegate == nil{
+            self.tblNHLNews.delegate = self
+            self.tblNHLNews.dataSource = self
+            tblNHLNews.reloadData()
         }
     }
 }
-    extension AllNewsCell : UITableViewDelegate,UITableViewDataSource
+    extension NHLNewsCell : UITableViewDelegate,UITableViewDataSource
     {
         func numberOfSections(in tableView: UITableView) -> Int {
             return 1
@@ -35,7 +32,7 @@ class AllNewsCell : UICollectionViewCell {
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = self.tblAllNews.dequeueReusableCell(withIdentifier: "AllNewsTableCell") as! AllNewsTableCell
+            let cell = self.tblNHLNews.dequeueReusableCell(withIdentifier: "NHLNewsTableCell") as! NHLNewsTableCell
                  
              cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrAllPostDao[indexPath.row])
             return cell

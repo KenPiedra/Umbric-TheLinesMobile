@@ -2,7 +2,7 @@
 //  NewsFeedDaoList.swift
 //  SportsApp
 //
-//  Created by Pratiksha on 03/06/21.
+//  Created by Apurva on 03/06/21.
 //
 
 import UIKit

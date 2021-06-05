@@ -2,63 +2,49 @@
 //  NBANewsCell.swift
 //  SportsApp
 //
-//  Created by Pratiksha on 03/06/21.
+//  Created by Apurva on 03/06/21.
 //
 import UIKit
 import UIKit
+protocol NBANewsViewProtocolNew {
+    func  leftNBANewsListDir()
+}
 
 class NBANewsCell: UICollectionViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    var delegate : NBANewsViewProtocolNew?
+    var VC:UIViewController?
+    @IBOutlet weak var tblNBANews: UITableView!
+    func preparelayout()
+    {
+        if self.tblNBANews.delegate == nil{
+            self.tblNBANews.delegate = self
+            self.tblNBANews.dataSource = self
+            tblNBANews.reloadData()
+        }
     }
+}
 
-        // Configure the view for the selected state
-    }
+    extension NBANewsCell : UITableViewDelegate,UITableViewDataSource{
+        func numberOfSections(in tableView: UITableView) -> Int {
+            return 1
+        }
 
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-//    extension NBANewsCell : UITableViewDelegate,UITableViewDataSource{
-//        func numberOfSections(in tableView: UITableView) -> Int {
-//            return 1
-//        }
-//
-//        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//
-//            return 1
-//        }
+            return NewsFeedDaoList.sharedInstance.arrAllPostDao.count
+        }
         
-//        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//            let cell = self.tblAllWatchList.dequeueReusableCell(withIdentifier: "WatchListPostTableCell") as! WatchListPostTableCell
-//            //cell.lblHeaderTitle.text = self.getDateUTCToLocalStartDateFormat(date: AllPostListDao.sharedInstance.arrAllWatchListDao[indexPath.row].postStartDate ?? "")
-//
-//                   if indexPath.row == 0 {
-//                       //cell.viewHeaderDate.isHidden = false
-//                       //cell.viewHeaderDateHeightConstraint.constant = 25
-//
-//                        cell.viewHeaderDateHeightConstraint.constant = 0
-//                   }else{
-//
-//                    if self.getDateUTCToLocalStartDateFormat(date: AllPostListDao.sharedInstance.arrAllWatchListDao[indexPath.row].postStartDate ?? "") == self.getDateUTCToLocalStartDateFormat(date: AllPostListDao.sharedInstance.arrAllWatchListDao[indexPath.row - 1].postStartDate ?? "") {
-//                                  cell.viewHeaderDate.isHidden = true
-//                                  cell.viewHeaderDateHeightConstraint.constant = 0
-//                       }else{
-//                                  //cell.viewHeaderDate.isHidden = false
-//                                  //cell.viewHeaderDateHeightConstraint.constant = 25
-//
-//                                    cell.viewHeaderDateHeightConstraint.constant = 0
-//                       }
-//                   }
-//             cell.preparelayout(objAllDao: AllPostListDao.sharedInstance.arrAllWatchListDao[indexPath.row])
-//            return cell
-//        }
-//
-//        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//            //self.tblAllWatchList.deselectRow(at: indexPath, animated: false)
-//            let userDefault = UserDefaults.standard
-//            userDefault.set(1, forKey: "Item")
-//            userDefault.synchronize()
-//            self.delegate?.selectedPost(postId: AllPostListDao.sharedInstance.arrAllWatchListDao[indexPath.row].post_id ?? "")
-//        }
-//
-//}
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = self.tblNBANews.dequeueReusableCell(withIdentifier: "NBANewsTableCell") as! NBANewsTableCell
+            
+            cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrAllPostDao[indexPath.row])
+           return cell
+        }
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 140
+        }
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        }
+
+}
