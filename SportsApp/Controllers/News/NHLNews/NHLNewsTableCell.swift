@@ -19,7 +19,7 @@ class NHLNewsTableCell: UITableViewCell {
         // Initialization code
     }
 
-    func preparelayout(objAllDao:AllNewsDao){
+    func preparelayout(objAllDao:NHLNewsDao){
         
         if objAllDao != nil{
             

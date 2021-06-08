@@ -30,13 +30,13 @@ class MLBNewsCell: UICollectionViewCell {
         }
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return NewsFeedDaoList.sharedInstance.arrAllPostDao.count
+            return NewsFeedDaoList.sharedInstance.arrMLBNewsDao.count
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = self.tbMLBNews.dequeueReusableCell(withIdentifier: "MLBNewsTableCell") as! MLBNewsTableCell
                  
-             cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrAllPostDao[indexPath.row])
+             cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrMLBNewsDao[indexPath.row])
             return cell
         }
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

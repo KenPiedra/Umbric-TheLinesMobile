@@ -28,13 +28,13 @@ class NHLNewsCell: UICollectionViewCell {
         }
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return NewsFeedDaoList.sharedInstance.arrAllPostDao.count
+            return NewsFeedDaoList.sharedInstance.arrNHLNewsDao.count
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = self.tblNHLNews.dequeueReusableCell(withIdentifier: "NHLNewsTableCell") as! NHLNewsTableCell
                  
-             cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrAllPostDao[indexPath.row])
+             cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrNHLNewsDao[indexPath.row])
             return cell
         }
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

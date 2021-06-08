@@ -21,22 +21,18 @@ class AllNewsTableCell: UITableViewCell {
 
     func preparelayout(objAllDao:AllNewsDao){
         
-        if objAllDao != nil{
-            
             viewMain.layer.cornerRadius = 15
             viewMain.layer.borderWidth = 0.5
             viewMain.layer.borderColor = UIColor.init(red: (31.0/255.0), green: (41.0/255.0), blue: (51.0/255.0), alpha: 1.0).cgColor
-            let isoDate = objAllDao.pubDate!
             self.lbllNewsDate.text = objAllDao.pubDate
             self.lblNewsDescription.text = objAllDao.title
-            self.lblNewsTitle.text = "All"
+            self.lblNewsTitle.text = objAllDao.categoryName?.uppercased()
             let url = NSURL(string: objAllDao.image!)
-            let data = try? NSData(contentsOf: url as! URL)
+            let data = try? NSData(contentsOf: url! as URL)
             if let imageData = data {
                 let image = UIImage(data: imageData as Data)
             self.ivNewsImage.image = image
             }
-        }
     }
 
 }

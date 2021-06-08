@@ -101,24 +101,7 @@ class NewsViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
  
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let currentIndex = self.collectionV.contentOffset.x / self.collectionV.frame.size.width;
-        if Int(currentIndex) == 0{
-            btnActionAllNews(btnAll!)
-        }else if Int(currentIndex) == 1{
-            btnActionNBANews(btnNBA!)
-        }
-        else if Int(currentIndex) == 2{
-            btnActionNFLNews(btnNFL!)
-        }else if Int(currentIndex) == 3{
-            btnActionMLBNews(btnMLB!)
-        }
-        else if Int(currentIndex) == 4{
-            btnActionNHLNews(btnNHL!)
-        }else if Int(currentIndex) == 5{
-            btnActionGolfNews(btnGolf!)
-        }
-    }
+//
     func getAllNews(){
 //        let url = "http://103.118.16.132:8035/api/news/1"
 //        var request = URLRequest(url: URL(string: url)!)
@@ -137,96 +120,133 @@ class NewsViewController: UIViewController,UICollectionViewDelegate,UICollection
        
             let str = """
             {
-                "listOffeeds": {
-                    "results": [
-                        {
-                            "totalRecords": 0,
-                            "title": "5 Maryland Sports Celebrities Most Suited To Endorse Sportsbooks",
-                            "creator": "Derek Helling",
-                            "pubDate": "Thu, 03 Jun 2021 14:20:09 +0000",
-                            "guid": "https://www.thelines.com/?p=392720",
-                            "image": "https://www.thelines.com/maryland-sports-celebrities-sportsbooks-2021/michael-phelps-1-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        },
-                        {
-                            "totalRecords": 0,
-                            "title": "Arizona Sports Betting Date Set To Launch Legal Retail Sportsbooks",
-                            "creator": "Derek Helling",
-                            "pubDate": "Thu, 03 Jun 2021 13:25:04 +0000",
-                            "guid": "https://www.thelines.com/?p=392693",
-                            "image": "https://www.thelines.com/arizona-sports-betting-launch-date-2021/arizona-governor-1-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        },
-                        {
-                            "totalRecords": 0,
-                            "title": "Second Medina Spirit Drug Test Means Historic Kentucky Derby DQ",
-                            "creator": "Brett Gibbons",
-                            "pubDate": "Wed, 02 Jun 2021 17:16:46 +0000",
-                            "guid": "https://www.thelines.com/?p=392548",
-                            "image": "https://www.thelines.com/medina-spirit-drug-test-kentucky-derby-dq-2021/baffert-1-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        },
-                        {
-                            "totalRecords": 0,
-                            "title": "NYC Mayor Odds: How To Bet On Race As Andrew Yang Drops In Polls",
-                            "pubDate": "Wed, 02 Jun 2021 16:35:01 +0000",
-                            "guid": "https://www.thelines.com/?p=392551",
-                            "image": "https://www.thelines.com/nyc-mayor-odds-andrew-yang-2021/andrew-yang-1-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        },
-                        {
-                            "totalRecords": 0,
-                            "title": "Belmont Stakes Picks: Ways To Bet Final Leg of Horse Racing Triple Crown",
-                            "creator": "Dave Bontempo",
-                            "pubDate": "Tue, 01 Jun 2021 21:28:23 +0000",
-                            "guid": "https://www.thelines.com/?p=392067",
-                            "image": "https://www.thelines.com/belmont-stakes-picks-2021/belmont-stakes-1-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        },
-                        {
-                            "totalRecords": 0,
-                            "title": "No Paul Vs Mayweather Bets: Fight Deemed  ‘Non-Competitive’",
-                            "creator": "Stephen Andress",
-                            "pubDate": "Tue, 01 Jun 2021 20:26:09 +0000",
-                            "guid": "https://www.thelines.com/?p=392051",
-                            "image": "https://www.thelines.com/paul-vs-mayweather-bets-2021/mayweather-1-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        },
-                        {
-                            "totalRecords": 0,
-                            "title": "Why One NL MVP Longshot May Not Be One For Much Longer",
-                            "creator": "Stephen Andress",
-                            "pubDate": "Tue, 01 Jun 2021 15:40:53 +0000",
-                            "guid": "https://www.thelines.com/?p=391878",
-                            "image": "https://www.thelines.com/nl-mvp-odds-dodgers-max-muncy-2021/max-muncy-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        },
-                        {
-                            "totalRecords": 0,
-                            "title": "Odds For Next Year’s Super Bowl: 2021-22 Futures For All 32 NFL Teams",
-                            "creator": "Matt Burke",
-                            "pubDate": "Tue, 01 Jun 2021 11:33:46 +0000",
-                            "guid": "https://www.thelines.com/?p=171852",
-                            "image": "https://www.thelines.com/next-year-super-bowl-odds-lvi-56-49ers-eagles-titans-bears-broncos-2022/next-year-super-bowl-odds-2022-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        },
-                        {
-                            "totalRecords": 0,
-                            "title": "Memorial Tournament Odds: Golfers To Watch",
-                            "creator": "FairwayJay",
-                            "pubDate": "Sun, 30 May 2021 14:09:05 +0000",
-                            "guid": "https://www.thelines.com/?p=390122",
-                            "image": "https://www.thelines.com/memorial-tournament-odds-2021/jon-rahm-memorial-1-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        },
-                        {
-                            "totalRecords": 0,
-                            "title": "2022 NFL Draft Odds: Quarterbacks Commandeer No. 1 Pick Market",
-                            "pubDate": "Thu, 27 May 2021 21:00:14 +0000",
-                            "guid": "https://www.thelines.com/?p=389002",
-                            "image": "https://www.thelines.com/nfl-draft-odds-quarterbacks-2022/rattler-1-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
-                        }
-                    ],
-                    "currentPage": 1,
-                    "pageCount": 10,
-                    "pageSize": 10,
-                    "rowCount": 100,
-                    "linkTemplate": null,
-                    "firstRowOnPage": 1,
-                    "lastRowOnPage": 10
-                },
-                "pager": null
+              "listOffeeds": {
+                "results": [
+                  {
+                    "categoryName": "nfl",
+                    "totalRecords": 0,
+                    "title": "How Julio Jones Fantasy Projections Compare to Sportsbook Props",
+                    "creator": "Brett Gibbons",
+                    "pubDate": "Mon, 07 Jun 2021 19:24:40 +0000",
+                    "guid": "https://www.thelines.com/?p=395071",
+                    "image": "https://www.thelines.com/how-julio-jones-fantasy-projections-compare-to-sportsbook-props/julio-projections-2-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nfl",
+                    "totalRecords": 0,
+                    "title": "Super Bowl Odds 2022: Kansas City Chiefs Remain The Favorites",
+                    "link": "https://www.thelines.com/odds/super-bowl/",
+                    "creator": "Brett Collson",
+                    "pubDate": "Mon, 07 Jun 2021 12:10:30 +0000",
+                    "guid": "https://www.thelines.com/?page_id=8262",
+                    "image": "https://www.thelines.com/odds/super-bowl/super-bowl-odds-2022-chiefs-buccaneers-patriots-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nfl",
+                    "totalRecords": 0,
+                    "title": "NFL Power Rankings 2021-22 | Chiefs, Buccaneers, Bills The Top 3",
+                    "creator": "Nate Weitzer",
+                    "pubDate": "Mon, 07 Jun 2021 12:01:31 +0000",
+                    "guid": "https://www.thelines.com/?page_id=17299",
+                    "image": "https://www.thelines.com/betting/nfl/power-rankings/nfl-power-rankings-new-chiefs-may-updated-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nfl",
+                    "totalRecords": 0,
+                    "title": "Julio Jones Trade: How Titans Super Bowl Odds Changed At DraftKings Sportsbook",
+                    "creator": "Stephen Andress",
+                    "pubDate": "Sun, 06 Jun 2021 16:21:44 +0000",
+                    "guid": "https://www.thelines.com/?p=394591",
+                    "image": "https://www.thelines.com/julio-jones-trade-titans-super-bowl-odds-2021/julio-jones-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nfl",
+                    "totalRecords": 0,
+                    "title": "Opening NFL Lines For Every Game Of The 2021 Season",
+                    "creator": "Juan Carlos Blanco",
+                    "pubDate": "Thu, 03 Jun 2021 17:31:59 +0000",
+                    "guid": "https://www.thelines.com/?p=388991",
+                    "image": "https://www.thelines.com/nfl-lines-every-week-2021/nfl-lines-every-week-spread-week-2-3-17-18-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nfl",
+                    "totalRecords": 0,
+                    "title": "Sunday Night Football Betting Preview: Bears at Rams",
+                    "creator": "Esten McLaren",
+                    "pubDate": "Thu, 03 Jun 2021 13:20:07 +0000",
+                    "guid": "https://www.thelines.com/?page_id=16035",
+                    "image": "https://www.thelines.com/odds/snf-betting/snf-betting-odds-sunday-night-football-line-spread-rams-bears-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nfl",
+                    "totalRecords": 0,
+                    "title": "NFL 2021 MVP Odds | Patrick Mahomes Sits Atop Odds Board",
+                    "creator": "Juan Carlos Blanco",
+                    "pubDate": "Thu, 03 Jun 2021 12:27:12 +0000",
+                    "image": "https://www.thelines.com/odds/nfl-mvp/nfl-mvp-odds-2021-2022-mahomes-josh-allen-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nfl",
+                    "totalRecords": 0,
+                    "title": "Thursday Night Football Betting Guide: Dallas Cowboys At Tampa Bay Buccaneers",
+                    "creator": "Matt Burke",
+                    "pubDate": "Thu, 03 Jun 2021 08:35:15 +0000",
+                    "image": "https://www.thelines.com/odds/tnf/thursday-night-football-odds-tnf-betting-cowboys-buccaneers-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nfl",
+                    "totalRecords": 0,
+                    "title": "Monday Night Football Betting Preview: Baltimore Ravens At Las Vegas Raiders",
+                    "creator": "Matt Burke",
+                    "pubDate": "Thu, 03 Jun 2021 08:19:59 +0000",
+                    "guid": "https://www.thelines.com/?page_id=9807",
+                    "image": "https://www.thelines.com/odds/mnf/mnf-betting-odds-monday-night-football-ravens-raiders-line-spread-total-over-under-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nba",
+                    "totalRecords": 0,
+                    "title": "How Bettors Should View Nets After James Harden Hamstring Injury",
+                    "creator": "Mo Nuwwarah",
+                    "pubDate": "Mon, 07 Jun 2021 21:21:46 +0000",
+                    "guid": "https://www.thelines.com/?p=395097",
+                    "image": "https://www.thelines.com/james-harden-hamstring-brooklyn-nets-2021/james-harden-2-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "mlb",
+                    "totalRecords": 0,
+                    "title": "Alex Bregman Props: Matchup, Trends, Best Odds vs. Red Sox (June 8, 2021)",
+                    "creator": "Staff",
+                    "pubDate": "Mon, 07 Jun 2021 20:26:49 +0000",
+                    "guid": "https://www.thelines.com/?p=395126",
+                    "image": "https://www.thelines.com/alex-bregman-mlb-player-prop-trends-astros-red-sox-6-8-2021/chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "nhl",
+                    "totalRecords": 0,
+                    "title": "Kyle Connor: NHL Player Prop Betting Trends For Jets Vs Canadiens (Jun 7)",
+                    "creator": "Staff",
+                    "pubDate": "Mon, 07 Jun 2021 20:24:03 +0000",
+                    "guid": "https://www.thelines.com/?p=395072",
+                    "image": "https://www.thelines.com/kyle-connor-nhl-player-props-6-7-2021/chub-img-slug-chub-img-slug-chub-img-slug/"
+                  },
+                  {
+                    "categoryName": "golf",
+                    "totalRecords": 0,
+                    "title": "US Open Golf Betting Guide",
+                    "creator": "Esten McLaren",
+                    "pubDate": "Mon, 07 Jun 2021 11:41:50 +0000",
+                    "image": "https://www.thelines.com/bryson-dechambeau-us-open-masters-pga-championship/bryson-dechambeau-odds-memorial-masters-us-open-pga/"
+                  }
+                ],
+                "currentPage": 1,
+                "pageCount": 2,
+                "pageSize": 50,
+                "rowCount": 100,
+                "linkTemplate": null,
+                "firstRowOnPage": 1,
+                "lastRowOnPage": 50
+              },
+              "pager": null
             }
             """
             

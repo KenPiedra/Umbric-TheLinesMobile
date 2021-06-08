@@ -20,17 +20,14 @@ class NFLNewsTableCell: UITableViewCell {
         // Initialization code
     }
 
-    func preparelayout(objAllDao:AllNewsDao){
+    func preparelayout(objAllDao:NFLNewsDao){
         
-        if objAllDao != nil{
-            
-            viewMain.layer.cornerRadius = 15
-            viewMain.layer.borderWidth = 0.5
-            viewMain.layer.borderColor = UIColor.init(red: (31.0/255.0), green: (41.0/255.0), blue: (51.0/255.0), alpha: 1.0).cgColor
+        self.viewMain.layer.cornerRadius = 15
+        self.viewMain.layer.borderWidth = 0.5
+        self.viewMain.layer.borderColor = UIColor.init(red: (31.0/255.0), green: (41.0/255.0), blue: (51.0/255.0), alpha: 1.0).cgColor
             self.lbllNewsDate.text = objAllDao.pubDate
             self.lblNewsDescription.text = objAllDao.title
-            self.lblNewsCategory.text = "NFL"
-        }
+            self.lblNewsCategory.text = objAllDao.categoryName?.uppercased()
     }
 
 }
