@@ -279,7 +279,6 @@
 		DB564A932656497900E4DD2A /* SportsApp */ = {
 			isa = PBXGroup;
 			children = (
-				F84F64BB26690A2A001F077C /* Cells */,
 				DB560BB3265677D100C863B4 /* Utils */,
 				DB560BA32656755B00C863B4 /* App */,
 				DB560BA22656755300C863B4 /* Model */,
@@ -310,47 +309,14 @@
 			path = SportsAppUITests;
 			sourceTree = "<group>";
 		};
-		F84F64BB26690A2A001F077C /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				F84F64BC26690A36001F077C /* NewsCells */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		F84F64BC26690A36001F077C /* NewsCells */ = {
-			isa = PBXGroup;
-			children = (
-				F84F64BD26690A71001F077C /* AllNewsCell.swift */,
-				F84F64BF266910C1001F077C /* NBANewsCell.swift */,
-				F8DDB2EF266BC164003542D3 /* NFLNewsCell.swift */,
-				F8DDB2F1266BC174003542D3 /* MLBNewsCell.swift */,
-				F8DDB2F3266BC184003542D3 /* NHLNewsCell.swift */,
-				F8DDB2F5266BC194003542D3 /* GolfNewsCell.swift */,
-			);
-			path = NewsCells;
-			sourceTree = "<group>";
-		};
 		F84F64C126691ADB001F077C /* News */ = {
 			isa = PBXGroup;
 			children = (
-				F8DDB2EA266BAED5003542D3 /* NHLNews */,
-				F8DDB2E9266BAECD003542D3 /* GolfNews */,
-				F8DDB2E7266BAE9A003542D3 /* MLBNews */,
-				F8DDB2E6266BAE8B003542D3 /* NFLNews */,
-				F8DDB2E5266BAE81003542D3 /* NBANews */,
-				F84F64C426691B4C001F077C /* AllNews */,
+				F86655A8266F8206000E0941 /* NewsCollectionCell */,
+				F86655A7266F81EC000E0941 /* NewsTableCells */,
 				F84F64B92668CABE001F077C /* NewsViewController.swift */,
 			);
 			path = News;
-			sourceTree = "<group>";
-		};
-		F84F64C426691B4C001F077C /* AllNews */ = {
-			isa = PBXGroup;
-			children = (
-				F84F64C226691AFC001F077C /* AllNewsTableCell.swift */,
-			);
-			path = AllNews;
 			sourceTree = "<group>";
 		};
 		F84F64C7266921FD001F077C /* News */ = {
@@ -361,44 +327,30 @@
 			path = News;
 			sourceTree = "<group>";
 		};
-		F8DDB2E5266BAE81003542D3 /* NBANews */ = {
-			isa = PBXGroup;
-			children = (
-				F8DDB2ED266BAF69003542D3 /* NBANewsTableCell.swift */,
-			);
-			path = NBANews;
-			sourceTree = "<group>";
-		};
-		F8DDB2E6266BAE8B003542D3 /* NFLNews */ = {
-			isa = PBXGroup;
-			children = (
-				F8DDB2F7266BC1E0003542D3 /* NFLNewsTableCell.swift */,
-			);
-			path = NFLNews;
-			sourceTree = "<group>";
-		};
-		F8DDB2E7266BAE9A003542D3 /* MLBNews */ = {
-			isa = PBXGroup;
-			children = (
-				F8DDB2FD266BC220003542D3 /* MLBNewsTableCell.swift */,
-			);
-			path = MLBNews;
-			sourceTree = "<group>";
-		};
-		F8DDB2E9266BAECD003542D3 /* GolfNews */ = {
+		F86655A7266F81EC000E0941 /* NewsTableCells */ = {
 			isa = PBXGroup;
 			children = (
 				F8DDB2F9266BC1FD003542D3 /* GolfNewsTableCell.swift */,
+				F8DDB2FB266BC210003542D3 /* NHLNewsTableCell.swift */,
+				F8DDB2FD266BC220003542D3 /* MLBNewsTableCell.swift */,
+				F8DDB2F7266BC1E0003542D3 /* NFLNewsTableCell.swift */,
+				F84F64C226691AFC001F077C /* AllNewsTableCell.swift */,
+				F8DDB2ED266BAF69003542D3 /* NBANewsTableCell.swift */,
 			);
-			path = GolfNews;
+			path = NewsTableCells;
 			sourceTree = "<group>";
 		};
-		F8DDB2EA266BAED5003542D3 /* NHLNews */ = {
+		F86655A8266F8206000E0941 /* NewsCollectionCell */ = {
 			isa = PBXGroup;
 			children = (
-				F8DDB2FB266BC210003542D3 /* NHLNewsTableCell.swift */,
+				F84F64BD26690A71001F077C /* AllNewsCell.swift */,
+				F84F64BF266910C1001F077C /* NBANewsCell.swift */,
+				F8DDB2EF266BC164003542D3 /* NFLNewsCell.swift */,
+				F8DDB2F1266BC174003542D3 /* MLBNewsCell.swift */,
+				F8DDB2F3266BC184003542D3 /* NHLNewsCell.swift */,
+				F8DDB2F5266BC194003542D3 /* GolfNewsCell.swift */,
 			);
-			path = NHLNews;
+			path = NewsCollectionCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -841,18 +793,20 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 88Z8Y7Q863;
+				CURRENT_PROJECT_VERSION = 0.1;
+				DEVELOPMENT_TEAM = 792AXRXG5Y;
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.app.demoSoftyApp;
+				MARKETING_VERSION = 2.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thelines.oddsfeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Development PP Harshal Mac Mini (DemoSofty)";
+				PROVISIONING_PROFILE_SPECIFIER = "VS: WildCard Development";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -863,19 +817,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 88Z8Y7Q863;
+				CURRENT_PROJECT_VERSION = 0.1;
+				DEVELOPMENT_TEAM = B2B35NC4BQ;
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.app.demoSoftyApp;
+				MARKETING_VERSION = 2.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thelines.oddsfeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Development PP Harshal Mac Mini (DemoSofty)";
+				PROVISIONING_PROFILE_SPECIFIER = "Distribution PP Apurva's Mac Mini (thelines)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

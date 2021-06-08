@@ -8,7 +8,6 @@
 import UIKit
 
 class NFLNewsCell: UICollectionViewCell {
-    var delegate : AllNewsViewProtocolNew?
     
     @IBOutlet weak var tblNFLNews: UITableView!
     var VC:UIViewController?
@@ -33,7 +32,22 @@ class NFLNewsCell: UICollectionViewCell {
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = self.tblNFLNews.dequeueReusableCell(withIdentifier: "NFLNewsTableCell") as! NFLNewsTableCell
-                 
+            DispatchQueue.global(qos: .userInitiated).async {
+
+                let link = NewsFeedDaoList.sharedInstance.arrAllNewsDao[indexPath.row].image
+
+                guard
+                    let url = URL(string: link!),
+                    let data = try? Data(contentsOf: url),
+                    let image = UIImage(data: data)
+                else {
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    cell.ivNewsImage.image = image
+                }
+            }
              cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrNFLNewsDao[indexPath.row])
             return cell
         }

@@ -23,15 +23,16 @@ class AllNewsTableCell: UITableViewCell {
             viewMain.layer.cornerRadius = 15
             viewMain.layer.borderWidth = 0.5
             viewMain.layer.borderColor = UIColor.init(red: (31.0/255.0), green: (41.0/255.0), blue: (51.0/255.0), alpha: 1.0).cgColor
-            self.lbllNewsDate.text = objAllDao.pubDate
+           
             self.lblNewsDescription.text = objAllDao.title
             self.lblNewsTitle.text = objAllDao.categoryName?.uppercased()
-            let url = NSURL(string: objAllDao.image!)
-            let imageUrl = try? Data(contentsOf: url! as URL)
-            if let imageData = imageUrl {
-                let image = UIImage(data: imageData as Data)
-            self.ivNewsImage.image = image
-            }
+        
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+        let date = dateFormatter.date(from:objAllDao.pubDate!)!
+        dateFormatter.dateFormat =  "MMM dd yyyy"
+        self.lbllNewsDate.text = dateFormatter.string(from: date)
     }
 
 }
