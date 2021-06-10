@@ -34,8 +34,8 @@ class NHLNewsCell: UICollectionViewCell {
             let cell = self.tblNHLNews.dequeueReusableCell(withIdentifier: "NHLNewsTableCell") as! NHLNewsTableCell
             DispatchQueue.global(qos: .userInitiated).async {
 
-                let link = NewsFeedDaoList.sharedInstance.arrAllNewsDao[indexPath.row].image
-
+                let link = NewsFeedDaoList.sharedInstance.arrNHLNewsDao[indexPath.row].image
+                if link != nil {
                 guard
                     let url = URL(string: link!),
                     let data = try? Data(contentsOf: url),
@@ -46,7 +46,7 @@ class NHLNewsCell: UICollectionViewCell {
 
                 DispatchQueue.main.async {
                     cell.ivNewsImage.image = image
-                }
+                }}
             }
              cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrNHLNewsDao[indexPath.row])
             return cell

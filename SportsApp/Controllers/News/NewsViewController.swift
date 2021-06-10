@@ -123,6 +123,8 @@ class NewsViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func configUI() {
         self.view.backgroundColor = .black
+        self.collectionV.isScrollEnabled = false
+        
         scView = UIScrollView(frame: CGRect(x: 0, y: 0, width: viewCategory.bounds.width, height: 50))
         viewCategory.addSubview(scView)
          scView.translatesAutoresizingMaskIntoConstraints = false

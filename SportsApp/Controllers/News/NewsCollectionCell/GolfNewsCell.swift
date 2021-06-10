@@ -35,8 +35,8 @@ class GolfNewsCell: UICollectionViewCell {
           
             DispatchQueue.global(qos: .userInitiated).async {
 
-                let link = NewsFeedDaoList.sharedInstance.arrAllNewsDao[indexPath.row].image
-
+                let link = NewsFeedDaoList.sharedInstance.arrGOLFNewsDao[indexPath.row].image
+                if link != nil {
                 guard
                     let url = URL(string: link!),
                     let data = try? Data(contentsOf: url),
@@ -47,7 +47,7 @@ class GolfNewsCell: UICollectionViewCell {
 
                 DispatchQueue.main.async {
                     cell.ivNewsImage.image = image
-                }
+                }}
             }
             
             
