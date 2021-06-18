@@ -4,6 +4,7 @@
 //
 //  Created by Apurva on 03/06/21.
 //
+import AVKit
 import UIKit
 import Foundation
 
@@ -33,33 +34,25 @@ class AllNewsCell : UICollectionViewCell {
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = self.tblAllNews.dequeueReusableCell(withIdentifier: "AllNewsTableCell") as! AllNewsTableCell
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-
-                let link = NewsFeedDaoList.sharedInstance.arrAllNewsDao[indexPath.row].image
-                if link != nil {
-                    guard
-                        let url = URL(string: link!),
-                        let data = try? Data(contentsOf: url),
-                        let image = UIImage(data: data)
-                    else {
-                        return
-                    }
-
-                    DispatchQueue.main.async {
-                        cell.ivNewsImage.image = image
-                    }
-                }
-            }
-            
+          
              cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrAllNewsDao[indexPath.row])
             return cell
         }
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return 140
         }
+    
         
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+   
+            
+            let storybord = UIStoryboard(name: "Main", bundle: nil)
+            guard let viewController = storybord.instantiateViewController(withIdentifier: "NewsDetailsViewController") as? NewsDetailsViewController
+            else{ return           }
+            viewController.delegate = NewsFeedDaoList.sharedInstance.arrAllNewsDao[indexPath.row]
+            let navigationController = self.window?.rootViewController as! UINavigationController
+            navigationController.pushViewController(viewController, animated: true)
+
            
         }
         

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Nuke
 class NHLNewsTableCell: UITableViewCell {
     @IBOutlet weak var viewMain: UIView!
     @IBOutlet weak var ivNewsImage: UIImageView!
@@ -36,6 +36,15 @@ class NHLNewsTableCell: UITableViewCell {
         let date = dateFormatter.date(from:objAllDao.pubDate!)!
         dateFormatter.dateFormat =  "MMM dd yyyy"
         self.lbllNewsDate.text = dateFormatter.string(from: date)
+        DispatchQueue.global(qos: .userInitiated).async {
+            let link = objAllDao.image
+            if link != nil {
+                DispatchQueue.main.async {
+                    Nuke.loadImage(with: link, into: self.ivNewsImage)
+                }
+            }
+        }
+
     }
 
 }

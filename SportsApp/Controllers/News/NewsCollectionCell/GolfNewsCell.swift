@@ -33,23 +33,23 @@ class GolfNewsCell: UICollectionViewCell {
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = self.tblGolfNews.dequeueReusableCell(withIdentifier: "GolfNewsTableCell") as! GolfNewsTableCell
           
-            DispatchQueue.global(qos: .userInitiated).async {
-
-                let link = NewsFeedDaoList.sharedInstance.arrGOLFNewsDao[indexPath.row].image
-                if link != nil {
-                guard
-                    let url = URL(string: link!),
-                    let data = try? Data(contentsOf: url),
-                    let image = UIImage(data: data)
-                else {
-                    return
-                }
-
-                DispatchQueue.main.async {
-                    cell.ivNewsImage.image = image
-                }}
-            }
-            
+//            DispatchQueue.global(qos: .userInitiated).async {
+//
+//                let link = NewsFeedDaoList.sharedInstance.arrGOLFNewsDao[indexPath.row].image
+//                if link != nil {
+//                guard
+//                    let url = URL(string: link!),
+//                    let data = try? Data(contentsOf: url),
+//                    let image = UIImage(data: data)
+//                else {
+//                    return
+//                }
+//
+//                DispatchQueue.main.async {
+//                    cell.ivNewsImage.image = image
+//                }}
+//            }
+//            
             
        
              cell.preparelayout(objAllDao: NewsFeedDaoList.sharedInstance.arrGOLFNewsDao[indexPath.row])

@@ -28,6 +28,7 @@
 		F84F64C0266910C1001F077C /* NBANewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64BF266910C1001F077C /* NBANewsCell.swift */; };
 		F84F64C326691AFC001F077C /* AllNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64C226691AFC001F077C /* AllNewsTableCell.swift */; };
 		F84F64C926692230001F077C /* NewsFeedDaoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64C826692230001F077C /* NewsFeedDaoList.swift */; };
+		F84F93842679F63900C58966 /* NewsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F93832679F63900C58966 /* NewsDetailsViewController.swift */; };
 		F8DDB2EE266BAF69003542D3 /* NBANewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2ED266BAF69003542D3 /* NBANewsTableCell.swift */; };
 		F8DDB2F0266BC164003542D3 /* NFLNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2EF266BC164003542D3 /* NFLNewsCell.swift */; };
 		F8DDB2F2266BC174003542D3 /* MLBNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2F1266BC174003542D3 /* MLBNewsCell.swift */; };
@@ -90,6 +91,7 @@
 		F84F64BF266910C1001F077C /* NBANewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBANewsCell.swift; sourceTree = "<group>"; };
 		F84F64C226691AFC001F077C /* AllNewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNewsTableCell.swift; sourceTree = "<group>"; };
 		F84F64C826692230001F077C /* NewsFeedDaoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedDaoList.swift; sourceTree = "<group>"; };
+		F84F93832679F63900C58966 /* NewsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailsViewController.swift; sourceTree = "<group>"; };
 		F8DDB2ED266BAF69003542D3 /* NBANewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBANewsTableCell.swift; sourceTree = "<group>"; };
 		F8DDB2EF266BC164003542D3 /* NFLNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLNewsCell.swift; sourceTree = "<group>"; };
 		F8DDB2F1266BC174003542D3 /* MLBNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLBNewsCell.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				F86655A8266F8206000E0941 /* NewsCollectionCell */,
 				F86655A7266F81EC000E0941 /* NewsTableCells */,
 				F84F64B92668CABE001F077C /* NewsViewController.swift */,
+				F84F93832679F63900C58966 /* NewsDetailsViewController.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -601,6 +604,7 @@
 				DB560BA9265675F200C863B4 /* Home.swift in Sources */,
 				F8DDB2FA266BC1FD003542D3 /* GolfNewsTableCell.swift in Sources */,
 				F84F64C926692230001F077C /* NewsFeedDaoList.swift in Sources */,
+				F84F93842679F63900C58966 /* NewsDetailsViewController.swift in Sources */,
 				DB564A9F2656497900E4DD2A /* SportsApp.xcdatamodeld in Sources */,
 				DB564A972656497900E4DD2A /* SceneDelegate.swift in Sources */,
 				DB560BD126567AB100C863B4 /* SportsData.swift in Sources */,
@@ -806,7 +810,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "VS: WildCard Development";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -831,7 +835,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Distribution PP Apurva's Mac Mini (thelines)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
