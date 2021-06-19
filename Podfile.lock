@@ -1,16 +1,24 @@
 PODS:
   - Alamofire (5.4.3)
+  - ExcelCollectionViewLayout (0.1.1)
+  - ReachabilitySwift (5.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
+  - ExcelCollectionViewLayout
+  - ReachabilitySwift
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - ExcelCollectionViewLayout
+    - ReachabilitySwift
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  ExcelCollectionViewLayout: 0eebfdec37a32852f9e1198635af5fc6a6be3822
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
 
-PODFILE CHECKSUM: c5016e9a119d5a745cefa154e188e945b301bf2b
+PODFILE CHECKSUM: a30d14214335ce56b82a57d70f1c930c8025a559
 
 COCOAPODS: 1.10.1

