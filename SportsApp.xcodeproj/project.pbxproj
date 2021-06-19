@@ -39,6 +39,7 @@
 		DB564AA42656497C00E4DD2A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB564AA22656497C00E4DD2A /* LaunchScreen.storyboard */; };
 		DB564AAF2656497C00E4DD2A /* SportsAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB564AAE2656497C00E4DD2A /* SportsAppTests.swift */; };
 		DB564ABA2656497C00E4DD2A /* SportsAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB564AB92656497C00E4DD2A /* SportsAppUITests.swift */; };
+<<<<<<< HEAD
 		DB5C705A267DE25A009DFDFC /* DeviceSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5C7059267DE25A009DFDFC /* DeviceSize.swift */; };
 		DB605A5526721F1900C3DCE1 /* WebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB605A5426721F1900C3DCE1 /* WebServices.swift */; };
 		DB605A57267236FA00C3DCE1 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB605A56267236FA00C3DCE1 /* EmptyCell.swift */; };
@@ -50,6 +51,23 @@
 		DB752CDF267A1FB8007BA5C9 /* CommonMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB752CDE267A1FB7007BA5C9 /* CommonMethod.swift */; };
 		DBA3DB5F2670E355006800D9 /* ToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3DB5E2670E355006800D9 /* ToolBar.swift */; };
 		DBA936E3266E291200233297 /* TabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA936E2266E291200233297 /* TabbarVC.swift */; };
+=======
+		F84F64BA2668CABE001F077C /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64B92668CABE001F077C /* NewsViewController.swift */; };
+		F84F64BE26690A71001F077C /* AllNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64BD26690A71001F077C /* AllNewsCell.swift */; };
+		F84F64C0266910C1001F077C /* NBANewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64BF266910C1001F077C /* NBANewsCell.swift */; };
+		F84F64C326691AFC001F077C /* AllNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64C226691AFC001F077C /* AllNewsTableCell.swift */; };
+		F84F64C926692230001F077C /* NewsFeedDaoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64C826692230001F077C /* NewsFeedDaoList.swift */; };
+		F84F93842679F63900C58966 /* NewsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F93832679F63900C58966 /* NewsDetailsViewController.swift */; };
+		F8DDB2EE266BAF69003542D3 /* NBANewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2ED266BAF69003542D3 /* NBANewsTableCell.swift */; };
+		F8DDB2F0266BC164003542D3 /* NFLNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2EF266BC164003542D3 /* NFLNewsCell.swift */; };
+		F8DDB2F2266BC174003542D3 /* MLBNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2F1266BC174003542D3 /* MLBNewsCell.swift */; };
+		F8DDB2F4266BC184003542D3 /* NHLNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2F3266BC184003542D3 /* NHLNewsCell.swift */; };
+		F8DDB2F6266BC194003542D3 /* GolfNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2F5266BC194003542D3 /* GolfNewsCell.swift */; };
+		F8DDB2F8266BC1E0003542D3 /* NFLNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2F7266BC1E0003542D3 /* NFLNewsTableCell.swift */; };
+		F8DDB2FA266BC1FD003542D3 /* GolfNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2F9266BC1FD003542D3 /* GolfNewsTableCell.swift */; };
+		F8DDB2FC266BC210003542D3 /* NHLNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2FB266BC210003542D3 /* NHLNewsTableCell.swift */; };
+		F8DDB2FE266BC220003542D3 /* MLBNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2FD266BC220003542D3 /* MLBNewsTableCell.swift */; };
+>>>>>>> origin/ApurvaRaut_NewsScreen
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -141,6 +159,21 @@
 		DBA3DB5E2670E355006800D9 /* ToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBar.swift; sourceTree = "<group>"; };
 		DBA936E2266E291200233297 /* TabbarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarVC.swift; sourceTree = "<group>"; };
 		E1A934F843560CAC4D33A61F /* Pods_SportsAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F84F64B92668CABE001F077C /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		F84F64BD26690A71001F077C /* AllNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNewsCell.swift; sourceTree = "<group>"; };
+		F84F64BF266910C1001F077C /* NBANewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBANewsCell.swift; sourceTree = "<group>"; };
+		F84F64C226691AFC001F077C /* AllNewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNewsTableCell.swift; sourceTree = "<group>"; };
+		F84F64C826692230001F077C /* NewsFeedDaoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedDaoList.swift; sourceTree = "<group>"; };
+		F84F93832679F63900C58966 /* NewsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailsViewController.swift; sourceTree = "<group>"; };
+		F8DDB2ED266BAF69003542D3 /* NBANewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBANewsTableCell.swift; sourceTree = "<group>"; };
+		F8DDB2EF266BC164003542D3 /* NFLNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLNewsCell.swift; sourceTree = "<group>"; };
+		F8DDB2F1266BC174003542D3 /* MLBNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLBNewsCell.swift; sourceTree = "<group>"; };
+		F8DDB2F3266BC184003542D3 /* NHLNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NHLNewsCell.swift; sourceTree = "<group>"; };
+		F8DDB2F5266BC194003542D3 /* GolfNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfNewsCell.swift; sourceTree = "<group>"; };
+		F8DDB2F7266BC1E0003542D3 /* NFLNewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLNewsTableCell.swift; sourceTree = "<group>"; };
+		F8DDB2F9266BC1FD003542D3 /* GolfNewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfNewsTableCell.swift; sourceTree = "<group>"; };
+		F8DDB2FB266BC210003542D3 /* NHLNewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NHLNewsTableCell.swift; sourceTree = "<group>"; };
+		F8DDB2FD266BC220003542D3 /* MLBNewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLBNewsTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,8 +261,13 @@
 		DB560BA12656754700C863B4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				DBA936E7266E291700233297 /* HomeVC */,
 				DBA936EB266E291E00233297 /* TabbarVC */,
+=======
+				F84F64C126691ADB001F077C /* News */,
+				DB560BA8265675F200C863B4 /* Home.swift */,
+>>>>>>> origin/ApurvaRaut_NewsScreen
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -237,6 +275,7 @@
 		DB560BA22656755300C863B4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F84F64C7266921FD001F077C /* News */,
 				DB560BD026567AB100C863B4 /* SportsData.swift */,
 			);
 			path = Model;
@@ -386,6 +425,7 @@
 			path = SportsAppUITests;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		DB5C7058267DE249009DFDFC /* DeviceSize */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,6 +486,51 @@
 				DBA936E2266E291200233297 /* TabbarVC.swift */,
 			);
 			path = TabbarVC;
+=======
+		F84F64C126691ADB001F077C /* News */ = {
+			isa = PBXGroup;
+			children = (
+				F86655A8266F8206000E0941 /* NewsCollectionCell */,
+				F86655A7266F81EC000E0941 /* NewsTableCells */,
+				F84F64B92668CABE001F077C /* NewsViewController.swift */,
+				F84F93832679F63900C58966 /* NewsDetailsViewController.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		F84F64C7266921FD001F077C /* News */ = {
+			isa = PBXGroup;
+			children = (
+				F84F64C826692230001F077C /* NewsFeedDaoList.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		F86655A7266F81EC000E0941 /* NewsTableCells */ = {
+			isa = PBXGroup;
+			children = (
+				F8DDB2F9266BC1FD003542D3 /* GolfNewsTableCell.swift */,
+				F8DDB2FB266BC210003542D3 /* NHLNewsTableCell.swift */,
+				F8DDB2FD266BC220003542D3 /* MLBNewsTableCell.swift */,
+				F8DDB2F7266BC1E0003542D3 /* NFLNewsTableCell.swift */,
+				F84F64C226691AFC001F077C /* AllNewsTableCell.swift */,
+				F8DDB2ED266BAF69003542D3 /* NBANewsTableCell.swift */,
+			);
+			path = NewsTableCells;
+			sourceTree = "<group>";
+		};
+		F86655A8266F8206000E0941 /* NewsCollectionCell */ = {
+			isa = PBXGroup;
+			children = (
+				F84F64BD26690A71001F077C /* AllNewsCell.swift */,
+				F84F64BF266910C1001F077C /* NBANewsCell.swift */,
+				F8DDB2EF266BC164003542D3 /* NFLNewsCell.swift */,
+				F8DDB2F1266BC174003542D3 /* MLBNewsCell.swift */,
+				F8DDB2F3266BC184003542D3 /* NHLNewsCell.swift */,
+				F8DDB2F5266BC194003542D3 /* GolfNewsCell.swift */,
+			);
+			path = NewsCollectionCell;
+>>>>>>> origin/ApurvaRaut_NewsScreen
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -521,6 +606,7 @@
 				TargetAttributes = {
 					DB564A902656497900E4DD2A = {
 						CreatedOnToolsVersion = 12.1;
+						LastSwiftMigration = 1250;
 					};
 					DB564AA92656497C00E4DD2A = {
 						CreatedOnToolsVersion = 12.1;
@@ -704,12 +790,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				DB564A952656497900E4DD2A /* AppDelegate.swift in Sources */,
 				DB605A5526721F1900C3DCE1 /* WebServices.swift in Sources */,
 				DBA936E3266E291200233297 /* TabbarVC.swift in Sources */,
 				DB73463F2678B84D00FB12E9 /* CompanyCell.swift in Sources */,
 				DB73463A2678888400FB12E9 /* LoaderView.swift in Sources */,
 				DB560BA9265675F200C863B4 /* Odds.swift in Sources */,
+=======
+				DB560BE126567C6D00C863B4 /* NetworkCall.swift in Sources */,
+				F8DDB2EE266BAF69003542D3 /* NBANewsTableCell.swift in Sources */,
+				DB564A952656497900E4DD2A /* AppDelegate.swift in Sources */,
+				F8DDB2F0266BC164003542D3 /* NFLNewsCell.swift in Sources */,
+				F8DDB2F2266BC174003542D3 /* MLBNewsCell.swift in Sources */,
+				F84F64C0266910C1001F077C /* NBANewsCell.swift in Sources */,
+				DB560BA9265675F200C863B4 /* Home.swift in Sources */,
+				F8DDB2FA266BC1FD003542D3 /* GolfNewsTableCell.swift in Sources */,
+				F84F64C926692230001F077C /* NewsFeedDaoList.swift in Sources */,
+				F84F93842679F63900C58966 /* NewsDetailsViewController.swift in Sources */,
+>>>>>>> origin/ApurvaRaut_NewsScreen
 				DB564A9F2656497900E4DD2A /* SportsApp.xcdatamodeld in Sources */,
 				DB7346432678B85400FB12E9 /* MiddleDataCell.swift in Sources */,
 				DB605A57267236FA00C3DCE1 /* EmptyCell.swift in Sources */,
@@ -717,8 +816,19 @@
 				DB5149F4266F69200062B1FF /* SportsCell.swift in Sources */,
 				DB7346412678B85200FB12E9 /* LeftDatacell.swift in Sources */,
 				DB560BD126567AB100C863B4 /* SportsData.swift in Sources */,
+				F84F64C326691AFC001F077C /* AllNewsTableCell.swift in Sources */,
+				F8DDB2FE266BC220003542D3 /* MLBNewsTableCell.swift in Sources */,
+				F8DDB2FC266BC210003542D3 /* NHLNewsTableCell.swift in Sources */,
+				F8DDB2F4266BC184003542D3 /* NHLNewsCell.swift in Sources */,
+				F84F64BA2668CABE001F077C /* NewsViewController.swift in Sources */,
 				DB560BB72656780200C863B4 /* NavigationBarExtension.swift in Sources */,
+<<<<<<< HEAD
 				DB5C705A267DE25A009DFDFC /* DeviceSize.swift in Sources */,
+=======
+				F84F64BE26690A71001F077C /* AllNewsCell.swift in Sources */,
+				F8DDB2F8266BC1E0003542D3 /* NFLNewsTableCell.swift in Sources */,
+				F8DDB2F6266BC194003542D3 /* GolfNewsCell.swift in Sources */,
+>>>>>>> origin/ApurvaRaut_NewsScreen
 				DB560BE726567C9E00C863B4 /* Constants.swift in Sources */,
 				DBA3DB5F2670E355006800D9 /* ToolBar.swift in Sources */,
 				DB752CDF267A1FB8007BA5C9 /* CommonMethod.swift in Sources */,
@@ -898,17 +1008,28 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U3NSVYKN56;
+=======
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 0.1;
+				DEVELOPMENT_TEAM = 792AXRXG5Y;
+>>>>>>> origin/ApurvaRaut_NewsScreen
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = SoftyWare.SportsApp;
+				MARKETING_VERSION = 2.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thelines.oddsfeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "VS: WildCard Development";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -918,17 +1039,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U3NSVYKN56;
+=======
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 0.1;
+				DEVELOPMENT_TEAM = B2B35NC4BQ;
+>>>>>>> origin/ApurvaRaut_NewsScreen
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = SoftyWare.SportsApp;
+				MARKETING_VERSION = 2.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thelines.oddsfeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Distribution PP Apurva's Mac Mini (thelines)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
