@@ -40,7 +40,7 @@ class NHLNewsTableCell: UITableViewCell {
             let link = objAllDao.image
             if link != nil {
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: link, into: self.ivNewsImage)
+                    Nuke.loadImage(with:link, into: self.ivNewsImage)
                 }
             }
         }
