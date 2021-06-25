@@ -38,12 +38,12 @@ class GolfNewsTableCell: UITableViewCell {
         self.lbllNewsDate.text = dateFormatter.string(from: date)
         DispatchQueue.global(qos: .userInitiated).async {
 
-            let link = objAllDao.image
+            let link = objAllDao.newsImages[0].small
             if link != nil {
 
 
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: link, into: self.ivNewsImage)
+                    Nuke.loadImage(with: link as! ImageRequestConvertible, into: self.ivNewsImage)
                 }
             }
         }

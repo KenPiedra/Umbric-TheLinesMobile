@@ -57,6 +57,10 @@ class MLBNewsCell: UICollectionViewCell {
         }
         
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            
+            let NewsDetailsView =  VC?.storyboard?.instantiateViewController(withIdentifier: "NewsDetailsViewController") as! NewsDetailsViewController
+            NewsDetailsView.delegate = NewsFeedDaoList.sharedInstance.arrAllNewsDao[indexPath.row]
+            VC?.navigationController?.pushViewController(NewsDetailsView, animated:true)
            
         }
         

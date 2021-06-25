@@ -28,7 +28,10 @@ class NewsFeedDaoList {
                     let objGOLFNews = GOLFNewsDao(dictInfo: dictData)
                     let objResult = dictData["categoryName"]
                     
+                  
                     NewsFeedDaoList.sharedInstance.arrAllNewsDao.append(objAllNews)
+                    
+                    
                     if  objResult as! String == "nba" {
                         NewsFeedDaoList.sharedInstance.arrNBANewsDao.append(objNBANews)
                     }
@@ -62,7 +65,7 @@ class AllNewsDao {
     var description: String?
     var encoded: String?
     var image: String?
-    
+     var newsImages = [NewsImages]()
     init() {
     }
     
@@ -70,6 +73,15 @@ class AllNewsDao {
         if let obj = dictInfo["categoryName"] {
             self.categoryName = obj as? String
         }
+        
+        if let obj = dictInfo["newsImages"] {
+            if let postImage = obj as? [String: AnyObject] {
+                    newsImages.append(NewsImages(dictInfo: postImage))
+                   
+               }
+        }
+    
+        
         if let obj = dictInfo["TotalRecords"] {
             self.TotalRecords = obj as? Int
         }
@@ -126,6 +138,7 @@ class NBANewsDao {
     var description: String?
     var encoded: String?
     var image: String?
+    var newsImages = [NewsImages]()
     
     init() {
     }
@@ -134,6 +147,14 @@ class NBANewsDao {
         if let obj = dictInfo["categoryName"] {
             self.categoryName = obj as? String
         }
+        
+        if let obj = dictInfo["newsImages"] {
+            if let postImage = obj as? [String: AnyObject] {
+                    newsImages.append(NewsImages(dictInfo: postImage))
+                   
+               }
+        }
+        
         if let obj = dictInfo["TotalRecords"] {
             self.TotalRecords = obj as? Int
         }
@@ -189,6 +210,7 @@ class NFLNewsDao {
     var description: String?
     var encoded: String?
     var image: String?
+    var newsImages = [NewsImages]()
     
     init() {
     }
@@ -197,6 +219,13 @@ class NFLNewsDao {
         if let obj = dictInfo["categoryName"] {
             self.categoryName = obj as? String
         }
+        if let obj = dictInfo["newsImages"] {
+            if let postImage = obj as? [String: AnyObject] {
+                    newsImages.append(NewsImages(dictInfo: postImage))
+                   
+               }
+        }
+        
         if let obj = dictInfo["TotalRecords"] {
             self.TotalRecords = obj as? Int
         }
@@ -252,6 +281,8 @@ class MLBNewsDao {
     var description: String?
     var encoded: String?
     var image: String?
+    var newsImages = [NewsImages]()
+    
     
     init() {
     }
@@ -259,6 +290,12 @@ class MLBNewsDao {
     init(dictInfo:[String:Any]) {
         if let obj = dictInfo["categoryName"] {
             self.categoryName = obj as? String
+        }
+        if let obj = dictInfo["newsImages"] {
+            if let postImage = obj as? [String: AnyObject] {
+                    newsImages.append(NewsImages(dictInfo: postImage))
+                   
+               }
         }
         if let obj = dictInfo["TotalRecords"] {
             self.TotalRecords = obj as? Int
@@ -315,6 +352,8 @@ class NHLNewsDao {
     var description: String?
     var encoded: String?
     var image: String?
+    var newsImages = [NewsImages]()
+    
     
     init() {
     }
@@ -323,6 +362,13 @@ class NHLNewsDao {
         if let obj = dictInfo["categoryName"] {
             self.categoryName = obj as? String
         }
+        if let obj = dictInfo["newsImages"] {
+            if let postImage = obj as? [String: AnyObject] {
+                    newsImages.append(NewsImages(dictInfo: postImage))
+                   
+               }
+        }
+        
         if let obj = dictInfo["TotalRecords"] {
             self.TotalRecords = obj as? Int
         }
@@ -365,6 +411,26 @@ class NHLNewsDao {
     }
     
 }
+ 
+class NewsImages
+{
+    var original: String?
+    var small: String?
+    
+    init() {
+    }
+    
+    init(dictInfo:[String:Any]) {
+    if let obj = dictInfo["original"] {
+        self.original = obj as? String
+    }
+    
+    if let obj = dictInfo["small"] {
+        self.small = obj as? String
+    }
+    }
+}
+
 class GOLFNewsDao {
     
     var categoryName: String?
@@ -378,13 +444,22 @@ class GOLFNewsDao {
     var description: String?
     var encoded: String?
     var image: String?
+    var newsImages = [NewsImages]()
     
+
     init() {
     }
     
     init(dictInfo:[String:Any]) {
         if let obj = dictInfo["categoryName"] {
             self.categoryName = obj as? String
+        }
+        
+        if let obj = dictInfo["newsImages"] {
+            if let postImage = obj as? [String: AnyObject] {
+                    newsImages.append(NewsImages(dictInfo: postImage))
+                   
+               }
         }
         if let obj = dictInfo["TotalRecords"] {
             self.TotalRecords = obj as? Int

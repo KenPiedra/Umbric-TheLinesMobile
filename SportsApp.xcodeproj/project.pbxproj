@@ -57,6 +57,7 @@
 		F84F64C326691AFC001F077C /* AllNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64C226691AFC001F077C /* AllNewsTableCell.swift */; };
 		F84F64C926692230001F077C /* NewsFeedDaoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F64C826692230001F077C /* NewsFeedDaoList.swift */; };
 		F84F93842679F63900C58966 /* NewsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F93832679F63900C58966 /* NewsDetailsViewController.swift */; };
+		F8C53CF92684E51A007F9EA7 /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F8C53CF82684E51A007F9EA7 /* AppIcon.png */; };
 		F8DDB2EE266BAF69003542D3 /* NBANewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2ED266BAF69003542D3 /* NBANewsTableCell.swift */; };
 		F8DDB2F0266BC164003542D3 /* NFLNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2EF266BC164003542D3 /* NFLNewsCell.swift */; };
 		F8DDB2F2266BC174003542D3 /* MLBNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DDB2F1266BC174003542D3 /* MLBNewsCell.swift */; };
@@ -163,6 +164,7 @@
 		F84F64C226691AFC001F077C /* AllNewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNewsTableCell.swift; sourceTree = "<group>"; };
 		F84F64C826692230001F077C /* NewsFeedDaoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedDaoList.swift; sourceTree = "<group>"; };
 		F84F93832679F63900C58966 /* NewsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailsViewController.swift; sourceTree = "<group>"; };
+		F8C53CF82684E51A007F9EA7 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AppIcon.png; path = ../../../../../Desktop/AppIcon.png; sourceTree = "<group>"; };
 		F8DDB2ED266BAF69003542D3 /* NBANewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBANewsTableCell.swift; sourceTree = "<group>"; };
 		F8DDB2EF266BC164003542D3 /* NFLNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLNewsCell.swift; sourceTree = "<group>"; };
 		F8DDB2F1266BC174003542D3 /* MLBNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLBNewsCell.swift; sourceTree = "<group>"; };
@@ -314,7 +316,6 @@
 		DB51F98E267B1DDC00D638A6 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				DB564AA02656497C00E4DD2A /* Assets.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -350,6 +351,7 @@
 		DB560BA42656756700C863B4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F8C53CF82684E51A007F9EA7 /* AppIcon.png */,
 				DB51F98D267B1DD300D638A6 /* Fonts */,
 				DB51F98E267B1DDC00D638A6 /* Assets */,
 			);
@@ -452,6 +454,7 @@
 		DB564A932656497900E4DD2A /* SportsApp */ = {
 			isa = PBXGroup;
 			children = (
+				DB564AA02656497C00E4DD2A /* Assets.xcassets */,
 				DB560BB3265677D100C863B4 /* Utils */,
 				DB560BA32656755B00C863B4 /* App */,
 				DB560BA22656755300C863B4 /* Model */,
@@ -663,6 +666,7 @@
 				DB51F9A9267B1DFE00D638A6 /* Mulish-ExtraLight.ttf in Resources */,
 				DB51F99F267B1DFE00D638A6 /* Mulish-Bold.ttf in Resources */,
 				DB51F9AE267B1DFE00D638A6 /* Mulish-Regular.ttf in Resources */,
+				F8C53CF92684E51A007F9EA7 /* AppIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,8 +1006,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0.1;
-				DEVELOPMENT_TEAM = 792AXRXG5Y;
+				CURRENT_PROJECT_VERSION = 0.2;
+				DEVELOPMENT_TEAM = 88Z8Y7Q863;
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1012,7 +1016,7 @@
 				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thelines.oddsfeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "VS: WildCard Development";
+				PROVISIONING_PROFILE_SPECIFIER = "Development PP Harshal Mac Mini (DemoSofty)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1028,7 +1032,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0.1;
+				CURRENT_PROJECT_VERSION = 0.2;
 				DEVELOPMENT_TEAM = B2B35NC4BQ;
 				INFOPLIST_FILE = SportsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -9,6 +9,7 @@ import UIKit
 
 class NewsDetailsViewController: UIViewController {
     var delegate : AllNewsDao?
+    @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var lblNewsDescription: UILabel!
     @IBOutlet weak var viewMain: UIView!
     @IBOutlet weak var lblNewsTitle: UILabel!
@@ -18,13 +19,16 @@ class NewsDetailsViewController: UIViewController {
         super.viewDidLoad()
         lblNewsTitle.text = delegate?.title
         lblCategory.text = delegate?.categoryName
+        
+        if delegate?.encoded != nil && delegate?.description != nil {
         let encoded = delegate?.encoded?.html2String
         let description = delegate?.description?.html2String
-        lblNewsDescription.text = description! + "\n" + encoded!
+            lblNewsDescription.text = description! + "\n" + encoded!
 
+        }
         DispatchQueue.global(qos: .userInitiated).async {
 
-            let link = self.delegate?.image
+            let link = self.delegate?.newsImages[0].original
             if link != nil {
                 DispatchQueue.main.async {
                     Nuke.loadImage(with: link, into: self.imgNews)
@@ -36,6 +40,9 @@ class NewsDetailsViewController: UIViewController {
     }
     
 
+    @IBAction func btnBackAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
     /*
     // MARK: - Navigation
 

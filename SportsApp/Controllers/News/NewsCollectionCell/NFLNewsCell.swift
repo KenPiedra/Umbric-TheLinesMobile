@@ -56,6 +56,10 @@ class NFLNewsCell: UICollectionViewCell {
         }
         
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            
+            let NewsDetailsView =  VC?.storyboard?.instantiateViewController(withIdentifier: "NewsDetailsViewController") as! NewsDetailsViewController
+
+            VC?.navigationController?.pushViewController(NewsDetailsView, animated:true)
            
         }
         

@@ -23,7 +23,19 @@ enum AllSports: String, CaseIterable {
         }
     }
 }
-
+enum AllNews: String, CaseIterable {
+    case All
+    case NBA
+    case NFL
+    case MLB
+    case NHL
+    case GOLF
+    
+    static var newsList: [String] {
+        return AllNews.allCases.map { $0.rawValue
+        }
+    }
+}
 
 struct API {
     static let baseUrl = "https://us1.catenaus.com/api/v2/app/oddsfeed/"
