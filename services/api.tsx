@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Game, League } from '../types';
 
 const sampleData = [
     {
@@ -135,7 +136,7 @@ export const getNews = (categoryId: string, limit: number, timeBefore?: Date): P
   });
 }
 
-export const getSportsForOdds = (): Promise<Array<object>> => {
+export const getSportsForOdds = (): Promise<Array<League>> => {
   return new Promise((resolve, reject) => {
     resolve([
       {Value: 'BBM', Name: 'MLB'},
@@ -150,14 +151,12 @@ export const getSportsForOdds = (): Promise<Array<object>> => {
   });
 }
 
-export const getOddsData = (leagueCode: string): Promise<Array<object>> => {
+export const getOddsData = (leagueCode: string): Promise<Array<Game>> => {
   const today = new Date().toISOString().substring(0, 10);
   const url = `https://us1.catenaus.com/api/v2/app/oddsfeed/${leagueCode.toLowerCase()}/odds?Day=${today}`;
   return axios({url, method: 'get', responseType: 'json'}).then((data: any) => {
-    if (data.meta.code == 200) {
-      return data.results;
-    } else {
-      throw new Error(data.meta.description);
+    if (data.status == 200) {
+      return data.data;
     }
   });
 }

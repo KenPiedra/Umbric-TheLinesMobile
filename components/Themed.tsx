@@ -4,8 +4,8 @@
  */
 
 import React, { useState } from 'react';
-import { Text as DefaultText, View as DefaultView } from 'react-native';
-import { default as DefaultDropDownPicker, DropDownPickerProps} from 'react-native-dropdown-picker';
+import { ActivityIndicator, Linking, Text as DefaultText, TouchableWithoutFeedback, View as DefaultView } from 'react-native';
+import { default as DefaultDropDownPicker, DropDownPickerProps } from 'react-native-dropdown-picker';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -32,6 +32,13 @@ type ThemeProps = {
 export type PickerProps = ThemeProps & DropDownPickerProps;
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
+export type TabViewProps = ViewProps & {
+  key: string;
+  tabLabel: string;
+};
+export type TouchableWithNavigationProps = ViewProps & {
+  url: string;
+};
 
 export function DropDownPicker(props: PickerProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -41,10 +48,23 @@ export function DropDownPicker(props: PickerProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <DefaultDropDownPicker textStyle={{color}}
-      open={open} setOpen={setOpen}
-      {...otherProps}
-    />
+    <View>
+      <DefaultDropDownPicker open={open} setOpen={setOpen}
+        containerStyle={{borderRadius: 8, borderColor: color}}
+        itemStyle={{justifyContent: 'flex-start'}}
+        style={{color, fontSize: 16, lineHeight: 24, padding: 12}}
+        {...otherProps}
+      />
+    </View>
+  );
+}
+
+export function LoadingSpinner(props: any) {
+  const { lightColor, darkColor, ...otherProps } = props;
+  const color = useThemeColor({}, 'text');
+
+  return (
+    <ActivityIndicator color={color} size="large" style={{flex: 1}} {...otherProps} />
   );
 }
 
@@ -60,4 +80,29 @@ export function View(props: ViewProps) {
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+}
+
+export function TabView(props: TabViewProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+
+  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+}
+
+export function TouchableWithNavigation(props: TouchableWithNavigationProps) {
+  const {url, ...otherProps} = props;
+
+  return (
+    <TouchableWithoutFeedback {...otherProps} onPress={async () => {
+      console.log(url);
+      if (url) {
+        const supported = await Linking.canOpenURL(url);
+        if (supported) {
+          await Linking.openURL(url);
+        } else {
+          console.error(`Cannot navigate to ${url}`);
+        }
+      }
+    }} />
+  )
 }
