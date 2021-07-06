@@ -14,20 +14,23 @@ export default class NewsScreen extends React.Component {
     error: null,
     loading: true,
     loadingMore: false,
+    noMoreLoad: false,
     refreshing: false,
   };
 
   _fetchNews = (lastItemTime?: Date) => {
     let categoryId = this.state.categories[this.state.activeCategory].Id;
-    API.getNews(categoryId, 10, lastItemTime)
+    const ItemsToLoad = 10;
+    API.getNews(categoryId, ItemsToLoad, lastItemTime)
       .then((newItems) => {
         let newData = this.state.refreshing ? newItems : [...this.state.data, ...newItems];
         this.setState((prevState, nextProps) => ({
           data: newData,
+          noMoreLoad: newItems.length < ItemsToLoad
         }));
       })
       .catch((err) => {
-        // console.error(err);
+        console.error(err);
       })
       .finally(() => {
         this.setState((prevState, nextProps) => ({
@@ -39,12 +42,14 @@ export default class NewsScreen extends React.Component {
   }
 
   _handleLoadMore() {
-    let lastItemTime: any = null;
-    if (this.state.data.length > 0) {
-      lastItemTime = this.state.data.slice(-1)[0]['PostedAt'];
-    }
+    if (!this.state.noMoreLoad) {
+      let lastItemTime: any = null;
+      if (this.state.data.length > 0) {
+        lastItemTime = this.state.data.slice(-1)[0]['PostedAt'];
+      }
 
-    this.setState((prevState, nextProps) => ({loadingMore: true}), () => this._fetchNews(lastItemTime));
+      this.setState((prevState, nextProps) => ({loadingMore: true}), () => this._fetchNews(lastItemTime));
+    }
   }
 
   _handleRefresh = () => {
@@ -69,9 +74,11 @@ export default class NewsScreen extends React.Component {
   onCategoryChanged(i: number) {
     if (this.state.activeCategory !== i) {
       this.setState(() => ({
-        activeCategory: i
-      }));
-      this._handleRefresh();
+        activeCategory: i,
+        data: []
+      }), () => {
+        this._handleRefresh()
+      });
     }
   }
 
