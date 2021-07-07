@@ -5,23 +5,15 @@
  */
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import React, { Component } from 'react';
 import { ColorSchemeName } from 'react-native';
+import { connect } from 'react-redux';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
+import LoginScreen from '../screens/LoginScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
-
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-  return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
-    </NavigationContainer>
-  );
-}
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
@@ -35,3 +27,44 @@ function RootNavigator() {
     </Stack.Navigator>
   );
 }
+
+function AuthNavigator() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Auth" component={LoginScreen} />
+    </Stack.Navigator>
+  );
+}
+
+interface NavigationProps {
+  colorScheme: ColorSchemeName,
+  isAuthenticated: boolean,
+}
+
+class Navigation extends Component<NavigationProps> {
+  constructor(props: Readonly<NavigationProps>) {
+    super(props);
+  }
+
+  render() {
+    const { colorScheme , isAuthenticated} = this.props;
+
+    return (
+      <NavigationContainer
+        linking={LinkingConfiguration}
+        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <RootNavigator />
+      </NavigationContainer>
+    );
+  }
+}
+
+const mapStateToProps = (state: any) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation)

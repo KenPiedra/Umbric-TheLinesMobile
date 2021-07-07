@@ -14,8 +14,9 @@ import HomeScreen from '../screens/HomeScreen';
 import OddsScreen from '../screens/OddsScreen';
 import NewsScreen from '../screens/NewsScreen';
 import SportsbooksScreen from '../screens/SportsbooksScreen';
-import { BottomTabParamList, HomeParamList, OddsParamList, NewsParamList, SportsbooksParamList } from '../types';
-import { HomeIcon, OddsIcon, NewsIcon, SportsbooksIcon } from '../components/SvgIcons';
+import PodcastScreen from '../screens/PodcastScreen';
+import { BottomTabParamList, HomeParamList, OddsParamList, NewsParamList, SportsbooksParamList, PodcastParamList } from '../types';
+import { HomeIcon, OddsIcon, NewsIcon, SportsbooksIcon, PodcastIcon } from '../components/SvgIcons';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -71,6 +72,13 @@ export default function BottomTabNavigator() {
         component={SportsbooksNavigator}
         options={{
           tabBarIcon: ({ color }) => <SportsbooksIcon color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Podcast"
+        component={PodcastNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <PodcastIcon color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -132,5 +140,19 @@ function SportsbooksNavigator() {
         options={{ headerTitle: 'Sportsbooks' }}
       />
     </SportsbooksStack.Navigator>
+  );
+}
+
+const PodcastStack = createStackNavigator<PodcastParamList>();
+
+function PodcastNavigator() {
+  return (
+    <PodcastStack.Navigator>
+      <PodcastStack.Screen
+        name="PodcastScreen"
+        component={PodcastScreen}
+        options={{ headerTitle: 'Podcast' }}
+      />
+    </PodcastStack.Navigator>
   );
 }
