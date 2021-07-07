@@ -3,9 +3,9 @@
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
-import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useSafeAreaInsets }  from 'react-native-safe-area-context';
 import * as React from 'react';
 
 import Colors from '../constants/Colors';
@@ -21,6 +21,7 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const insets = useSafeAreaInsets();
 
   return (
     <BottomTab.Navigator
@@ -42,7 +43,7 @@ export default function BottomTabNavigator() {
           marginBottom: 16
         },
         style: {
-          height: 81,
+          height: 81 + insets.bottom,
         }
       }}>
       <BottomTab.Screen
