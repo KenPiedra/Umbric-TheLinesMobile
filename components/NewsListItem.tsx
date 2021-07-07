@@ -9,7 +9,6 @@ export interface NewsItemDataProps {
   AuthorLink?: string,
   Thumb: string,
   Categories: Array<string>,
-  CategoriesLink?: Object,
   PostedAt: Date,
   DetailLink: string,
 };
