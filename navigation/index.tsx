@@ -11,8 +11,9 @@ import { connect } from 'react-redux';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import LoginScreen from '../screens/LoginScreen';
+import PodcastPlayScreen from '../screens/PodcastPlayScreen';
 import { RootStackParamList } from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
+import RootStackNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
 // A root stack navigator is often used for displaying modals on top of all other content
@@ -22,7 +23,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen name="Root" component={RootStackNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );
@@ -53,7 +54,12 @@ class Navigation extends Component<NavigationProps> {
       <NavigationContainer
         linking={LinkingConfiguration}
         theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <RootNavigator />
+          {
+            isAuthenticated ?
+            <RootNavigator />
+            :
+            <AuthNavigator />
+          }
       </NavigationContainer>
     );
   }

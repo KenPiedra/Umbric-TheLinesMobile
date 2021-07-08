@@ -36,3 +36,7 @@ export type SportsbooksParamList = {
 export type PodcastParamList = {
   PodcastScreen: undefined;
 };
+
+export type PodcastPlayParamList = {
+  PodcastPlayScreen: { podcast: any };
+};

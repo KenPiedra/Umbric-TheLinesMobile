@@ -3,16 +3,15 @@ import { Button, StyleSheet, NativeModules } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 
+const { RNTwitterSignIn } = NativeModules;
+const API_KEY = {
+  TWITTER_API_KEY: "AnruNLI7G01Ps4CQ09FIk8apl",
+  TWITTER_SECRET_KEY: "QwxScWKOJyR7fTDxtXbkAwT3hlWU0ibwa96sHe2viKTvsHglMA"
+}
+
 export default function LoginScreen() {
 
-  const API_KEY = {
-    TWITTER_API_KEY: "AnruNLI7G01Ps4CQ09FIk8apl",
-    TWITTER_SECRET_KEY: "QwxScWKOJyR7fTDxtXbkAwT3hlWU0ibwa96sHe2viKTvsHglMA"
-  }
-
-  const twitterLogin = () => {
-    const { RNTwitterSignIn } = NativeModules;
-
+  function twitterLogin() {
     RNTwitterSignIn.init(API_KEY.TWITTER_API_KEY, API_KEY.TWITTER_SECRET_KEY)
     RNTwitterSignIn.logIn()
     .then((loginData: any) => {

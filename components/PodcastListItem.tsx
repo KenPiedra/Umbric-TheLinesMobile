@@ -1,8 +1,17 @@
 import * as React from 'react';
-import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Image, StyleSheet, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 import { Ionicons } from '@expo/vector-icons';
 import { Text, View, ViewProps } from './Themed';
+
+import { PodcastPlayParamList } from '../types';
+
+// type ProfileScreenNavigationProp = StackNavigationProp<
+//   PodcastPlayParamList,
+//   'PodcastPlayScreen'
+// >;
 
 export interface PodcastItemDataProps {
   Title: string,
@@ -16,32 +25,36 @@ export interface PodcastItemDataProps {
 };
 
 interface PodcastListItemProps extends ViewProps {
-  data: PodcastItemDataProps
+  data: PodcastItemDataProps,
+  // navigation: ProfileScreenNavigationProp,
 }
 
-export default class PodcastListItem extends React.Component<PodcastListItemProps> {
-  constructor(props: Readonly<PodcastListItemProps>) {
-    super(props);
+export default function PodcastListItem (props: PodcastListItemProps) {
+
+  const navigation = useNavigation();
+  const { data: { Title, Thumb } } = props;
+
+  function _navigateToPlayScreen() {
+    console.log("clicked podcast");
+    const { data } = props;
+
+    navigation.navigate('PodcastPlayScreen', { podcast: data })
   }
 
-  render() {
-    const { data: { Title } } = this.props;
-
-    return (
-      <TouchableWithoutFeedback onPress={() => {}}>
-        <View style={styles.container}>
-          <Image style={styles.thumb} source={{uri: this.props.data.Thumb}} />
-          <View style={styles.desc}>
-            <Text style={styles.title}>{Title.split(':')[0]}</Text>
-            <Text style={styles.subTitle} numberOfLines={1}>{Title.split(':')[1].trim()}</Text>
-          </View>
-          <View style={styles.arrow}>
-            <Ionicons name="md-triangle-outline" size={24} color="#2CAF4D" style={{transform: [{ rotate: "90deg" }]}} />
-          </View>
+  return (
+    <TouchableHighlight onPress={() => _navigateToPlayScreen()}>
+      <View style={styles.container}>
+        <Image style={styles.thumb} source={{uri: Thumb}} />
+        <View style={styles.desc}>
+          <Text style={styles.title}>{Title.split(':')[0]}</Text>
+          <Text style={styles.subTitle} numberOfLines={1}>{Title.split(':')[1].trim()}</Text>
         </View>
-      </TouchableWithoutFeedback>
-    );
-  }
+        <View style={styles.arrow}>
+          <Ionicons name="md-triangle-outline" size={24} color="#2CAF4D" style={{transform: [{ rotate: "90deg" }]}} />
+        </View>
+      </View>
+    </TouchableHighlight>
+  );
 }
 
 const styles = StyleSheet.create({

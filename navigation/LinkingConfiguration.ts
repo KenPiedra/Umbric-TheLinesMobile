@@ -46,6 +46,11 @@ export default {
               PodcastScreen: 'podcast',
             },
           },
+          PodcastPlay: {
+            screens: {
+              PodcastPlayScreen: 'podcastplay',
+            },
+          },
         },
       },
       NotFound: '*',
