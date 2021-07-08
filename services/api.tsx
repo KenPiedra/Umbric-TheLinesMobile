@@ -3,6 +3,11 @@ import { Game, League } from '../types';
 import { firebase } from '../firebase/database';
 import { NewsItemData } from '../types/News';
 
+// Initialize firebase connection
+console.log('Connecting to Firebase ref');
+firebase.default.database().ref('news/News');
+console.log('done');
+
 export const getNewsCategories = (): Promise<Array<any>> => {
   // Use following data temporary
   const categories = [
