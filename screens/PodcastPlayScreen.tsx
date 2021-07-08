@@ -13,7 +13,7 @@ export default function PodcastPlayScreen(props: PodcastPlayProps) {
 
   return (
     <View style={styles.container}>
-      <Text>Hello world</Text>
+      <Text>Coming Soon</Text>
     </View>
   );
 }

@@ -57,3 +57,9 @@ export const authLoginUser = (username: string, password: string) => {
       })
     }
 }
+
+export const authLoginWithTwitter = () => {
+  return (dispatch: any) => {
+    dispatch(authLoginUserSuccess('testToken'))
+  }
+}
