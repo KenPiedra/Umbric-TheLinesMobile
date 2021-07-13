@@ -58,8 +58,8 @@ export const authLoginUser = (username: string, password: string) => {
     }
 }
 
-export const authLoginWithTwitter = () => {
+export const authLoginWithTwitter = (token: string) => {
   return (dispatch: any) => {
-    dispatch(authLoginUserSuccess('testToken'))
+    dispatch(authLoginUserSuccess(token))
   }
 }

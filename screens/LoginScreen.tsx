@@ -6,10 +6,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Text, View } from '../components/Themed';
 import { authLoginWithTwitter } from '../actions/authActions'
 
-// const { RNTwitterSignIn } = NativeModules;
+const { RNTwitterSignIn } = NativeModules;
+
 const API_KEY = {
-  TWITTER_API_KEY: "AnruNLI7G01Ps4CQ09FIk8apl",
-  TWITTER_SECRET_KEY: "QwxScWKOJyR7fTDxtXbkAwT3hlWU0ibwa96sHe2viKTvsHglMA"
+  TWITTER_API_KEY: "h9PUP3dScz8aZ1oHFw4u1iq5o",
+  TWITTER_SECRET_KEY: "eJQk4kDoU29pzCX5c3wfN2vlfTVb1KTgAQMItycVhHk3sfEkfE"
 }
 
 const styles = StyleSheet.create({
@@ -107,15 +108,15 @@ class LoginScreen extends Component<LoginScreenProps> {
   }
 
   _twitterLogin = () => {
-    // RNTwitterSignIn.init(API_KEY.TWITTER_API_KEY, API_KEY.TWITTER_SECRET_KEY)
-    // RNTwitterSignIn.logIn()
-    // .then((loginData: any) => {
-    //   console.log("TwitterLoginData:", loginData);
-    // }).catch((error: any) => {
-    //   console.log("error", error);
-    // })
-    console.log("twitter login...");
-    this.props.authLoginWithTwitter();
+    console.log("Twitter login...");
+    RNTwitterSignIn.init(API_KEY.TWITTER_API_KEY, API_KEY.TWITTER_SECRET_KEY)
+    RNTwitterSignIn.logIn()
+    .then((loginData: any) => {
+      console.log("TwitterLoginData:", loginData);
+      this.props.authLoginWithTwitter(loginData.authToken);
+    }).catch((error: any) => {
+      console.log("TwitterLoginError:", error);
+    })
   }
 
   render () {
@@ -126,7 +127,7 @@ class LoginScreen extends Component<LoginScreenProps> {
           <Text style={styles.helpText}>Enter your username & password to log in</Text>
         </View>
 
-        <View style={styles.fieldWrapper}>
+        {/* <View style={styles.fieldWrapper}>
           <Text style={styles.fieldLabel}>Email</Text>
           <TextInput style={styles.fieldInput} placeholder="Enter Email" />
         </View>
@@ -136,9 +137,10 @@ class LoginScreen extends Component<LoginScreenProps> {
         </View>
         <Pressable style={styles.greenButton} onPress={() => this._twitterLogin()}>
           <Text style={styles.socialButtonText}>Continue</Text>
-        </Pressable>
+        </Pressable> */}
 
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+
         <Pressable style={styles.socialButton} onPress={() => this._twitterLogin()}>
           <FontAwesome name="facebook" size={24} color="#7B8794" />
           <Text style={styles.socialButtonText}>Continue with Facebook</Text>
@@ -157,7 +159,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  authLoginWithTwitter: () => dispatch(authLoginWithTwitter())
+  authLoginWithTwitter: (token: string) => dispatch(authLoginWithTwitter(token))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
