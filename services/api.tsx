@@ -39,7 +39,7 @@ function capitalizeTheFirstLetterOfEachWord(value: string) {
 export const getNews = (categoryId: string, limit: number, timeBefore?: Date): Promise<Array<NewsItemData>> => {
   // Filter by date
   return new Promise((resolve, reject) => {
-    const ref = firebase.default.database().ref('news/News');
+    const ref = firebase.default.database().ref('news');
 
     if (!timeBefore) timeBefore = new Date('9999-12-31T00:00:00');
     let query = ref.endBefore(timeBefore.toISOString().substring(0, 19), 'PostedAtIso');
@@ -53,7 +53,7 @@ export const getNews = (categoryId: string, limit: number, timeBefore?: Date): P
 
     // If categoryId is not set, limit the count to fetch
     if (!categoryId) {
-      query = query.limitToFirst(limit);
+      query = query.limitToLast(limit);
     }
 
     query.once('value', (snap: any) => {
@@ -77,9 +77,10 @@ export const getNews = (categoryId: string, limit: number, timeBefore?: Date): P
 
       // Filter by category id and limit count here
       if (categoryId) {
-        newsData = newsData.slice(0, limit);
+        newsData = newsData.slice(-limit);
       }
 
+      newsData.reverse();
       resolve(newsData);
     }).catch((err: any) => reject(err));
   });
