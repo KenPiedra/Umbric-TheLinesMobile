@@ -20,14 +20,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.naruto5123.TheLines"
+      "bundleIdentifier": "com.thelines.oddsfeed"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.naruto5123.TheLines"
+      "package": "com.thelines.oddsfeed"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
