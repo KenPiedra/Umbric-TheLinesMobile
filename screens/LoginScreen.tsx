@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Pressable, TextInput, NativeModules } from 'react-native';
 import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
+var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
 
 import { Text, View } from '../components/Themed';
 import { authLoginWithTwitter } from '../actions/authActions'
@@ -107,6 +108,11 @@ class LoginScreen extends Component<LoginScreenProps> {
     super(props);
   }
 
+  _facebookLogin = (data: any) => {
+    console.log("Facebook login...");
+
+  }
+
   _twitterLogin = () => {
     console.log("Twitter login...");
     RNTwitterSignIn.init(API_KEY.TWITTER_API_KEY, API_KEY.TWITTER_SECRET_KEY)
@@ -149,6 +155,12 @@ class LoginScreen extends Component<LoginScreenProps> {
           <FontAwesome name="twitter" size={24} color="#7B8794" />
           <Text style={styles.socialButtonText}>Continue with Twitter</Text>
         </Pressable>
+
+        <FBLogin style={{ marginBottom: 10, }}
+          permissions={["email", "user_friends"]}
+          loginBehavior={FBLoginManager.LoginBehaviors.Native}
+          onLogin={(data: any) => this._facebookLogin(data)}
+        />
       </View>
     );
   }
