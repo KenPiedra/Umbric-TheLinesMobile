@@ -14,12 +14,25 @@ import HomeScreen from '../screens/HomeScreen';
 import OddsScreen from '../screens/OddsScreen';
 import NewsScreen from '../screens/NewsScreen';
 import SportsbooksScreen from '../screens/SportsbooksScreen';
-import { BottomTabParamList, HomeParamList, OddsParamList, NewsParamList, SportsbooksParamList } from '../types';
-import { HomeIcon, OddsIcon, NewsIcon, SportsbooksIcon } from '../components/SvgIcons';
+import PodcastScreen from '../screens/PodcastScreen';
+import PodcastPlayScreen from '../screens/PodcastPlayScreen';
+import { BottomTabParamList, HomeParamList, OddsParamList, NewsParamList, SportsbooksParamList, PodcastParamList, PodcastPlayParamList } from '../types';
+import { HomeIcon, OddsIcon, NewsIcon, SportsbooksIcon, PodcastIcon } from '../components/SvgIcons';
+
+const RootStack = createStackNavigator();
+
+export default function RootStackNavigator() {
+  return (
+    <RootStack.Navigator>
+      <RootStack.Screen name="HomeScreen" component={BottomTabNavigator} />
+      <RootStack.Screen name="PodcastPlayScreen" component={PodcastPlayScreen} />
+    </RootStack.Navigator>
+  )
+}
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
 
@@ -72,6 +85,13 @@ export default function BottomTabNavigator() {
         component={SportsbooksNavigator}
         options={{
           tabBarIcon: ({ color }) => <SportsbooksIcon color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Podcast"
+        component={PodcastNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <PodcastIcon color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -133,5 +153,33 @@ function SportsbooksNavigator() {
         options={{ headerTitle: 'Sportsbooks' }}
       />
     </SportsbooksStack.Navigator>
+  );
+}
+
+const PodcastStack = createStackNavigator<PodcastParamList>();
+
+function PodcastNavigator() {
+  return (
+    <PodcastStack.Navigator>
+      <PodcastStack.Screen
+        name="PodcastScreen"
+        component={PodcastScreen}
+        options={{ headerTitle: 'Podcast' }}
+      />
+    </PodcastStack.Navigator>
+  );
+}
+
+const PodcastPlayStack = createStackNavigator<PodcastPlayParamList>();
+
+function PodcastPlayNavigator() {
+  return (
+    <PodcastPlayStack.Navigator>
+      <PodcastPlayStack.Screen
+        name="PodcastPlayScreen"
+        component={PodcastPlayScreen}
+        options={{ headerTitle: 'Podcast' }}
+      />
+    </PodcastPlayStack.Navigator>
   );
 }

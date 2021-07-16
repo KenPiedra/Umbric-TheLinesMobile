@@ -1,5 +1,6 @@
 export type RootStackParamList = {
   Root: undefined;
+  Auth: undefined;
   NotFound: undefined;
 };
 
@@ -8,6 +9,7 @@ export type BottomTabParamList = {
   Odds: undefined;
   News: undefined;
   Sportsbooks: undefined;
+  Podcast: undefined;
 };
 
 export type HomeParamList = {
@@ -24,4 +26,12 @@ export type NewsParamList = {
 
 export type SportsbooksParamList = {
   SportsbooksScreen: undefined;
+};
+
+export type PodcastParamList = {
+  PodcastScreen: undefined;
+};
+
+export type PodcastPlayParamList = {
+  PodcastPlayScreen: { podcast: any };
 };

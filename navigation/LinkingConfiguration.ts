@@ -10,6 +10,15 @@ export default {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
+      Auth: {
+        screens: {
+          Login: {
+            screens: {
+              LoginScreen: 'login',
+            },
+          },
+        }
+      },
       Root: {
         screens: {
           Home: {
@@ -30,6 +39,16 @@ export default {
           Sportsbooks: {
             screens: {
               SportsbooksScreen: 'sportsbooks',
+            },
+          },
+          Podcast: {
+            screens: {
+              PodcastScreen: 'podcast',
+            },
+          },
+          PodcastPlay: {
+            screens: {
+              PodcastPlayScreen: 'podcastplay',
             },
           },
         },
