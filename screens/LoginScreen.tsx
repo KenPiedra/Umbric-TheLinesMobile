@@ -10,8 +10,8 @@ import { authLoginWithTwitter } from '../actions/authActions'
 const { RNTwitterSignIn } = NativeModules;
 
 const API_KEY = {
-  TWITTER_API_KEY: "h9PUP3dScz8aZ1oHFw4u1iq5o",
-  TWITTER_SECRET_KEY: "eJQk4kDoU29pzCX5c3wfN2vlfTVb1KTgAQMItycVhHk3sfEkfE"
+  TWITTER_API_KEY: "LEt5eIRVV9jqfHVxWJGJot8q8",
+  TWITTER_SECRET_KEY: "qiDnV8FJgINb70vF7h6GLf6GCQYe830TiFZX4LxO8EcG8dwSYi"
 }
 
 const styles = StyleSheet.create({
