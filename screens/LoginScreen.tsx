@@ -125,6 +125,11 @@ class LoginScreen extends Component<LoginScreenProps> {
     })
   }
 
+  _continueLogin = () => {
+    console.log("Skip login...");
+    this.props.authLoginWithTwitter("authFakeToken");
+  }
+
   render () {
     return (
       <View style={styles.container}>
@@ -154,6 +159,10 @@ class LoginScreen extends Component<LoginScreenProps> {
         <Pressable style={styles.socialButton} onPress={() => this._twitterLogin()}>
           <FontAwesome name="twitter" size={24} color="#7B8794" />
           <Text style={styles.socialButtonText}>Continue with Twitter</Text>
+        </Pressable>
+
+        <Pressable style={styles.greenButton} onPress={() => this._continueLogin()}>
+          <Text style={styles.socialButtonText}>Continue</Text>
         </Pressable>
 
       </View>
