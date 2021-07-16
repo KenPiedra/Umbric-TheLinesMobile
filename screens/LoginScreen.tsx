@@ -156,11 +156,6 @@ class LoginScreen extends Component<LoginScreenProps> {
           <Text style={styles.socialButtonText}>Continue with Twitter</Text>
         </Pressable>
 
-        <FBLogin style={{ marginBottom: 10, }}
-          permissions={["email", "user_friends"]}
-          loginBehavior={FBLoginManager.LoginBehaviors.Native}
-          onLogin={(data: any) => this._facebookLogin(data)}
-        />
       </View>
     );
   }

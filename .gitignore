@@ -14,3 +14,5 @@ web-build/
 
 # Configuration
 firebase/config.tsx
+
+yarn.lock
