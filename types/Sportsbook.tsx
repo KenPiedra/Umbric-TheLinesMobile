@@ -1,4 +1,17 @@
-export type Sportsbook = {
-  Name: string,
-  Link: string,
+export type SportsbookItemData = {
+  ID: number,
+  title: string,
+  sportsdata_id: number,
+  affiliate_link: string,
+  bonus_details: string,
+  bonus_text: string,
+  bottom_text: string,
+  button_text: string,
+  list_items: Array<string>,
+  logo: string,
+  logo_text: string,
+  promo_code: string,
+  promo_text: string,
+  review_title: string,
+  review_link: string,
 };

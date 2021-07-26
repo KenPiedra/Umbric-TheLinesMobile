@@ -11,9 +11,8 @@ import { connect } from 'react-redux';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import LoginScreen from '../screens/LoginScreen';
-import PodcastPlayScreen from '../screens/PodcastPlayScreen';
 import { RootStackParamList } from '../types';
-import RootStackNavigator from './BottomTabNavigator';
+import RootStackNavigator from './RootNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
 // A root stack navigator is often used for displaying modals on top of all other content

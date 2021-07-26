@@ -1,30 +1,105 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
+import SportsbookListItem from '../components/SportsbookListItem';
+import HamburgerIcon from '../components/HamburgerIcon';
+import * as API from '../services/api';
 
-export default function SportbooksScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sportbooks</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-    </View>
-  );
+export default class SportsbooksScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Welcome',
+    headerLeft: <HamburgerIcon />
+  };
+
+  state = {
+    data: [],
+    error: null,
+    loading: true,
+    loadingMore: false,
+    noMoreLoad: false,
+    refreshing: false,
+  };
+
+  _fetchSportsbooks = () => {
+    const ItemsToLoad = 10;
+    API.getSportsBooks(ItemsToLoad)
+      .then((items) => {
+        let data = this.state.refreshing ? items : [...this.state.data, ...items];
+        this.setState({
+          data: data,
+          noMoreLoad: items.length < ItemsToLoad
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        this.setState({
+          loading: false,
+          loadingMore: false,
+          refreshing: false,
+        });
+      });
+  }
+
+  _handleLoadMore() {
+    if (!this.state.noMoreLoad) {
+      this.setState({loadingMore: true}, () => this._fetchSportsbooks());
+    }
+  }
+
+  _handleRefresh = () => {
+    this.setState(
+      {
+        refreshing: true
+      },
+      () => {
+        this._fetchSportsbooks();
+      }
+    );
+  };
+
+  componentDidMount() {
+    this._fetchSportsbooks();
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <FlatList
+          contentContainerStyle={styles.wrap}
+          data={this.state.data}
+          initialNumToRender={10}
+          renderItem={({item, index}) => <SportsbookListItem key={index} data={item} />}
+          onEndReached={() => this._handleLoadMore()}
+          onEndReachedThreshold={0.5}
+          onRefresh={this._handleRefresh}
+          refreshing={this.state.refreshing}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'stretch',
+    justifyContent: 'flex-start',
+    margin: 0,
+    padding: 16,
   },
   title: {
-    fontSize: 20,
+    fontSize: 32,
     fontWeight: 'bold',
+    marginTop: 16,
+    marginBottom: 30,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  wrap: {
+    // flex: 1,
+    // flexDirection: 'column',
+    // height: '100%',
+    // width: '100%',
   },
 });

@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-
+import { StackScreenProps } from '@react-navigation/stack';
 import { Text, View } from '../components/Themed';
 import NewsListItem from '../components/NewsListItem';
 import ScrollableTabNavigator from '../navigation/ScrollableTabNavigator';
 import * as API from '../services/api';
+import { RootStackParamList } from '../types';
+import { DrawerActions } from '@react-navigation/native';
+
 
 export default class NewsScreen extends React.Component {
   state = {
@@ -89,7 +92,8 @@ export default class NewsScreen extends React.Component {
         <ScrollableTabNavigator onChangeTab={({i}: {i:number}) => this.onCategoryChanged(i)}>
           {this.state.categories.map((category, index) =>
             <FlatList
-              key={index} tabLabel={category.Name}
+              key={index}
+              tabLabel={category.Name}
               contentContainerStyle={styles.news}
               data={this.state.data}
               initialNumToRender={10}

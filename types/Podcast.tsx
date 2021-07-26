@@ -1,0 +1,15 @@
+export type PodcastItemData = {
+  AudioID: string,
+  Title: string,
+  Author: string,
+  ClientID: string,
+  Description: string,
+  DetailLink: string,
+  Duration: number,
+  PostedAtIso: string,
+  Tags: string,
+  TagsList: Array<string>,
+  Categories: Array<string>,
+  PostedAt: Date,
+  Thumb: string,
+};

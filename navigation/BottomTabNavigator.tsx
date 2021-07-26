@@ -15,24 +15,27 @@ import OddsScreen from '../screens/OddsScreen';
 import NewsScreen from '../screens/NewsScreen';
 import SportsbooksScreen from '../screens/SportsbooksScreen';
 import PodcastScreen from '../screens/PodcastScreen';
-import PodcastPlayScreen from '../screens/PodcastPlayScreen';
-import { BottomTabParamList, HomeParamList, OddsParamList, NewsParamList, SportsbooksParamList, PodcastParamList, PodcastPlayParamList } from '../types';
-import { HomeIcon, OddsIcon, NewsIcon, SportsbooksIcon, PodcastIcon } from '../components/SvgIcons';
+import {
+  BottomTabParamList,
+  HomeParamList,
+  OddsParamList,
+  NewsParamList,
+  SportsbooksParamList,
+  PodcastParamList,
+} from '../types';
+import {
+  HomeIcon,
+  OddsIcon,
+  NewsIcon,
+  SportsbooksIcon,
+  PodcastIcon
+} from '../components/SvgIcons';
 
-const RootStack = createStackNavigator();
-
-export default function RootStackNavigator() {
-  return (
-    <RootStack.Navigator>
-      <RootStack.Screen name="HomeScreen" component={BottomTabNavigator} />
-      <RootStack.Screen name="PodcastPlayScreen" component={PodcastPlayScreen} />
-    </RootStack.Navigator>
-  )
-}
+import HamburgerIcon from '../components/HamburgerIcon';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-function BottomTabNavigator() {
+export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
 
@@ -102,7 +105,7 @@ function BottomTabNavigator() {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const HomeStack = createStackNavigator<HomeParamList>();
 
-function HomeNavigator() {
+export function HomeNavigator() {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
@@ -116,7 +119,7 @@ function HomeNavigator() {
 
 const OddsStack = createStackNavigator<OddsParamList>();
 
-function OddsNavigator() {
+export function OddsNavigator() {
   return (
     <OddsStack.Navigator>
       <OddsStack.Screen
@@ -130,13 +133,16 @@ function OddsNavigator() {
 
 const NewsStack = createStackNavigator<NewsParamList>();
 
-function NewsNavigator() {
+export function NewsNavigator() {
   return (
     <NewsStack.Navigator>
       <NewsStack.Screen
         name="NewsScreen"
         component={NewsScreen}
-        options={{ headerTitle: 'News' }}
+        options={{
+          headerTitle: 'News',
+          headerLeft: () => <HamburgerIcon />
+        }}
       />
     </NewsStack.Navigator>
   );
@@ -144,7 +150,7 @@ function NewsNavigator() {
 
 const SportsbooksStack = createStackNavigator<SportsbooksParamList>();
 
-function SportsbooksNavigator() {
+export function SportsbooksNavigator() {
   return (
     <SportsbooksStack.Navigator>
       <SportsbooksStack.Screen
@@ -158,7 +164,7 @@ function SportsbooksNavigator() {
 
 const PodcastStack = createStackNavigator<PodcastParamList>();
 
-function PodcastNavigator() {
+export function PodcastNavigator() {
   return (
     <PodcastStack.Navigator>
       <PodcastStack.Screen
@@ -167,19 +173,5 @@ function PodcastNavigator() {
         options={{ headerTitle: 'Podcast' }}
       />
     </PodcastStack.Navigator>
-  );
-}
-
-const PodcastPlayStack = createStackNavigator<PodcastPlayParamList>();
-
-function PodcastPlayNavigator() {
-  return (
-    <PodcastPlayStack.Navigator>
-      <PodcastPlayStack.Screen
-        name="PodcastPlayScreen"
-        component={PodcastPlayScreen}
-        options={{ headerTitle: 'Podcast' }}
-      />
-    </PodcastPlayStack.Navigator>
   );
 }

@@ -46,8 +46,7 @@ export default function PodcastListItem (props: PodcastListItemProps) {
       <View style={styles.container}>
         <Image style={styles.thumb} source={{uri: Thumb}} />
         <View style={styles.desc}>
-          <Text style={styles.title}>{Title.split(':')[0]}</Text>
-          <Text style={styles.subTitle} numberOfLines={1}>{Title.split(':')[1].trim()}</Text>
+          <Text style={styles.title} numberOfLines={1}>{Title}</Text>
         </View>
         <View style={styles.arrow}>
           <Ionicons name="md-triangle-outline" size={24} color="#2CAF4D" style={{transform: [{ rotate: "90deg" }]}} />
@@ -79,7 +78,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    flex: 1,
     fontSize: 14,
     fontWeight: '400',
     letterSpacing: 0.2,

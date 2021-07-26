@@ -14,35 +14,42 @@ export default class PodcastScreen extends React.Component {
     error: null,
     loading: true,
     loadingMore: false,
+    noMoreLoad: false,
     refreshing: false,
   };
 
-  _fetchPodcast = (lastItemTime?: string) => {
-    let categoryId = this.state.categories[this.state.activeCategory]?.Id;
-    API.getPodcast(categoryId, 10, lastItemTime)
-      .then((newItems) => {
-        let podcastData = this.state.refreshing ? newItems : [...this.state.data, ...newItems];
-        this.setState({data: podcastData});
+  _fetchPodcasts = (lastItemTime?: Date) => {
+    let categoryId = this.state.categories[this.state.activeCategory].Id;
+    const ItemsToLoad = 10;
+    API.getPodcasts(categoryId, ItemsToLoad, lastItemTime)
+      .then((items) => {
+        let newData = this.state.refreshing ? items : [...this.state.data, ...items];
+        this.setState((prevState, nextProps) => ({
+          data: newData,
+          noMoreLoad: items.length < ItemsToLoad
+        }));
       })
       .catch((err) => {
-        // console.error(err);
+        console.error(err);
       })
       .finally(() => {
-        this.setState({
+        this.setState((prevState, nextProps) => ({
           loading: false,
           loadingMore: false,
           refreshing: false,
-        });
+        }));
       });
   }
 
   _handleLoadMore() {
-    let lastItemTime: any = null;
-    if (this.state.data.length > 0) {
-      lastItemTime = this.state.data.slice(-1)[0]['PostedAtIso'];
-    }
+    if (!this.state.noMoreLoad) {
+      let lastItemTime: any = null;
+      if (this.state.data.length > 0) {
+        lastItemTime = this.state.data.slice(-1)[0]['PostedAt'];
+      }
 
-    this.setState({loadingMore: true}, () => this._fetchPodcast(lastItemTime));
+      this.setState((prevState, nextProps) => ({loadingMore: true}), () => this._fetchPodcasts(lastItemTime));
+    }
   }
 
   _handleRefresh = () => {
@@ -51,23 +58,27 @@ export default class PodcastScreen extends React.Component {
         refreshing: true
       },
       () => {
-        this._fetchPodcast();
+        this._fetchPodcasts();
       }
     );
   };
 
   componentDidMount() {
-    API.getPodcastCategories().then((categories) => {
-      this.setState({ categories });
+    API.getNewsCategories().then((categories) => {
+      this.setState((prevState, nextProps) => ({
+        categories: categories
+      }));
     })
   }
 
   onCategoryChanged(i: number) {
     if (this.state.activeCategory !== i) {
       this.setState(() => ({
-        activeCategory: i
-      }));
-      this._handleRefresh();
+        activeCategory: i,
+        data: []
+      }), () => {
+        this._handleRefresh()
+      });
     }
   }
 
@@ -78,8 +89,9 @@ export default class PodcastScreen extends React.Component {
         <ScrollableTabNavigator onChangeTab={({i}: {i:number}) => this.onCategoryChanged(i)}>
           {this.state.categories.map((category, index) =>
             <FlatList
-              key={index} tabLabel={category.Name}
-              contentContainerStyle={styles.news}
+              key={index}
+              tabLabel={category.Name}
+              contentContainerStyle={styles.wrap}
               data={this.state.data}
               initialNumToRender={10}
               renderItem={({item, index}) => <PodcastListItem key={index} data={item} />}
@@ -108,16 +120,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 30,
   },
-  news: {
+  wrap: {
     // flex: 1,
     // flexDirection: 'column',
     // height: '100%',
     // width: '100%',
-  },
-  newsitem: {
-    borderColor: '#1F2933',
-    borderRadius: 16,
-    borderWidth: 0.5,
-    margin: 8,
   }
 });
