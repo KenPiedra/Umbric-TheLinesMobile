@@ -18,8 +18,4 @@ target 'TheLines' do
   #     flipper_post_install(installer)
   #   end
   # end
-  pod 'react-native-twitter-signin', :path => '../node_modules/react-native-twitter-signin'
-
-  pod 'TwitterKit', '~> 3.4.2'
-
 end
