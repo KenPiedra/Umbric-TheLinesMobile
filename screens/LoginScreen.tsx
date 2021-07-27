@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, Pressable, TextInput, NativeModules } from 'react-native';
 import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
-var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
+// var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
 
 import { Text, View } from '../components/Themed';
 import { authLoginWithTwitter } from '../actions/authActions'
 
-const { RNTwitterSignIn } = NativeModules;
+// const { RNTwitterSignIn } = NativeModules;
 
 const API_KEY = {
   TWITTER_API_KEY: "LEt5eIRVV9jqfHVxWJGJot8q8",
@@ -110,19 +110,20 @@ class LoginScreen extends Component<LoginScreenProps> {
 
   _facebookLogin = (data: any) => {
     console.log("Facebook login...");
-
+    this.props.authLoginWithTwitter("authFakeToken");
   }
 
   _twitterLogin = () => {
     console.log("Twitter login...");
-    RNTwitterSignIn.init(API_KEY.TWITTER_API_KEY, API_KEY.TWITTER_SECRET_KEY)
-    RNTwitterSignIn.logIn()
-    .then((loginData: any) => {
-      console.log("TwitterLoginData:", loginData);
-      this.props.authLoginWithTwitter(loginData.authToken);
-    }).catch((error: any) => {
-      console.log("TwitterLoginError:", error);
-    })
+    this.props.authLoginWithTwitter("authFakeToken");
+    // RNTwitterSignIn.init(API_KEY.TWITTER_API_KEY, API_KEY.TWITTER_SECRET_KEY)
+    // RNTwitterSignIn.logIn()
+    // .then((loginData: any) => {
+    //   console.log("TwitterLoginData:", loginData);
+    //   this.props.authLoginWithTwitter(loginData.authToken);
+    // }).catch((error: any) => {
+    //   console.log("TwitterLoginError:", error);
+    // })
   }
 
   _continueLogin = () => {
