@@ -1,3 +1,5 @@
+import { PodcastItemDataProps } from "../components/PodcastListItem";
+
 export type RootStackParamList = {
   Root: undefined;
   Auth: undefined;
@@ -10,6 +12,12 @@ export type BottomTabParamList = {
   News: undefined;
   Sportsbooks: undefined;
   Podcast: undefined;
+};
+
+export type DrawerStackParmList = {
+  Home: undefined;
+  PodcastPlay: { podcast: PodcastItemDataProps };
+  HowToBet: undefined;
 };
 
 export type HomeParamList = {
