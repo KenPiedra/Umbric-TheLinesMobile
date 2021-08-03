@@ -1,29 +1,31 @@
-import * as React from 'react';
-import { StyleSheet, TouchableHighlight } from 'react-native';
-import { useNavigation, DrawerActions } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
-import { View } from './Themed';
+import * as React from "react";
+import { StyleSheet, TouchableHighlight } from "react-native";
+import { useNavigation, DrawerActions } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import useColorScheme from "../hooks/useColorScheme";
 
+import { View, useThemeColor } from "./Themed";
 
-export default function HamburgerIcon (props: any) {
-
+export default function HamburgerIcon(props: any) {
   const navigation = useNavigation();
 
   function _openDrawer() {
     navigation.dispatch(DrawerActions.openDrawer());
   }
-
+  const theme = useColorScheme();
   return (
     <TouchableHighlight onPress={() => _openDrawer()}>
       <View style={styles.icon}>
-        <Ionicons name="ios-reorder-three" size={24} color="#fff" />
+        <Ionicons
+          name="ios-reorder-three"
+          size={24}
+          color={theme === "dark" ? "#fff" : "#aaa"}
+        />
       </View>
     </TouchableHighlight>
   );
 }
 
 const styles = StyleSheet.create({
-  icon: {
-
-  }
+  icon: {},
 });

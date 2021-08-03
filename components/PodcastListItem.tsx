@@ -30,7 +30,6 @@ export default function PodcastListItem(props: PodcastListItemProps) {
   const {
     data: { Title, Thumb },
   } = props;
-  console.log("###", props);
   function _navigateToPlayScreen() {
     const {
       data: {

@@ -3,12 +3,21 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import React, { useState } from 'react';
-import { ActivityIndicator, Linking, Text as DefaultText, TouchableWithoutFeedback, View as DefaultView } from 'react-native';
-import { default as DefaultDropDownPicker, DropDownPickerProps } from 'react-native-dropdown-picker';
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  Linking,
+  Text as DefaultText,
+  TouchableWithoutFeedback,
+  View as DefaultView,
+} from "react-native";
+import {
+  default as DefaultDropDownPicker,
+  DropDownPickerProps,
+} from "react-native-dropdown-picker";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -30,8 +39,8 @@ type ThemeProps = {
 };
 
 export type PickerProps = ThemeProps & DropDownPickerProps;
-export type TextProps = ThemeProps & DefaultText['props'];
-export type ViewProps = ThemeProps & DefaultView['props'];
+export type TextProps = ThemeProps & DefaultText["props"];
+export type ViewProps = ThemeProps & DefaultView["props"];
 export type TabViewProps = ViewProps & {
   key: string;
   tabLabel: string;
@@ -42,17 +51,19 @@ export type TouchableWithNavigationProps = ViewProps & {
 
 export function DropDownPicker(props: PickerProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor({}, 'text');
-  const color = useThemeColor({}, 'inactive');
+  const backgroundColor = useThemeColor({}, "text");
+  const color = useThemeColor({}, "inactive");
 
   const [open, setOpen] = useState(false);
 
   return (
     <View>
-      <DefaultDropDownPicker open={open} setOpen={setOpen}
-        containerStyle={{borderRadius: 8, borderColor: color}}
-        itemStyle={{justifyContent: 'flex-start'}}
-        style={{color, fontSize: 16, lineHeight: 24, padding: 12}}
+      <DefaultDropDownPicker
+        open={open}
+        setOpen={setOpen}
+        containerStyle={{ borderRadius: 8, borderColor: color }}
+        itemStyle={{ justifyContent: "flex-start" }}
+        style={{ color, fontSize: 16, lineHeight: 24, padding: 12 }}
         {...otherProps}
       />
     </View>
@@ -61,48 +72,62 @@ export function DropDownPicker(props: PickerProps) {
 
 export function LoadingSpinner(props: any) {
   const { lightColor, darkColor, ...otherProps } = props;
-  const color = useThemeColor({}, 'text');
+  const color = useThemeColor({}, "text");
 
   return (
-    <ActivityIndicator color={color} size="large" style={{flex: 1}} {...otherProps} />
+    <ActivityIndicator
+      color={color}
+      size="large"
+      style={{ flex: 1 }}
+      {...otherProps}
+    />
   );
 }
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
 }
 
 export function View(props: ViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background"
+  );
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
 export function TabView(props: TabViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background"
+  );
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
 export function TouchableWithNavigation(props: TouchableWithNavigationProps) {
-  const {url, ...otherProps} = props;
+  const { url, ...otherProps } = props;
 
   return (
-    <TouchableWithoutFeedback {...otherProps} onPress={async () => {
-      console.log(url);
-      if (url) {
-        const supported = await Linking.canOpenURL(url);
-        if (supported) {
-          await Linking.openURL(url);
-        } else {
-          console.error(`Cannot navigate to ${url}`);
+    <TouchableWithoutFeedback
+      {...otherProps}
+      onPress={async () => {
+        console.log(url);
+        if (url) {
+          const supported = await Linking.canOpenURL(url);
+          if (supported) {
+            await Linking.openURL(url);
+          } else {
+            console.error(`Cannot navigate to ${url}`);
+          }
         }
-      }
-    }} />
-  )
+      }}
+    />
+  );
 }
