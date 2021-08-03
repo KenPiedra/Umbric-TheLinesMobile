@@ -111,7 +111,10 @@ export function HomeNavigator() {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Home' }}
+        options={{
+          headerTitle: 'Home',
+          headerLeft: (props) => <HamburgerIcon {...props} />
+        }}
       />
     </HomeStack.Navigator>
   );
@@ -125,7 +128,10 @@ export function OddsNavigator() {
       <OddsStack.Screen
         name="OddsScreen"
         component={OddsScreen}
-        options={{ headerTitle: 'Odds' }}
+        options={{
+          headerTitle: 'Odds',
+          headerLeft: (props) => <HamburgerIcon {...props} />
+        }}
       />
     </OddsStack.Navigator>
   );
@@ -141,7 +147,7 @@ export function NewsNavigator() {
         component={NewsScreen}
         options={{
           headerTitle: 'News',
-          headerLeft: () => <HamburgerIcon />
+          headerLeft: (props) => <HamburgerIcon {...props} />
         }}
       />
     </NewsStack.Navigator>
@@ -156,7 +162,10 @@ export function SportsbooksNavigator() {
       <SportsbooksStack.Screen
         name="SportsbooksScreen"
         component={SportsbooksScreen}
-        options={{ headerTitle: 'Sportsbooks' }}
+        options={{
+          headerTitle: 'Sportsbooks',
+          headerLeft: (props) => <HamburgerIcon {...props} />
+        }}
       />
     </SportsbooksStack.Navigator>
   );
@@ -170,7 +179,10 @@ export function PodcastNavigator() {
       <PodcastStack.Screen
         name="PodcastScreen"
         component={PodcastScreen}
-        options={{ headerTitle: 'Podcast' }}
+        options={{
+          headerTitle: 'Podcast',
+          headerLeft: (props) => <HamburgerIcon {...props} />
+        }}
       />
     </PodcastStack.Navigator>
   );

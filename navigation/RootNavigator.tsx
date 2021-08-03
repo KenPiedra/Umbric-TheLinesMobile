@@ -15,10 +15,11 @@ const RootStack = createStackNavigator();
 
 export default function RootStackNavigator() {
   return (
-    <RootStack.Navigator>
-      <RootStack.Screen name="HomeScreen" component={BottomTabNavigator} />
-      <RootStack.Screen name="PodcastPlayScreen" component={PodcastPlayScreen} />
-      <RootStack.Screen name="Drawer" component={DrawerNavigator} />
-    </RootStack.Navigator>
+    <DrawerNavigator />
+    // <RootStack.Navigator>
+    //   <RootStack.Screen name="Drawer" component={DrawerNavigator} />
+    //   {/* <RootStack.Screen name="HomeScreen" component={BottomTabNavigator} /> */}
+    //   {/* <RootStack.Screen name="PodcastPlayScreen" component={PodcastPlayScreen} /> */}
+    // </RootStack.Navigator>
   )
 }

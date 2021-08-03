@@ -10,7 +10,6 @@ export default function HamburgerIcon (props: any) {
   const navigation = useNavigation();
 
   function _openDrawer() {
-    console.log("clicked hamburger icon. =>", props.navigation);
     navigation.dispatch(DrawerActions.openDrawer());
   }
 

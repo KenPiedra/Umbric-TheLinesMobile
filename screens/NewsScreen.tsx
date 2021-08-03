@@ -9,7 +9,7 @@ import { RootStackParamList } from '../types';
 import { DrawerActions } from '@react-navigation/native';
 
 
-export default class NewsScreen extends React.Component {
+export default class NewsScreen extends React.Component<{navigation: StackScreenProps<RootStackParamList, 'NotFound'>}> {
   state = {
     activeCategory: -1,
     categories: [],
@@ -67,6 +67,7 @@ export default class NewsScreen extends React.Component {
   };
 
   componentDidMount() {
+    console.log(this.props.navigation);
     API.getNewsCategories().then((categories) => {
       this.setState((prevState, nextProps) => ({
         categories: categories

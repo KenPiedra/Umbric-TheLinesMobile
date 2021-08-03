@@ -6,15 +6,11 @@
 import * as React from 'react';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import {
-  HomeNavigator,
-  NewsNavigator,
-  OddsNavigator,
-  SportsbooksNavigator,
-  PodcastNavigator,
-} from './BottomTabNavigator';
+import BottomTabNavigator from './BottomTabNavigator';
 
 import CustomDrawerContent from './CustomDrawerContent';
+import PodcastPlayScreen from '../screens/PodcastPlayScreen';
+import HowToBetScreen from '../screens/HowToBetScreen';
 
 
 const Drawer = createDrawerNavigator();
@@ -22,11 +18,9 @@ const Drawer = createDrawerNavigator();
 export default function DrawerNavigator() {
   return (
     <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="DrawerHome" component={HomeNavigator} />
-      <Drawer.Screen name="DrawerNews" component={NewsNavigator} />
-      <Drawer.Screen name="DrawerOdds" component={OddsNavigator} />
-      <Drawer.Screen name="DrawerSportsbooks" component={SportsbooksNavigator} />
-      <Drawer.Screen name="DrawerPodcast" component={PodcastNavigator} />
+      <Drawer.Screen name="Home" component={BottomTabNavigator} />
+      <Drawer.Screen name="PodcastPlay" component={PodcastPlayScreen} />
+      <Drawer.Screen name="HowToBet" component={HowToBetScreen} />
     </Drawer.Navigator>
   )
 }
