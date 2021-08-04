@@ -47,11 +47,8 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
 
   componentDidMount() {
     this.setState({type: this.state.types[0].value, location: this.state.locations[0].value});
-
-    API.getSportsForOdds().then((leagues) => {
-      this.setState(() => ({leagues: leagues}), () => {
-        this.loadGameData();
-      });
+    this.setState(() => ({leagues: API.getSportsForOdds()}), () => {
+      this.loadGameData();
     });
   }
 

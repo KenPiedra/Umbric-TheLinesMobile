@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1057064596430-aj3boo2tg0lrl9v3c7gbdlp7e1ns0rbk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1057064596430-aj3boo2tg0lrl9v3c7gbdlp7e1ns0rbk</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB5qhztEix1in7V8RJcwqTX8F0dnD1u3dY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1057064596430</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.thelines.oddsfeed</string>
+	<key>PROJECT_ID</key>
+	<string>the-lines-mobile</string>
+	<key>STORAGE_BUCKET</key>
+	<string>the-lines-mobile.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1057064596430:ios:171eaa459311f15d60b19f</string>
+	<key>DATABASE_URL</key>
+	<string>https://the-lines-mobile-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

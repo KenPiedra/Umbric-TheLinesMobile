@@ -69,11 +69,9 @@ export default class PodcastScreen extends React.Component {
   };
 
   componentDidMount() {
-    API.getNewsCategories().then((categories) => {
       this.setState((prevState, nextProps) => ({
-        categories: categories,
+        categories: API.getNewsCategories(),
       }));
-    });
   }
 
   onCategoryChanged(i: number) {
