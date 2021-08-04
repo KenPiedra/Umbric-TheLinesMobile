@@ -14,18 +14,18 @@ export default function HamburgerIcon(props: any) {
   }
   const theme = useColorScheme();
   return (
-    <TouchableHighlight onPress={() => _openDrawer()}>
-      <View style={styles.icon}>
-        <Ionicons
-          name="ios-reorder-three"
-          size={24}
-          color={theme === "dark" ? "#fff" : "#aaa"}
-        />
-      </View>
+    <TouchableHighlight onPress={() => _openDrawer()} style={styles.container}>
+      <Ionicons
+        name="ios-reorder-three"
+        size={30}
+        color={theme === "dark" ? "#fff" : "#aaa"}
+      />
     </TouchableHighlight>
   );
 }
 
 const styles = StyleSheet.create({
-  icon: {},
+  container: {
+    paddingLeft: 8,
+  },
 });
