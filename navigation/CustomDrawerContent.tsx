@@ -13,17 +13,19 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, DrawerActions } from "@react-navigation/native";
 
 function CustomDrawerContent(props: any) {
   const width = useWindowDimensions().width;
   const navigation = useNavigation();
-
+  const _closeDrawer = () => {
+    navigation.dispatch(DrawerActions.closeDrawer());
+  };
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.menuContainer}>
         <View style={styles.menuActions}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={_closeDrawer}>
             <Icon name="close" style={styles.menuItemIcon} size={32} />
           </TouchableOpacity>
         </View>
