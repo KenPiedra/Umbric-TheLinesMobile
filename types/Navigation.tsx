@@ -17,6 +17,10 @@ export type BottomTabParamList = {
 export type DrawerStackParmList = {
   Home: undefined;
   PodcastPlay: { podcast: PodcastItemDataProps };
+  HowToBetStack: undefined;
+};
+
+export type HowToBetStackParmList = {
   HowToBet: undefined;
 };
 
