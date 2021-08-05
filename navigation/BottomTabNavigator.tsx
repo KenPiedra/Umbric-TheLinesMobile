@@ -3,18 +3,18 @@
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { useSafeAreaInsets }  from 'react-native-safe-area-context';
-import * as React from 'react';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import React from "react";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import HomeScreen from '../screens/HomeScreen';
-import OddsScreen from '../screens/OddsScreen';
-import NewsScreen from '../screens/NewsScreen';
-import SportsbooksScreen from '../screens/SportsbooksScreen';
-import PodcastScreen from '../screens/PodcastScreen';
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import HomeScreen from "../screens/HomeScreen";
+import OddsScreen from "../screens/OddsScreen";
+import NewsScreen from "../screens/NewsScreen";
+import SportsbooksScreen from "../screens/SportsbooksScreen";
+import PodcastScreen from "../screens/PodcastScreen";
 import {
   BottomTabParamList,
   HomeParamList,
@@ -22,16 +22,17 @@ import {
   NewsParamList,
   SportsbooksParamList,
   PodcastParamList,
-} from '../types';
+} from "../types";
 import {
   HomeIcon,
   OddsIcon,
   NewsIcon,
   SportsbooksIcon,
-  PodcastIcon
-} from '../components/SvgIcons';
+  PodcastIcon,
+} from "../components/SvgIcons";
 
-import HamburgerIcon from '../components/HamburgerIcon';
+import HamburgerIcon from "../components/HamburgerIcon";
+import { ViewProps } from "react-native";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -48,7 +49,7 @@ export default function BottomTabNavigator() {
         iconStyle: {
           width: 32,
           height: 32,
-          margin: 1
+          margin: 1,
         },
         labelStyle: {
           fontSize: 12,
@@ -56,12 +57,13 @@ export default function BottomTabNavigator() {
         },
         tabStyle: {
           marginTop: 16,
-          marginBottom: 16
+          marginBottom: 16,
         },
         style: {
           height: 81 + insets.bottom,
-        }
-      }}>
+        },
+      }}
+    >
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
@@ -112,8 +114,8 @@ export function HomeNavigator() {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          headerTitle: 'Home',
-          headerLeft: (props) => <HamburgerIcon {...props} />
+          headerTitle: "Home",
+          headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
       />
     </HomeStack.Navigator>
@@ -129,8 +131,8 @@ export function OddsNavigator() {
         name="OddsScreen"
         component={OddsScreen}
         options={{
-          headerTitle: 'Odds',
-          headerLeft: (props) => <HamburgerIcon {...props} />
+          headerTitle: "Odds",
+          headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
       />
     </OddsStack.Navigator>
@@ -146,8 +148,8 @@ export function NewsNavigator() {
         name="NewsScreen"
         component={NewsScreen}
         options={{
-          headerTitle: 'News',
-          headerLeft: (props) => <HamburgerIcon {...props} />
+          headerTitle: "News",
+          headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
       />
     </NewsStack.Navigator>
@@ -163,8 +165,8 @@ export function SportsbooksNavigator() {
         name="SportsbooksScreen"
         component={SportsbooksScreen}
         options={{
-          headerTitle: 'Sportsbooks',
-          headerLeft: (props) => <HamburgerIcon {...props} />
+          headerTitle: "Sportsbooks",
+          headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
       />
     </SportsbooksStack.Navigator>
@@ -180,8 +182,8 @@ export function PodcastNavigator() {
         name="PodcastScreen"
         component={PodcastScreen}
         options={{
-          headerTitle: 'Podcast',
-          headerLeft: (props) => <HamburgerIcon {...props} />
+          headerTitle: "Podcast",
+          headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
       />
     </PodcastStack.Navigator>

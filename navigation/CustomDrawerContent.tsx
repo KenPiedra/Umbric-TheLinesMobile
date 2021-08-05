@@ -1,12 +1,11 @@
 import * as React from "react";
 import {
-  View,
   StyleSheet,
   useWindowDimensions,
   TouchableOpacity,
-  Text,
   Image,
 } from "react-native";
+import { View, Text } from "../components/Themed";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import {
   DrawerContentScrollView,
@@ -213,7 +212,6 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   menuItemText: {
-    color: "#fff",
     fontSize: 16,
     fontWeight: "600",
   },

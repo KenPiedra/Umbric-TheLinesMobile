@@ -1,41 +1,63 @@
-import * as React from 'react';
-import { StyleSheet, ViewProps } from 'react-native';
+import * as React from "react";
+import { StyleSheet, ViewProps } from "react-native";
 
-import { Text, TabView, View, DropDownPicker, LoadingSpinner } from '../components/Themed';
-import OddsBoardComponent from '../components/OddsBoardComponent';
-import ScrollableTabNavigator from '../navigation/ScrollableTabNavigator';
-import { Game, League } from '../types';
-import * as API from '../services/api';
+import {
+  Text,
+  TabView,
+  View,
+  DropDownPicker,
+  LoadingSpinner,
+} from "../components/Themed";
+import OddsBoardComponent from "../components/OddsBoardComponent";
+import ScrollableTabNavigator from "../navigation/ScrollableTabNavigator";
+import { Game, League } from "../types";
+import * as API from "../services/api";
 
 interface OddsScreenState {
-  activeLeague: number,
-  leagues: League[],
-  oddsBoardData: Game[],
-  isLoadingGameData: boolean,
-  type: any,
-  types: any[],
-  location: any,
-  locations: any[],
-};
+  activeLeague: number;
+  leagues: League[];
+  oddsBoardData: Game[];
+  isLoadingGameData: boolean;
+  type: any;
+  types: any[];
+  location: any;
+  locations: any[];
+}
 
 const BET_MARKETS = [
-  {label: 'Spread', value: 'Spread'},
-  {label: 'Money Line', value: 'MoneyLine'},
-  {label: 'Over/Under', value: 'OverUnder'},
+  { label: "Spread", value: "Spread" },
+  { label: "Money Line", value: "MoneyLine" },
+  { label: "Over/Under", value: "OverUnder" },
 ];
 
-const BET_LOCATIONS = ['CO', 'DC', 'IA', 'IL', 'IN', 'MI', 'NJ', 'NV', 'PA', 'TN', 'VA', 'WV'];
+const BET_LOCATIONS = [
+  "CO",
+  "DC",
+  "IA",
+  "IL",
+  "IN",
+  "MI",
+  "NJ",
+  "NV",
+  "PA",
+  "TN",
+  "VA",
+  "WV",
+];
 
 export default class OddsScreen extends React.Component<{}, OddsScreenState> {
   state: Readonly<OddsScreenState> = {
-    activeLeague: 0,
+    activeLeague: this.props.route.params.index,
     leagues: [],
     oddsBoardData: [],
     isLoadingGameData: false,
     type: null,
     types: BET_MARKETS,
     location: null,
-    locations: BET_LOCATIONS.map((location: string) => ({label: location, value: location})),
+    locations: BET_LOCATIONS.map((location: string) => ({
+      label: location,
+      value: location,
+    })),
   };
 
   constructor(props: ViewProps) {
@@ -46,34 +68,48 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
   }
 
   componentDidMount() {
-    this.setState({type: this.state.types[0].value, location: this.state.locations[0].value});
-    this.setState(() => ({leagues: API.getSportsForOdds()}), () => {
-      this.loadGameData();
+    this.setState({
+      type: this.state.types[0].value,
+      location: this.state.locations[0].value,
     });
+    this.setState(
+      () => ({ leagues: API.getSportsForOdds() }),
+      () => {
+        this.loadGameData();
+      }
+    );
+  }
+
+  componentDidUpdate() {
+    console.log("^^^^", this.props.route.params.index);
+    this.onLeagueChanged(this.props.route.params.index);
   }
 
   onLeagueChanged(i: number) {
     if (this.state.activeLeague !== i) {
-      this.setState(() => ({activeLeague: i}), () => {
-        this.loadGameData();
-      });
+      this.setState(
+        () => ({ activeLeague: i }),
+        () => {
+          this.loadGameData();
+        }
+      );
     }
   }
 
   setType(callback: any) {
     this.setState((state: any) => ({
-      type: callback(state.type)
+      type: callback(state.type),
     }));
   }
 
   setLocation(callback: any) {
     this.setState((state: any) => ({
-      location: callback(state.location)
+      location: callback(state.location),
     }));
   }
 
   loadGameData() {
-    this.setState(() => ({isLoadingGameData: true, oddsBoardData: []}));
+    this.setState(() => ({ isLoadingGameData: true, oddsBoardData: [] }));
 
     // Check league name
     if (this.state.activeLeague >= this.state.leagues.length) return;
@@ -81,14 +117,17 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
 
     // Retrieve game data for selected leage
     console.log(`Retrieving game odds feed for ${leagueName}`);
-    API.getOddsData(leagueName).then((data: Game[]) => {
-      this.setState(() => ({oddsBoardData: data}));
-    }).catch(err => {
-      console.error(err);
-      this.setState(() => ({oddsBoardData: []}));
-    }).finally(() => {
-      this.setState(() => ({isLoadingGameData: false}));
-    });
+    API.getOddsData(leagueName)
+      .then((data: Game[]) => {
+        this.setState(() => ({ oddsBoardData: data }));
+      })
+      .catch((err) => {
+        console.error(err);
+        this.setState(() => ({ oddsBoardData: [] }));
+      })
+      .finally(() => {
+        this.setState(() => ({ isLoadingGameData: false }));
+      });
   }
 
   render() {
@@ -96,34 +135,47 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
 
     return (
       <View style={styles.container}>
-        <ScrollableTabNavigator onChangeTab={({i}: {i:number}) => this.onLeagueChanged(i)}>
-          {state.leagues.map((league, index) =>
-            <TabView style={styles.view} key={league.Value} tabLabel={league.Name}>
+        <ScrollableTabNavigator
+          initialPage={this.props.route.params.index}
+          onChangeTab={({ i }: { i: number }) => this.onLeagueChanged(i)}
+        >
+          {state.leagues.map((league, index) => (
+            <TabView
+              style={styles.view}
+              key={league.Value}
+              tabLabel={league.Name}
+            >
               <View style={styles.selectGroup}>
                 <View style={styles.select}>
                   <Text style={styles.selectLabel}>Type</Text>
                   <DropDownPicker
                     value={state.type}
                     items={state.types}
-                    setValue={this.setType} />
+                    setValue={this.setType}
+                  />
                 </View>
-                <View style={{width: 28}} />
+                <View style={{ width: 28 }} />
                 <View style={styles.select}>
                   <Text style={styles.selectLabel}>State</Text>
                   <DropDownPicker
                     value={state.location}
                     items={state.locations}
-                    setValue={this.setLocation} />
+                    setValue={this.setLocation}
+                  />
                 </View>
               </View>
               {state.isLoadingGameData ? (
                 <LoadingSpinner />
               ) : (
-                <OddsBoardComponent data={state.oddsBoardData}
-                  league={league.Name} market={state.type} location={state.location} />
+                <OddsBoardComponent
+                  data={state.oddsBoardData}
+                  league={league.Name}
+                  market={state.type}
+                  location={state.location}
+                />
               )}
             </TabView>
-          )}
+          ))}
         </ScrollableTabNavigator>
       </View>
     );
@@ -138,11 +190,11 @@ const styles = StyleSheet.create({
   },
   view: {
     flex: 1,
-    justifyContent: 'flex-start',
-    overflow: 'scroll',
+    justifyContent: "flex-start",
+    overflow: "scroll",
   },
   selectGroup: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingTop: 8,
     paddingBottom: 8,
     zIndex: 10,
@@ -153,14 +205,12 @@ const styles = StyleSheet.create({
   selectLabel: {
     fontSize: 12,
     lineHeight: 24,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
-  selectPicker: {
-  },
-  table: {
-  },
+  selectPicker: {},
+  table: {},
   tableWrapper: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   columnHeader: {
     paddingTop: 8,
@@ -169,12 +219,12 @@ const styles = StyleSheet.create({
     paddingRight: 24,
   },
   columnHeaderText: {
-    fontWeight: '800',
+    fontWeight: "800",
     fontSize: 12,
     lineHeight: 12,
     letterSpacing: 1.5,
     paddingTop: 4,
     paddingBottom: 4,
-    textTransform: 'uppercase',
-  }
+    textTransform: "uppercase",
+  },
 });
