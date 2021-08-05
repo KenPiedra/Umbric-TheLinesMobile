@@ -13,10 +13,7 @@ const EventExploreItem = (props: EventExploreItemProps) => {
   const { item } = props;
   return (
     <DefaultView style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require("../assets/images/Art.png")}
-      />
+      <Image style={styles.image} source={item.Image} />
       <Text style={styles.text}>{item.Name}</Text>
     </DefaultView>
   );

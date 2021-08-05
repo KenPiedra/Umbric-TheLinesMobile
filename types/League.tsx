@@ -1,4 +1,7 @@
+import { ImageSourcePropType } from "react-native";
+
 export type League = {
-  Name: string,
-  Value: string,
+  Name: string;
+  Value: string;
+  Image: ImageSourcePropType;
 };

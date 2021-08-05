@@ -1,17 +1,19 @@
 //import liraries
 import React, { Component } from "react";
 import { StyleSheet, Image, View as DefaultView } from "react-native";
+import { NewsItemData } from "../types/News";
 import { View, Text, useThemeColor } from "./Themed";
 
+type NewExploreItemProps = {
+  item: NewsItemData;
+};
 // create a component
-const NewsExploreItem = () => {
+const NewsExploreItem = (props: NewExploreItemProps) => {
+  const { item } = props;
   return (
     <DefaultView style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require("../assets/images/Art.png")}
-      />
-      <Text style={styles.text}>Article Name</Text>
+      <Image style={styles.image} source={{ uri: item.Thumb }} />
+      <Text style={styles.text}>{item.Author}</Text>
     </DefaultView>
   );
 };

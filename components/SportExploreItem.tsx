@@ -1,22 +1,24 @@
 //import liraries
 import React, { Component } from "react";
 import { StyleSheet, Image } from "react-native";
+import { League } from "../types";
 
 import { View, Text, useThemeColor } from "./Themed";
-
+type SportExploreItemProps = {
+  item: League;
+};
 // create a component
-const SportExploreItem = () => {
+const SportExploreItem = (props: SportExploreItemProps) => {
+  const { item } = props;
   const colorMain = useThemeColor({}, "text");
-  return (
-    <View style={[styles.container, { borderColor: colorMain }]}>
-      <Image
-        source={require("../assets/images/Art.png")}
-        style={styles.image}
-        resizeMode="contain"
-      />
-      <Text style={styles.text}>PGA Tour</Text>
-    </View>
-  );
+  if (item) {
+    return (
+      <View style={[styles.container, { borderColor: colorMain }]}>
+        <Image source={item.Image} style={styles.image} resizeMode="contain" />
+        <Text style={styles.text}>{item.Name}</Text>
+      </View>
+    );
+  } else return null;
 };
 
 // define your styles

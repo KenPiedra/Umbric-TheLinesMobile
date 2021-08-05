@@ -9,7 +9,7 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   Home: undefined;
   Odds: { screen: string; params: { index: number } };
-  News: undefined;
+  News: { screen: string; params: { index: number } };
   Sportsbooks: undefined;
   Podcast: undefined;
 };

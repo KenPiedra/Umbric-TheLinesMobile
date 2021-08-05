@@ -85,15 +85,24 @@ export const getNews = (
 };
 
 export const getSportsForOdds = (): Array<League> => {
+  const MLB = require("../assets/images/MLB.png");
+  const NBA = require("../assets/images/NBA.png");
+  const NFL = require("../assets/images/NFL.png");
+  const NHL = require("../assets/images/NHL.png");
+  const CFB = require("../assets/images/CFB.png");
+  const GOLF = require("../assets/images/GOLF.png");
+  const EPL = require("../assets/images/EPL.png");
+  const MLS = require("../assets/images/MLS.png");
+
   const categories = [
-    { Value: "BBM", Name: "MLB" },
-    { Value: "BKP", Name: "NBA" },
-    { Value: "FBP", Name: "NFL" },
-    { Value: "HKN", Name: "NHL" },
-    { Value: "BKC", Name: "NCAAB" },
-    { Value: "FBC", Name: "NCAAF" },
-    { Value: "SOE", Name: "EPL" },
-    { Value: "SOM", Name: "MLS" },
+    { Value: "BBM", Name: "MLB", Image: MLB },
+    { Value: "BKP", Name: "NBA", Image: NBA },
+    { Value: "FBP", Name: "NFL", Image: NFL },
+    { Value: "HKN", Name: "NHL", Image: NHL },
+    { Value: "BKC", Name: "NCAAB", Image: GOLF },
+    { Value: "FBC", Name: "NCAAF", Image: CFB },
+    { Value: "SOE", Name: "EPL", Image: EPL },
+    { Value: "SOM", Name: "MLS", Image: MLS },
   ];
   return categories;
 };
