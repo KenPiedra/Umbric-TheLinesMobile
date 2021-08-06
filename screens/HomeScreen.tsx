@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
-import { Text, View } from "../components/Themed";
+import { Text, View, useThemeColor } from "../components/Themed";
 import SearchBox from "../components/Searchbox";
 import SportExploreItem from "../components/SportExploreItem";
 import EventExploreItem from "../components/EventExploreItem";
@@ -17,6 +17,7 @@ export default function HomeScreen() {
   const leagues = API.getSportsForOdds();
   const [trendingNews, settrendingNews] = useState<NewsItemData[]>([]);
   const [sportData, setsportData] = useState<League[]>([]);
+  const bgcolor = useThemeColor({}, "background");
   const { navigate } =
     useNavigation<BottomTabNavigationProp<BottomTabParamList>>();
 
@@ -30,7 +31,7 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { backgroundColor: bgcolor }]}>
       <Text style={styles.explore}>Explore</Text>
       <SearchBox placeholder="Search The Lines" />
       <Text style={styles.sport}>Sports</Text>
@@ -74,6 +75,7 @@ export default function HomeScreen() {
           );
         })}
       </ScrollView>
+      <View style={{ height: 20 }} />
     </ScrollView>
   );
 }
@@ -82,7 +84,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    marginBottom: 20,
   },
   explore: {
     fontSize: 32,
