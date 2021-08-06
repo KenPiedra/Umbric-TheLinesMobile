@@ -134,6 +134,7 @@ export function OddsNavigator() {
           headerTitle: "Odds",
           headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
+        initialParams={{ index: 0 }}
       />
     </OddsStack.Navigator>
   );

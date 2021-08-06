@@ -100,6 +100,18 @@ function CustomDrawerContent(props: any) {
               />
             </View>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("StateBettingGuide")}
+          >
+            <View style={styles.menuItem}>
+              <Text style={styles.menuItemText}>State Betting Guides</Text>
+              <Icon
+                name="chevron-right"
+                style={styles.menuItemIcon}
+                size={24}
+              />
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>US State Guides</Text>

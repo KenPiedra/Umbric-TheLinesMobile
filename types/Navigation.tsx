@@ -24,6 +24,10 @@ export type HowToBetStackParmList = {
   HowToBet: undefined;
 };
 
+export type StateBetGuideParmList = {
+  StateBetGuide: undefined;
+};
+
 export type HomeParamList = {
   HomeScreen: undefined;
 };

@@ -99,10 +99,11 @@ export const getSportsForOdds = (): Array<League> => {
     { Value: "BKP", Name: "NBA", Image: NBA },
     { Value: "FBP", Name: "NFL", Image: NFL },
     { Value: "HKN", Name: "NHL", Image: NHL },
-    { Value: "BKC", Name: "NCAAB", Image: GOLF },
+    { Value: "BKC", Name: "NCAAB", Image: NBA },
     { Value: "FBC", Name: "NCAAF", Image: CFB },
     { Value: "SOE", Name: "EPL", Image: EPL },
     { Value: "SOM", Name: "MLS", Image: MLS },
+    { Value: "CFB", Name: "CFB", Image: CFB },
   ];
   return categories;
 };
