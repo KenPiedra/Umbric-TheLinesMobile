@@ -28,6 +28,11 @@ export type StateBetGuideParmList = {
   StateBetGuide: undefined;
 };
 
+export type CustomDrawerStackParamList = {
+  CustomDrawerContent: undefined;
+  BettingGuideStates: undefined;
+};
+
 export type HomeParamList = {
   HomeScreen: undefined;
 };

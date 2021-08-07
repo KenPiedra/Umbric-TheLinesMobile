@@ -5,16 +5,14 @@
 
 import * as React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import {
-  createStackNavigator,
-  StackNavigationProp,
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import BottomTabNavigator from "./BottomTabNavigator";
-import CustomDrawerContent from "./CustomDrawerContent";
 import PodcastPlayScreen from "../screens/PodcastPlayScreen";
 import HowToBetScreen from "../screens/HowToBetScreen";
 import StateBettingGuideScreen from "../screens/StateBettingGuideScreen";
+import CustomDrawerContent from "../screens/DrawerMenus";
+
 import { HowToBetStackParmList, StateBetGuideParmList } from "../types";
 import HamburgerIcon from "../components/HamburgerIcon";
 
@@ -55,7 +53,9 @@ const StateBetGuideNavigator = () => {
 export default function DrawerNavigator() {
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerContent={() => {
+        return <CustomDrawerContent />;
+      }}
     >
       <Drawer.Screen name="Home" component={BottomTabNavigator} />
       <Drawer.Screen name="PodcastPlay" component={PodcastPlayScreen} />

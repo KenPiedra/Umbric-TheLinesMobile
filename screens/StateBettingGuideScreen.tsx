@@ -60,6 +60,7 @@ const StateBettingGuide = () => {
           {[0, 1, 2, 3, 4, 5, 6, 7].map((item, index) => {
             return (
               <TouchableOpacity
+                key={index}
                 style={[styles.touchable, { borderBottomColor: color }]}
               >
                 <Text style={styles.touchableText}>

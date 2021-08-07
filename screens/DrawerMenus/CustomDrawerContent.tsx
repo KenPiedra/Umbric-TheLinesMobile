@@ -5,16 +5,16 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { View, Text } from "../components/Themed";
+import { View, Text } from "../../components/Themed";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
+import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useNavigation, DrawerActions } from "@react-navigation/native";
 
-function CustomDrawerContent(props: any) {
+type CustomDrawerContentProps = {
+  handleClick: (i: number) => void;
+};
+
+function CustomDrawerContent(props: CustomDrawerContentProps) {
   const width = useWindowDimensions().width;
   const navigation = useNavigation();
   const _closeDrawer = () => {
@@ -100,21 +100,9 @@ function CustomDrawerContent(props: any) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("StateBettingGuide")}
-          >
+          <TouchableOpacity onPress={() => props.handleClick(5)}>
             <View style={styles.menuItem}>
-              <Text style={styles.menuItemText}>State Betting Guides</Text>
-              <Icon
-                name="chevron-right"
-                style={styles.menuItemIcon}
-                size={24}
-              />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.menuItem}>
-              <Text style={styles.menuItemText}>US State Guides</Text>
+              <Text style={styles.menuItemText}>US State Guide</Text>
               <Icon
                 name="chevron-right"
                 style={styles.menuItemIcon}

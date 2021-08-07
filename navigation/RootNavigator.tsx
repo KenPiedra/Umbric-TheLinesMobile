@@ -3,23 +3,10 @@
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
-import * as React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import * as React from "react";
 
-import BottomTabNavigator from './BottomTabNavigator'
-import DrawerNavigator from './DrawerNavigator'
-import PodcastPlayScreen from '../screens/PodcastPlayScreen';
-
-
-const RootStack = createStackNavigator();
+import DrawerNavigator from "./DrawerNavigator";
 
 export default function RootStackNavigator() {
-  return (
-    <DrawerNavigator />
-    // <RootStack.Navigator>
-    //   <RootStack.Screen name="Drawer" component={DrawerNavigator} />
-    //   {/* <RootStack.Screen name="HomeScreen" component={BottomTabNavigator} /> */}
-    //   {/* <RootStack.Screen name="PodcastPlayScreen" component={PodcastPlayScreen} /> */}
-    // </RootStack.Navigator>
-  )
+  return <DrawerNavigator />;
 }
