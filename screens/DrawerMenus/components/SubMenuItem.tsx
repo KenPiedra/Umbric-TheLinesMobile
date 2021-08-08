@@ -1,24 +1,23 @@
 //import liraries
 import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-
 import { View, useThemeColor, Text } from "../../../components/Themed";
 // create a component
-type MenuItemProps = {
+type SubMenuItemProps = {
   hasNav: boolean;
   title: string;
 };
-const MenuItem = (props: MenuItemProps) => {
+const SubMenuItem = (props: SubMenuItemProps) => {
   const tintColor = useThemeColor({}, "inactive");
   return (
     <TouchableOpacity
       style={[styles.container, { borderBottomColor: tintColor }]}
     >
-      <Text>{props.title}</Text>
-      {props.hasNav && (
-        <Ionicons color={tintColor} size={24} name="chevron-forward" />
-      )}
+      <Text>
+        {"\u2022"}
+        {"  "}
+        {props.title}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -26,13 +25,14 @@ const MenuItem = (props: MenuItemProps) => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    height: 50,
+    paddingHorizontal: 14,
     borderBottomWidth: 1,
+    height: 50,
+    alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
   },
 });
 
 //make this component available to the app
-export default MenuItem;
+export default SubMenuItem;

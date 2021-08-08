@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import CustomDrawerContentScreen from "../../screens/DrawerMenus/CustomDrawerContent";
 import BettingGuideStatesScreen from "../../screens/DrawerMenus/BettingGuideStates";
-
+import NBAScreen from "./NBAScreen";
+import NFLScreen from "./NFLScreen";
 // create a component
 const DrawMain = () => {
   const [index, setindex] = useState(0);
@@ -12,7 +13,9 @@ const DrawMain = () => {
       {index == 0 && (
         <CustomDrawerContentScreen handleClick={(i: number) => setindex(i)} />
       )}
-      {index == 5 && (
+      {index == 1 && <NBAScreen handleBack={() => setindex(0)} />}
+      {index == 2 && <NFLScreen handleBack={() => setindex(0)} />}
+      {index == 6 && (
         <BettingGuideStatesScreen handleBack={() => setindex(0)} />
       )}
     </View>

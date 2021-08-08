@@ -5,32 +5,26 @@ import { StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import { View, useThemeColor, Text } from "../../components/Themed";
 import DrawerHeader from "./components/header";
 import MenuItem from "./components/MenuItem";
+import SubMenuItem from "./components/SubMenuItem";
 
-type BettingGuideStatesProps = {
+type NBAScreenProps = {
   handleBack: () => void;
 };
 // create a component
-const BettingGuideStates = (props: BettingGuideStatesProps) => {
+const NBAScreen = (props: NBAScreenProps) => {
   const bgColor = useThemeColor({}, "background");
   const tintColor = useThemeColor({}, "inactive");
   const backendData = [
-    { name: "DraftKings Sportsbook NJ", hasNav: false },
-    { name: "BetMGM Sportsbook NJ", hasNav: false },
-    { name: "FanDuel Sportsbook NJ", hasNav: false },
-    { name: "SugarHouse Sportsbook NJ", hasNav: false },
-    { name: "Unibet Sportsbook NJ", hasNav: false },
-    { name: "PointsBet Sportsbook NJ", hasNav: false },
-    { name: "WynnBet Sportsbook NJ", hasNav: false },
-    { name: "888 Sports NJ", hasNav: false },
-    { name: "Bet365", hasNav: false },
-    { name: "Borgata Sports", hasNav: false },
-    { name: "Resorts", hasNav: false },
-    { name: "Golden Nugget Sportsbook NJ", hasNav: false },
-    { name: "Caesars Sportsbook NJ", hasNav: false },
-    { name: "Hard Rock", hasNav: false },
-    { name: "TheScore Bet", hasNav: false },
-    { name: "Tipico", hasNav: false },
-    { name: "TwinSpires", hasNav: false },
+    { name: "Futures", hasNav: true },
+    { name: "Power Rankings", hasNav: false },
+    { name: "Game Previews", hasNav: false },
+    { name: "Odds", hasNav: false },
+    { name: "News", hasNav: false },
+  ];
+  const subBackendData = [
+    { name: "NBA Finals", hasNav: false },
+    { name: "MVP", hasNav: false },
+    { name: "Rookie", hasNav: false },
   ];
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -38,14 +32,22 @@ const BettingGuideStates = (props: BettingGuideStatesProps) => {
         <DrawerHeader handleBack={props.handleBack} />
       </View>
       <ScrollView style={[styles.container, { backgroundColor: bgColor }]}>
-        <Text style={[{ color: tintColor }, styles.title]}>
-          US Sports Betting Guides
-        </Text>
+        <Text style={[{ color: tintColor }, styles.title]}>NBA</Text>
         {backendData.map((item, index) => {
           return (
             <MenuItem title={item.name} hasNav={item.hasNav} key={index} />
           );
         })}
+        {/* {subBackendData.map((item, index) => {
+          return (
+            <SubMenuItem title={item.name} hasNav={item.hasNav} key={index} />
+          );
+        })}
+        {backendData.slice(-2).map((item, index) => {
+          return (
+            <MenuItem title={item.name} hasNav={item.hasNav} key={index} />
+          );
+        })} */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -65,4 +67,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default BettingGuideStates;
+export default NBAScreen;

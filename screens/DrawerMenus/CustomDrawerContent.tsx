@@ -44,7 +44,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
 
         <View style={[styles.menuGroup, { paddingTop: 32 }]}>
           <Text style={styles.menuTitle}>Quick Menu</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("News")}>
+          <TouchableOpacity onPress={() => props.handleClick(1)}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>NBA</Text>
               <Icon
@@ -54,7 +54,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("News")}>
+          <TouchableOpacity onPress={() => props.handleClick(2)}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>NFL</Text>
               <Icon
@@ -100,7 +100,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.handleClick(5)}>
+          <TouchableOpacity onPress={() => props.handleClick(6)}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>US State Guide</Text>
               <Icon
