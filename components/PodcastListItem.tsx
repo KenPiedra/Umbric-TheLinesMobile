@@ -6,54 +6,25 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View, ViewProps } from "./Themed";
-
-import { DrawerStackParmList } from "../types";
-
-export interface PodcastItemDataProps {
-  Title: string;
-  Author: string;
-  AuthorLink?: string;
-  Thumb: string;
-  Categories: Array<string>;
-  CategoriesLink?: Object;
-  PostedAtIso: string;
-  DetailLink: string;
-}
+import { PodcastParamList } from "../types";
+import { PodcastItemData } from "../types/Podcast";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 interface PodcastListItemProps extends ViewProps {
-  data: PodcastItemDataProps;
+  data: PodcastItemData;
 }
 
 export default function PodcastListItem(props: PodcastListItemProps) {
-  const { navigate } =
-    useNavigation<DrawerNavigationProp<DrawerStackParmList>>();
+  const { navigate } = useNavigation<StackNavigationProp<PodcastParamList>>();
   const {
     data: { Title, Thumb },
   } = props;
   function _navigateToPlayScreen() {
     const {
-      data: {
-        Title,
-        Author,
-        AuthorLink,
-        Thumb,
-        Categories,
-        CategoriesLink,
-        PostedAtIso,
-        DetailLink,
-      },
+      data: { Title, Author, Thumb, Categories, PostedAtIso, DetailLink },
     } = props;
-    navigate("PodcastPlay", {
-      podcast: {
-        Title,
-        Author,
-        AuthorLink,
-        Thumb,
-        Categories,
-        CategoriesLink,
-        PostedAtIso,
-        DetailLink,
-      },
+    navigate("PodcastPlayScreen", {
+      podcast: props.data,
     });
   }
 

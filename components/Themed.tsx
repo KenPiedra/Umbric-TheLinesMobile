@@ -38,7 +38,6 @@ type ThemeProps = {
   darkColor?: string;
 };
 
-export type PickerProps = ThemeProps & DropDownPickerProps;
 export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
 export type TabViewProps = ViewProps & {
@@ -49,24 +48,23 @@ export type TouchableWithNavigationProps = ViewProps & {
   url: string;
 };
 
-export function DropDownPicker(props: PickerProps) {
-  const { style, lightColor, darkColor, ...otherProps } = props;
+export function DropDownPicker(props: DropDownPickerProps) {
+  const { style, zIndex, ...otherProps } = props;
   const backgroundColor = useThemeColor({}, "text");
   const color = useThemeColor({}, "inactive");
 
   const [open, setOpen] = useState(false);
 
   return (
-    <View>
-      <DefaultDropDownPicker
-        open={open}
-        setOpen={setOpen}
-        containerStyle={{ borderRadius: 8, borderColor: color }}
-        itemStyle={{ justifyContent: "flex-start" }}
-        style={{ color, fontSize: 16, lineHeight: 24, padding: 12 }}
-        {...otherProps}
-      />
-    </View>
+    <DefaultDropDownPicker
+      open={open}
+      setOpen={setOpen}
+      containerStyle={{ borderRadius: 8, borderColor: color }}
+      itemStyle={{ justifyContent: "flex-start" }}
+      style={{ color, fontSize: 16, lineHeight: 24, padding: 12 }}
+      zIndex={zIndex}
+      {...otherProps}
+    />
   );
 }
 

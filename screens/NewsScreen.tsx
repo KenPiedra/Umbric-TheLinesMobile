@@ -6,7 +6,6 @@ import NewsListItem from "../components/NewsListItem";
 import ScrollableTabNavigator from "../navigation/ScrollableTabNavigator";
 import * as API from "../services/api";
 import { RootStackParamList } from "../types";
-import { DrawerActions } from "@react-navigation/native";
 
 export default class NewsScreen extends React.Component<{
   navigation: StackScreenProps<RootStackParamList, "NotFound">;
@@ -53,7 +52,7 @@ export default class NewsScreen extends React.Component<{
       if (this.state.data.length > 0) {
         lastItemTime = this.state.data.slice(-1)[0]["PostedAt"];
       }
-
+      console.log("###", lastItemTime);
       this.setState(
         (prevState, nextProps) => ({ loadingMore: true }),
         () => this._fetchNews(lastItemTime)

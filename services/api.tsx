@@ -5,8 +5,10 @@ import { Game, League } from "../types";
 import { NewsItemData } from "../types/News";
 import { PodcastItemData } from "../types/Podcast";
 import { SportsbookItemData } from "../types/Sportsbook";
+import { NewCategoriesData } from "../types/News";
+import { BettingMarket } from "../types/Future";
 
-export const getNewsCategories = (): Array<Object> => {
+export const getNewsCategories = (): Array<NewCategoriesData> => {
   // Use following data temporary
   const categories = [
     { Id: "", Name: "All" },
@@ -53,7 +55,6 @@ export const getNews = (
         let newsData = Array();
         snap.forEach((child: any) => {
           let val = child.val();
-
           let item: NewsItemData = { ...val };
           item.PostedAt = new Date(val.PostedAtIso);
           item.Categories = Array.isArray(val.TagsList)
@@ -68,7 +69,6 @@ export const getNews = (
           } else if (categoryId && !item.Categories.includes(categoryId)) {
             return;
           }
-
           newsData.push(item);
         });
 
@@ -78,6 +78,7 @@ export const getNews = (
         }
 
         newsData.reverse();
+        console.log("NewData", newsData);
         resolve(newsData);
       })
       .catch((err: any) => reject(err));
@@ -106,6 +107,20 @@ export const getSportsForOdds = (): Array<League> => {
     { Value: "CFB", Name: "CFB", Image: CFB },
   ];
   return categories;
+};
+
+export const getFutureData = (
+  bettingbettype: string
+): Promise<Array<BettingMarket>> => {
+  const url = `https://us1.catenaus.com/api/v2/app/oddsfeed/nfl/futures?BettingBetType=${bettingbettype}`;
+  return axios({ url, method: "get", responseType: "json" }).then(
+    (data: any) => {
+      console.log(data);
+      if (data.status == 200) {
+        return data.data;
+      }
+    }
+  );
 };
 
 export const getOddsData = (leagueCode: string): Promise<Array<Game>> => {

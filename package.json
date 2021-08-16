@@ -41,8 +41,10 @@
     "react-native-scrollable-tab-view-ts": "1.5.0",
     "react-native-svg": "12.1.0",
     "react-native-table-component": "^1.2.1",
+    "react-native-track-player": "^1.2.7",
     "react-native-unimodules": "~0.13.3",
     "react-native-web": "~0.13.12",
+    "react-native-webview": "^11.13.0",
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0"

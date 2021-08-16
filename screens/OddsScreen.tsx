@@ -68,12 +68,12 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
   }
 
   componentDidMount() {
-    this.setState({
-      type: this.state.types[0].value,
-      location: this.state.locations[0].value,
-    });
     this.setState(
-      () => ({ leagues: API.getSportsForOdds() }),
+      {
+        type: this.state.types[0].value,
+        location: this.state.locations[0].value,
+        leagues: API.getSportsForOdds(),
+      },
       () => {
         this.loadGameData();
       }
@@ -81,18 +81,14 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
   }
 
   componentDidUpdate() {
-    console.log("^^^^", this.props.route.params.index);
     this.onLeagueChanged(this.props.route.params.index);
   }
 
   onLeagueChanged(i: number) {
     if (this.state.activeLeague !== i) {
-      this.setState(
-        () => ({ activeLeague: i }),
-        () => {
-          this.loadGameData();
-        }
-      );
+      this.setState({ activeLeague: i }, () => {
+        this.loadGameData();
+      });
     }
   }
 
@@ -109,7 +105,7 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
   }
 
   loadGameData() {
-    this.setState(() => ({ isLoadingGameData: true, oddsBoardData: [] }));
+    this.setState({ isLoadingGameData: true, oddsBoardData: [] });
 
     // Check league name
     if (this.state.activeLeague >= this.state.leagues.length) return;

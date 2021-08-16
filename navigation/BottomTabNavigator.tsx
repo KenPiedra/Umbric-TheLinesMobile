@@ -32,7 +32,9 @@ import {
 } from "../components/SvgIcons";
 
 import HamburgerIcon from "../components/HamburgerIcon";
+import BackIcon from "../components/BackIcon";
 import { ViewProps } from "react-native";
+import PodcastPlayScreen from "../screens/PodcastPlayScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -42,7 +44,7 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Odds"
       tabBarOptions={{
         activeTintColor: Colors[colorScheme].tabIconSelected,
         inactiveTintColor: Colors[colorScheme].tabIconDefault,
@@ -185,6 +187,16 @@ export function PodcastNavigator() {
         options={{
           headerTitle: "Podcast",
           headerLeft: (props) => <HamburgerIcon {...props} />,
+        }}
+      />
+      <PodcastStack.Screen
+        name="PodcastPlayScreen"
+        component={PodcastPlayScreen}
+        options={{
+          headerTitle: "Episode",
+          headerLeft: (props) => {
+            return <BackIcon />;
+          },
         }}
       />
     </PodcastStack.Navigator>

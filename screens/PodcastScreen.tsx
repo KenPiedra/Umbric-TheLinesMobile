@@ -5,12 +5,27 @@ import { Text, View } from "../components/Themed";
 import PodcastListItem from "../components/PodcastListItem";
 import ScrollableTabNavigator from "../navigation/ScrollableTabNavigator";
 import * as API from "../services/api";
+import { PodcastItemData } from "../types/Podcast";
+import { NewCategoriesData } from "../types/News";
+type PodCastScreenState = {
+  activeCategory: number;
+  categories: Array<NewCategoriesData>;
+  data: Array<PodcastItemData>;
+  error: Object | null;
+  loading: boolean;
+  loadingMore: boolean;
+  noMoreLoad: boolean;
+  refreshing: boolean;
+};
 
-export default class PodcastScreen extends React.Component {
+export default class PodcastScreen extends React.Component<
+  {},
+  PodCastScreenState
+> {
   state = {
     activeCategory: -1,
-    categories: [],
-    data: [],
+    categories: new Array<NewCategoriesData>(),
+    data: new Array<PodcastItemData>(),
     error: null,
     loading: true,
     loadingMore: false,
@@ -69,9 +84,7 @@ export default class PodcastScreen extends React.Component {
   };
 
   componentDidMount() {
-      this.setState((prevState, nextProps) => ({
-        categories: API.getNewsCategories(),
-      }));
+    this.setState({ categories: API.getNewsCategories() });
   }
 
   onCategoryChanged(i: number) {

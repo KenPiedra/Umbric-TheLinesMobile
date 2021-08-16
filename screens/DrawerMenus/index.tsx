@@ -5,6 +5,8 @@ import CustomDrawerContentScreen from "../../screens/DrawerMenus/CustomDrawerCon
 import BettingGuideStatesScreen from "../../screens/DrawerMenus/BettingGuideStates";
 import NBAScreen from "./NBAScreen";
 import NFLScreen from "./NFLScreen";
+import MLBScreen from "./MLB";
+
 // create a component
 const DrawMain = () => {
   const [index, setindex] = useState(0);
@@ -15,6 +17,7 @@ const DrawMain = () => {
       )}
       {index == 1 && <NBAScreen handleBack={() => setindex(0)} />}
       {index == 2 && <NFLScreen handleBack={() => setindex(0)} />}
+      {index == 3 && <MLBScreen handleBack={() => setindex(0)} />}
       {index == 6 && (
         <BettingGuideStatesScreen handleBack={() => setindex(0)} />
       )}

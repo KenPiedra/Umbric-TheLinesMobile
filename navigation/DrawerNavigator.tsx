@@ -8,18 +8,22 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import BottomTabNavigator from "./BottomTabNavigator";
-import PodcastPlayScreen from "../screens/PodcastPlayScreen";
 import HowToBetScreen from "../screens/HowToBetScreen";
 import StateBettingGuideScreen from "../screens/StateBettingGuideScreen";
 import CustomDrawerContent from "../screens/DrawerMenus";
-
-import { HowToBetStackParmList, StateBetGuideParmList } from "../types";
+import FutureScreen from "../screens/FutureScreen";
+import {
+  HowToBetStackParmList,
+  StateBetGuideParmList,
+  FutureStackParamList,
+} from "../types";
 import HamburgerIcon from "../components/HamburgerIcon";
+import BackIcon from "../components/BackIcon";
 
 const Drawer = createDrawerNavigator();
 const StackHowToBet = createStackNavigator<HowToBetStackParmList>();
 const StackStateBet = createStackNavigator<StateBetGuideParmList>();
-
+const StackFuture = createStackNavigator<FutureStackParamList>();
 const HowToBetNavigator = () => {
   return (
     <StackHowToBet.Navigator>
@@ -42,11 +46,25 @@ const StateBetGuideNavigator = () => {
         name="StateBetGuide"
         component={StateBettingGuideScreen}
         options={{
-          title: "NJ Sports Betting",
+          title: "US Sports Betting",
           headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
       />
     </StackStateBet.Navigator>
+  );
+};
+const FutureNavigator = () => {
+  return (
+    <StackFuture.Navigator>
+      <StackFuture.Screen
+        name="Future"
+        component={FutureScreen}
+        options={{
+          title: "Future",
+          headerLeft: (props) => <HamburgerIcon {...props} />,
+        }}
+      />
+    </StackFuture.Navigator>
   );
 };
 
@@ -58,12 +76,12 @@ export default function DrawerNavigator() {
       }}
     >
       <Drawer.Screen name="Home" component={BottomTabNavigator} />
-      <Drawer.Screen name="PodcastPlay" component={PodcastPlayScreen} />
       <Drawer.Screen name="HowToBetStack" component={HowToBetNavigator} />
       <Drawer.Screen
         name="StateBettingGuide"
         component={StateBetGuideNavigator}
       />
+      <Drawer.Screen name="FutureStack" component={FutureNavigator} />
     </Drawer.Navigator>
   );
 }

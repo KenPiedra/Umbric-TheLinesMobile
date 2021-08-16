@@ -8,15 +8,22 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { WebView } from "react-native-webview";
+import { RouteProp, useRoute } from "@react-navigation/core";
 
 import { Text, View, useThemeColor } from "../components/Themed";
+import { StateBetGuideParmList } from "../types";
+
 // create a component
 const StateBettingGuide = () => {
-  const color = useThemeColor({}, "text");
-  const bgcolor = useThemeColor({}, "background");
+  // const color = useThemeColor({}, "text");
+  // const bgcolor = useThemeColor({}, "background");
+  const { params } =
+    useRoute<RouteProp<StateBetGuideParmList, "StateBetGuide">>();
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={[{ backgroundColor: bgcolor }, styles.container]}>
+      <WebView source={{ uri: params.link }} />
+      {/* <ScrollView style={[{ backgroundColor: bgcolor }, styles.container]}>
         <Text style={styles.smallTitle}>some heading</Text>
         <Text style={styles.title}>Single Line Header</Text>
         <View style={{ height: 10 }} />
@@ -71,7 +78,7 @@ const StateBettingGuide = () => {
             );
           })}
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 };

@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  StyleSheet,
-  useWindowDimensions,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import { View, Text } from "../../components/Themed";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
@@ -15,7 +10,6 @@ type CustomDrawerContentProps = {
 };
 
 function CustomDrawerContent(props: CustomDrawerContentProps) {
-  const width = useWindowDimensions().width;
   const navigation = useNavigation();
   const _closeDrawer = () => {
     navigation.dispatch(DrawerActions.closeDrawer());
@@ -57,6 +51,16 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
           <TouchableOpacity onPress={() => props.handleClick(2)}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>NFL</Text>
+              <Icon
+                name="chevron-right"
+                style={styles.menuItemIcon}
+                size={24}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => props.handleClick(3)}>
+            <View style={styles.menuItem}>
+              <Text style={styles.menuItemText}>MLB</Text>
               <Icon
                 name="chevron-right"
                 style={styles.menuItemIcon}
@@ -110,7 +114,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("News")}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>News</Text>
               <Icon
@@ -120,7 +124,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Podcast")}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>Podcast</Text>
               <Icon

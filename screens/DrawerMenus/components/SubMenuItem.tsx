@@ -4,13 +4,14 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { View, useThemeColor, Text } from "../../../components/Themed";
 // create a component
 type SubMenuItemProps = {
-  hasNav: boolean;
   title: string;
+  onClick: () => void;
 };
 const SubMenuItem = (props: SubMenuItemProps) => {
   const tintColor = useThemeColor({}, "inactive");
   return (
     <TouchableOpacity
+      onPress={props.onClick}
       style={[styles.container, { borderBottomColor: tintColor }]}
     >
       <Text>

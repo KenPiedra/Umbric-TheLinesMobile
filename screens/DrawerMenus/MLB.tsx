@@ -9,27 +9,19 @@ import { DrawerStackParmList } from "../../types";
 import DrawerHeader from "./components/header";
 import MenuItem from "./components/MenuItem";
 
-type NFLScreenProps = {
+type MLBScreenProps = {
   handleBack: () => void;
 };
 // create a component
-const NFLScreen = (props: NFLScreenProps) => {
+const MLBScreen = (props: MLBScreenProps) => {
   const navigation = useNavigation<DrawerNavigationProp<DrawerStackParmList>>();
   const bgColor = useThemeColor({}, "background");
   const tintColor = useThemeColor({}, "inactive");
-  const subBackendData = [
-    { name: "Super Bowl" },
-    { name: "Win Total" },
-    { name: "MVP" },
-    { name: "Rookie" },
-  ];
   const backendData = [
-    { name: "Power Rankings", hasNav: false },
-    { name: "Futures", hasNav: false },
-    { name: "Game Previews", hasNav: false },
-    { name: "NFL Player Props", hasNav: false },
-    { name: "Odds", hasNav: false },
-    { name: "News", hasNav: false },
+    { name: "World Series", hasNav: false },
+    { name: "MVP", hasNav: false },
+    { name: "Cy Young", hasNav: false },
+    { name: "Win Totals", hasNav: false },
   ];
 
   const handleOnClick = () => {
@@ -74,4 +66,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default NFLScreen;
+export default MLBScreen;

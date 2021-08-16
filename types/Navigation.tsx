@@ -1,4 +1,4 @@
-import { PodcastItemDataProps } from "../components/PodcastListItem";
+import { PodcastItemData } from "./Podcast";
 
 export type RootStackParamList = {
   Root: undefined;
@@ -16,8 +16,9 @@ export type BottomTabParamList = {
 
 export type DrawerStackParmList = {
   Home: undefined;
-  PodcastPlay: { podcast: PodcastItemDataProps };
   HowToBetStack: undefined;
+  StateBettingGuide: { screen: string; params: { link: string } };
+  FutureStack: { screen: string; params: { index: number } };
 };
 
 export type HowToBetStackParmList = {
@@ -25,7 +26,15 @@ export type HowToBetStackParmList = {
 };
 
 export type StateBetGuideParmList = {
-  StateBetGuide: undefined;
+  StateBetGuide: { link: string };
+};
+
+export type FutureStackParamList = {
+  Future: { index: number };
+};
+
+export type PodCastPlayerStackParamList = {
+  PodCastPlayer: { podcast: PodcastItemData };
 };
 
 export type CustomDrawerStackParamList = {
@@ -51,8 +60,5 @@ export type SportsbooksParamList = {
 
 export type PodcastParamList = {
   PodcastScreen: undefined;
-};
-
-export type PodcastPlayParamList = {
-  PodcastPlayScreen: { podcast: any };
+  PodcastPlayScreen: { podcast: PodcastItemData };
 };
