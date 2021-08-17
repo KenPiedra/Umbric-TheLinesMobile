@@ -1,6 +1,7 @@
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
+
 import { Text, View } from "../components/Themed";
 import NewsListItem from "../components/NewsListItem";
 import ScrollableTabNavigator from "../navigation/ScrollableTabNavigator";
@@ -21,10 +22,10 @@ export default class NewsScreen extends React.Component<{
     refreshing: false,
   };
 
-  _fetchNews = (lastItemTime?: Date) => {
+  _fetchNews = (PostedAt: string | null) => {
     let categoryId = this.state.categories[this.state.activeCategory].Id;
     const ItemsToLoad = 10;
-    API.getNews(categoryId, ItemsToLoad, lastItemTime)
+    API.getNews(categoryId, ItemsToLoad, PostedAt)
       .then((newItems) => {
         let newData = this.state.refreshing
           ? newItems
@@ -50,7 +51,7 @@ export default class NewsScreen extends React.Component<{
     if (!this.state.noMoreLoad) {
       let lastItemTime: any = null;
       if (this.state.data.length > 0) {
-        lastItemTime = this.state.data.slice(-1)[0]["PostedAt"];
+        lastItemTime = this.state.data.slice(-1)[0]["PostedAtIso"];
       }
       console.log("###", lastItemTime);
       this.setState(
@@ -66,14 +67,12 @@ export default class NewsScreen extends React.Component<{
         refreshing: true,
       },
       () => {
-        this._fetchNews();
+        this._fetchNews(null);
       }
     );
   };
 
   componentDidMount() {
-    console.log(this.props.navigation);
-
     this.setState((prevState, nextProps) => ({
       categories: API.getNewsCategories(),
     }));

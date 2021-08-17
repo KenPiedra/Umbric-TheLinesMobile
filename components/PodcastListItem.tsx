@@ -1,7 +1,12 @@
 import * as React from "react";
-import { Image, StyleSheet, TouchableHighlight } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  Linking,
+  Alert,
+} from "react-native";
 
-import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -28,8 +33,20 @@ export default function PodcastListItem(props: PodcastListItemProps) {
     });
   }
 
+  async function _linkToBrowser() {
+    const {
+      data: { Title, Author, Thumb, Categories, PostedAtIso, DetailLink },
+    } = props;
+    const support = await Linking.canOpenURL(DetailLink);
+    if (support) {
+      await Linking.openURL(DetailLink);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${url}`);
+    }
+  }
+
   return (
-    <TouchableHighlight onPress={() => _navigateToPlayScreen()}>
+    <TouchableHighlight onPress={() => _linkToBrowser()}>
       <View style={styles.container}>
         <Image style={styles.thumb} source={{ uri: Thumb }} />
         <View style={styles.desc}>

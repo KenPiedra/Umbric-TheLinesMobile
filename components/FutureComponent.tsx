@@ -2,7 +2,13 @@ import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Table, Row } from "react-native-table-component";
 import { SvgUri } from "react-native-svg";
-import { Text, TouchableWithNavigation, View, ViewProps } from "./Themed";
+import {
+  Text,
+  TouchableWithNavigation,
+  View,
+  ViewProps,
+  useThemeColor,
+} from "./Themed";
 import { Game, GameOdd, BettingMarket, SportBook } from "../types";
 
 type BetStyle = "modern" | "vegas" | "classic" | undefined;
@@ -93,6 +99,12 @@ export default class FutureComponent extends React.Component<FutureComponentProp
   /** 1000 => 1,000 */
   numberWithCommas(x: string) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  getSign(num: number) {
+    if (num > 0) {
+      return "+";
+    }
+    return "";
   }
   /**
    * Decoded from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 4897
@@ -566,7 +578,6 @@ export default class FutureComponent extends React.Component<FutureComponentProp
 
   render() {
     const { providers, futures } = this.getFutureData();
-
     // Show an empty message and exit if we don't have games to show
     if (futures.length == 0) {
       return this.renderNoOdds();
@@ -575,12 +586,11 @@ export default class FutureComponent extends React.Component<FutureComponentProp
     // Add empty string into providers for row header cell
     providers.unshift("");
 
-    const headerColumnWidth = 150,
-      dataColumnWidth = 180;
+    const headerColumnWidth = 84,
+      dataColumnWidth = 106;
     let widthArr = Array(providers.length);
     widthArr.fill(dataColumnWidth);
     widthArr[0] = headerColumnWidth;
-    console.log(providers);
 
     return (
       <View style={styles.container}>
@@ -609,37 +619,100 @@ export default class FutureComponent extends React.Component<FutureComponentProp
                                 {future.BettingMarketType === "Team Future" &&
                                   (future.TeamKey || market.Participant)}
                                 {future.BettingMarketType === "Player Future" &&
-                                  market.Participant}
+                                  future.PlayerName}
                               </Text>
                             </View>
                           );
                         } else {
-                          const tt = market.SportsBooks.map(
+                          const filtered = market.SportsBooks.filter(
                             (sportbook: SportBook) =>
-                              sportbook.SportsbookName.toLowerCase()
-                          ).indexOf(provider.toLowerCase());
-                          if (tt >= 0) {
-                            return (
-                              <View style={styles.gameCellStyle}>
-                                <Text style={styles.gameCellTextStyle}>
-                                  {!!market.BettingOutcomeType
-                                    ? market.BettingOutcomeType
-                                    : this.numberWithCommas(
-                                        market.SportsBooks[
-                                          tt
-                                        ]?.PayoutAmerican.toString()
-                                      )}
-                                </Text>
-                                <Text
-                                  style={[
-                                    styles.gameCellTextStyle,
-                                    { textDecorationLine: "underline" },
-                                  ]}
-                                >
-                                  Bet This Player!
-                                </Text>
-                              </View>
-                            );
+                              sportbook.SportsbookName.toLowerCase().includes(
+                                provider.toLowerCase()
+                              )
+                          );
+                          if (filtered?.length > 0) {
+                            if (market.BettingOutcomeType == "Yes") {
+                              return (
+                                <View style={styles.gameCellStyle}>
+                                  {filtered.length == 2 && (
+                                    <View>
+                                      <Text style={styles.oddsCellText}>
+                                        {`${this.getSign(
+                                          filtered[0]?.PayoutAmerican
+                                        )}${this.numberWithCommas(
+                                          filtered[0]?.PayoutAmerican.toString()
+                                        )} `}
+                                        <Text style={{ color: "gray" }}>
+                                          No
+                                        </Text>
+                                      </Text>
+
+                                      <Text style={styles.oddsCellText}>
+                                        {`${this.getSign(
+                                          filtered[1]?.PayoutAmerican
+                                        )}${this.numberWithCommas(
+                                          filtered[1]?.PayoutAmerican.toString()
+                                        )} `}
+                                        <Text style={{ color: "gray" }}>
+                                          Yes
+                                        </Text>
+                                      </Text>
+                                    </View>
+                                  )}
+                                  {filtered.length == 1 && (
+                                    <Text style={styles.oddsCellText}>
+                                      {`${this.getSign(
+                                        filtered[0]?.PayoutAmerican
+                                      )}${this.numberWithCommas(
+                                        filtered[0]?.PayoutAmerican.toString()
+                                      )} `}
+                                    </Text>
+                                  )}
+                                  <Text style={[styles.oddsBetButton]}>
+                                    {future.BettingMarketType ===
+                                      "Team Future" && "Bet This Team!"}
+                                    {future.BettingMarketType ===
+                                      "Player Future" && "Bet This Player!"}
+                                  </Text>
+                                </View>
+                              );
+                            }
+                            if (market.BettingOutcomeType == "Over") {
+                              return (
+                                <View style={styles.gameCellStyle}>
+                                  <Text style={styles.oddsCellText}>{`${
+                                    market.Participant
+                                  } ${this.numberWithCommas(
+                                    filtered[0].PayoutAmerican.toString()
+                                  )}`}</Text>
+                                  <Text style={[styles.oddsBetButton]}>
+                                    {future.BettingMarketType ===
+                                      "Team Future" && "Bet This Team!"}
+                                    {future.BettingMarketType ===
+                                      "Player Future" && "Bet This Player!"}
+                                  </Text>
+                                </View>
+                              );
+                            }
+                            if (!!!market.BettingOutcomeType) {
+                              return (
+                                <View style={styles.gameCellStyle}>
+                                  <Text
+                                    style={styles.oddsCellText}
+                                  >{`${this.getSign(
+                                    filtered[0].PayoutAmerican
+                                  )}${this.numberWithCommas(
+                                    filtered[0].PayoutAmerican.toString()
+                                  )}`}</Text>
+                                  <Text style={[styles.oddsBetButton]}>
+                                    {future.BettingMarketType ===
+                                      "Team Future" && "Bet This Team!"}
+                                    {future.BettingMarketType ===
+                                      "Player Future" && "Bet This Player!"}
+                                  </Text>
+                                </View>
+                              );
+                            }
                           }
                           return null;
                         }
@@ -702,7 +775,6 @@ const styles = StyleSheet.create({
   gameCellStyle: {
     paddingTop: 8,
     paddingBottom: 8,
-    paddingLeft: 24,
   },
   gameCellTextStyle: {
     fontWeight: "800",

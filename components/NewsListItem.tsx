@@ -1,20 +1,26 @@
-import * as React from 'react';
-import { Image, Linking, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import * as React from "react";
+import {
+  Image,
+  Linking,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from "react-native";
+import moment from "moment";
 
-import { Text, View, ViewProps } from './Themed';
+import { Text, View, ViewProps } from "./Themed";
 
 export interface NewsItemDataProps {
-  Title: string,
-  Author: string,
-  AuthorLink?: string,
-  Thumb: string,
-  Categories: Array<string>,
-  PostedAt: Date,
-  DetailLink: string,
-};
+  Title: string;
+  Author: string;
+  AuthorLink?: string;
+  Thumb: string;
+  Categories: Array<string>;
+  PostedAtIso: string;
+  DetailLink: string;
+}
 
 interface NewsListItemProps extends ViewProps {
-  data: NewsItemDataProps
+  data: NewsItemDataProps;
 }
 
 export default class NewsListItem extends React.Component<NewsListItemProps> {
@@ -23,14 +29,17 @@ export default class NewsListItem extends React.Component<NewsListItemProps> {
   }
 
   render() {
+    const PostedAt = moment(this.props.data.PostedAtIso).format("MMM Do YYYY");
     return (
-      <TouchableWithoutFeedback onPress={() => this.openNews(this.props.data.DetailLink)}>
+      <TouchableWithoutFeedback
+        onPress={() => this.openNews(this.props.data.DetailLink)}
+      >
         <View style={styles.container}>
-          <Image style={styles.thumb} source={{uri: this.props.data.Thumb}} />
+          <Image style={styles.thumb} source={{ uri: this.props.data.Thumb }} />
           <View style={styles.desc}>
             <Text style={styles.newsFeed}>{this.props.data.Author}</Text>
             <Text style={styles.newsTitle}>{this.props.data.Title}</Text>
-            <Text style={styles.newsDate}>{this.props.data.PostedAt.toDateString()}</Text>
+            <Text style={styles.newsDate}>{PostedAt}</Text>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -49,44 +58,44 @@ export default class NewsListItem extends React.Component<NewsListItemProps> {
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: '#1F2933',
+    borderColor: "#1F2933",
     borderRadius: 16,
     borderWidth: 0.5,
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 116,
     margin: 8,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   thumb: {
-    height: '100%',
+    height: "100%",
     width: 112,
   },
   desc: {
     flex: 1,
-    display: 'flex',
+    display: "flex",
     padding: 8,
   },
   newsFeed: {
     flex: 0,
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
     letterSpacing: 1.5,
     marginTop: 8,
     marginBottom: 8,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   newsTitle: {
     flex: 1,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: "700",
     letterSpacing: 0.15,
     lineHeight: 19.2,
   },
   newsDate: {
     flex: 0,
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
     lineHeight: 18,
     marginTop: 8,
-  }
+  },
 });

@@ -28,7 +28,7 @@ export default function HowToBetScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <View style={styles.videoWrap}>
+        {/* <View style={styles.videoWrap}>
           <Image
             source={{
               uri: "https://ethicseducationforchildren.org/images/generic-video-thumbnail.jpg",
@@ -38,7 +38,7 @@ export default function HowToBetScreen() {
               { width: imageWidth, height: imageWidth * 0.6 },
             ]}
           />
-        </View>
+        </View> */}
         <View style={styles.contentWrap}>
           <Text style={[styles.title, { paddingBottom: 16 }]}>How to Bet</Text>
           <Text style={styles.normalText}>
@@ -1104,7 +1104,6 @@ export default function HowToBetScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
   },
   scrollView: {
     marginHorizontal: 0,
@@ -1122,19 +1121,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: "#fff",
+    // color: "#fff",
     fontWeight: "700",
     lineHeight: 24,
   },
   subTitle: {
     fontSize: 12,
-    color: "#fff",
+    // color: "#fff",
     textTransform: "uppercase",
     lineHeight: 12,
   },
   normalText: {
     fontSize: 16,
-    color: "#fff",
+    // color: "#fff",
     lineHeight: 24,
   },
   infoWrap: {

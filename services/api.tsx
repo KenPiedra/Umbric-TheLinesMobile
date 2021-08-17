@@ -37,48 +37,59 @@ function capitalizeTheFirstLetterOfEachWord(value: string) {
 export const getNews = (
   categoryId: string,
   limit: number,
-  timeBefore?: Date
+  PostedAt: string | number | boolean | null
 ): Promise<Array<NewsItemData>> => {
   // Filter by date
-  return new Promise((resolve, reject) => {
+  console.log("categoryid", categoryId);
+  return new Promise(async (resolve, reject) => {
     const ref = database().ref("news");
-    if (!timeBefore) timeBefore = new Date("9999-12-31T00:00:00");
-    let query = ref.orderByChild("PostedAtIso").endAt(timeBefore.toString());
-
+    let num: number = 0;
+    let query = ref.orderByChild("PostedAtIso");
+    if (PostedAt) {
+      query = ref.orderByChild("PostedAtIso").endAt(PostedAt);
+    }
     // If categoryId is not set, limit the count to fetch
     if (!categoryId) {
-      query = query.limitToLast(limit);
+      let ttt = await ref
+        .orderByChild("PostedAtIso")
+        .equalTo(PostedAt)
+        .once("value");
+      console.log("length", ttt.val());
+      num = ttt.val() ? Object.keys(ttt.val()).length : 0;
+      query = query.limitToLast(limit + num);
     }
 
     query
       .once("value", (snap: any) => {
+        console.log("snapshat", snap.val());
         let newsData = Array();
         snap.forEach((child: any) => {
           let val = child.val();
           let item: NewsItemData = { ...val };
-          item.PostedAt = new Date(val.PostedAtIso);
           item.Categories = Array.isArray(val.TagsList)
-            ? val.TagsList.map((tag: string) =>
-                capitalizeTheFirstLetterOfEachWord(tag)
-              )
+            ? val.TagsList.map((tag: string) => tag)
             : [];
 
           // Filter by categoryId and PostedAt
-          if (item.PostedAt == timeBefore) {
+          if (item.PostedAtIso == PostedAt) {
             return;
-          } else if (categoryId && !item.Categories.includes(categoryId)) {
+          } else if (
+            categoryId &&
+            !item.Categories.includes(categoryId.toLocaleLowerCase())
+          ) {
             return;
           }
           newsData.push(item);
         });
-
+        console.log("NewData", newsData);
         // Filter by category id and limit count here
         if (categoryId) {
           newsData = newsData.slice(-limit);
+        } else {
+          newsData = newsData.slice(0, limit);
         }
-
         newsData.reverse();
-        console.log("NewData", newsData);
+        console.log("Filtered NewData", newsData);
         resolve(newsData);
       })
       .catch((err: any) => reject(err));

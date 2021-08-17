@@ -4,7 +4,7 @@ export type NewsItemData = {
   AuthorLink?: string;
   Thumb: string;
   Categories: Array<string>;
-  PostedAt: Date;
+  PostedAtIso: string;
   DetailLink: string;
 };
 export type NewCategoriesData = {

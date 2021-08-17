@@ -638,6 +638,7 @@ export default class FutureScreen extends React.Component<
               onChangeValue={() => this.loadGameData()}
             />
           </View>
+          <View style={{ height: 20 }} />
           {isLoadingGameData ? (
             <LoadingSpinner />
           ) : (
