@@ -606,50 +606,52 @@ export default class FutureScreen extends React.Component<
       isLoadingGameData,
     } = this.state;
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <View style={styles.selectGroup}>
-            <Text style={styles.selectLabel}>Type</Text>
-            <DropDownPicker
-              zIndex={2000}
-              categorySelectable={false}
-              value={type}
-              items={types}
-              open={isTypeOpen}
-              setOpen={(open) => this.setState({ isTypeOpen: open })}
-              setValue={(callback) =>
-                this.setState((state) => ({ type: callback(state.type) }))
-              }
-              onChangeValue={() => this.loadGameData()}
-            />
-            <View style={{ height: 14 }} />
-            <Text style={styles.selectLabel}>State</Text>
-            <DropDownPicker
-              zIndex={1000}
-              value={location}
-              items={locations}
-              open={isLocationOpen}
-              setOpen={(open) => this.setState({ isLocationOpen: open })}
-              setValue={(callback) =>
-                this.setState((state) => ({
-                  location: callback(state.location),
-                }))
-              }
-              onChangeValue={() => this.loadGameData()}
-            />
+      <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={styles.container}>
+            <View style={styles.selectGroup}>
+              <Text style={styles.selectLabel}>Type</Text>
+              <DropDownPicker
+                zIndex={2000}
+                categorySelectable={false}
+                value={type}
+                items={types}
+                open={isTypeOpen}
+                setOpen={(open) => this.setState({ isTypeOpen: open })}
+                setValue={(callback) =>
+                  this.setState((state) => ({ type: callback(state.type) }))
+                }
+                onChangeValue={() => this.loadGameData()}
+              />
+              <View style={{ height: 14 }} />
+              <Text style={styles.selectLabel}>State</Text>
+              <DropDownPicker
+                zIndex={1000}
+                value={location}
+                items={locations}
+                open={isLocationOpen}
+                setOpen={(open) => this.setState({ isLocationOpen: open })}
+                setValue={(callback) =>
+                  this.setState((state) => ({
+                    location: callback(state.location),
+                  }))
+                }
+                onChangeValue={() => this.loadGameData()}
+              />
+            </View>
+            <View style={{ height: 20 }} />
+            {isLoadingGameData ? (
+              <LoadingSpinner />
+            ) : (
+              <FutureComponent
+                location={this.state.location}
+                data={this.state.futureData}
+                league="nfl"
+              />
+            )}
           </View>
-          <View style={{ height: 20 }} />
-          {isLoadingGameData ? (
-            <LoadingSpinner />
-          ) : (
-            <FutureComponent
-              location={this.state.location}
-              data={this.state.futureData}
-              league="nfl"
-            />
-          )}
-        </View>
-      </SafeAreaView>
+        </SafeAreaView>
+      </View>
     );
   }
 }

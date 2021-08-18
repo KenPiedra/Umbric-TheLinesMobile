@@ -49,19 +49,23 @@ export const getNews = (
       query = ref.orderByChild("PostedAtIso").endAt(PostedAt);
     }
     // If categoryId is not set, limit the count to fetch
-    if (!categoryId) {
-      let ttt = await ref
-        .orderByChild("PostedAtIso")
-        .equalTo(PostedAt)
-        .once("value");
-      console.log("length", ttt.val());
-      num = ttt.val() ? Object.keys(ttt.val()).length : 0;
+    if (categoryId.length == 0) {
+      console.log("############");
+      try {
+        let ttt = await ref
+          .orderByChild("PostedAtIso")
+          .equalTo(PostedAt)
+          .once("value");
+        num = ttt.val() ? Object.keys(ttt.val()).length : 0;
+      } catch (error) {
+        console.log("firebase query error", error);
+      }
+      console.log("num", num);
       query = query.limitToLast(limit + num);
     }
-
+    console.log("$$$$$$$$$$$$$$$", query);
     query
       .once("value", (snap: any) => {
-        console.log("snapshat", snap.val());
         let newsData = Array();
         snap.forEach((child: any) => {
           let val = child.val();
@@ -81,9 +85,8 @@ export const getNews = (
           }
           newsData.push(item);
         });
-        console.log("NewData", newsData);
         // Filter by category id and limit count here
-        if (categoryId) {
+        if (categoryId.length > 0) {
           newsData = newsData.slice(-limit);
         } else {
           newsData = newsData.slice(0, limit);
@@ -112,10 +115,9 @@ export const getSportsForOdds = (): Array<League> => {
     { Value: "FBP", Name: "NFL", Image: NFL },
     { Value: "HKN", Name: "NHL", Image: NHL },
     { Value: "BKC", Name: "NCAAB", Image: NBA },
-    { Value: "FBC", Name: "NCAAF", Image: CFB },
+    { Value: "FBC", Name: "CFB", Image: CFB },
     { Value: "SOE", Name: "EPL", Image: EPL },
     { Value: "SOM", Name: "MLS", Image: MLS },
-    { Value: "CFB", Name: "CFB", Image: CFB },
   ];
   return categories;
 };
@@ -137,9 +139,11 @@ export const getFutureData = (
 export const getOddsData = (leagueCode: string): Promise<Array<Game>> => {
   const today = new Date().toISOString().substring(0, 10);
   const url = `https://us1.catenaus.com/api/v2/app/oddsfeed/${leagueCode.toLowerCase()}/odds?Day=${today}`;
+  console.log("url", url);
   return axios({ url, method: "get", responseType: "json" }).then(
     (data: any) => {
       if (data.status == 200) {
+        console.log("get odd data result", data);
         return data.data;
       }
     }

@@ -9,7 +9,13 @@ import {
   ViewProps,
   useThemeColor,
 } from "./Themed";
-import { Game, GameOdd, BettingMarket, SportBook } from "../types";
+import {
+  Game,
+  GameOdd,
+  BettingMarket,
+  SportBook,
+  BettingOutcome,
+} from "../types";
 
 type BetStyle = "modern" | "vegas" | "classic" | undefined;
 type Market = "Spread" | "MoneyLine" | "OverUnder" | undefined;
@@ -426,24 +432,6 @@ export default class FutureComponent extends React.Component<FutureComponentProp
     );
   }
 
-  renderFutureHeaderCell(future: BettingMarket) {
-    let formatPlayTime = (datetime: string) => {
-      let hour = parseInt(datetime.substring(11, 13));
-      let minute = datetime.substring(14, 16);
-      let AP = hour < 12 ? "A" : "P";
-      hour = hour % 12;
-      return `${hour}:${minute}${AP}`;
-    };
-
-    return (
-      <View style={styles.gameCellStyle}>
-        <Text style={styles.gameCellTextStyle}>{future.BettingBetType}</Text>
-        <Text style={styles.gameCellTextStyle}>{future.BettingBetType}</Text>
-        <Text style={styles.gameCellTextStyle}>TEMP</Text>
-      </View>
-    );
-  }
-
   getProviderFromSportsbook(
     sportsbook: string,
     providers?: string[]
@@ -462,116 +450,98 @@ export default class FutureComponent extends React.Component<FutureComponentProp
     return provider;
   }
 
-  /**
-   * Decoded from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 2318
-   */
-  mb_populateFutureCell(odds: GameOdd, isHomeTeam: boolean) {
-    let backgroundColor = "#fff"; // useThemeColor({}, 'text');
-    let color = "#101010"; // useThemeColor({}, 'background');
-
-    const { betStyle, market } = this.props;
-    if (market == "Spread") {
-      let isHomeTeamFavorite = odds.HomePointSpread >= 0;
-      if (betStyle == "modern") {
-      } else if (betStyle == "vegas") {
-      } else {
-        return (
-          <View>
-            <View style={[{ backgroundColor }, styles.oddsCellTextWrapper]}>
-              <Text style={[{ color }, styles.oddsCellText]}>
-                {mb_formatSpread(
-                  isHomeTeam ? odds.HomePointSpread : odds.AwayPointSpread
-                )}
-              </Text>
-              <Text style={[{ color }, styles.oddsCellText]}>
-                {mb_formatWithSign(
-                  isHomeTeam
-                    ? odds.HomePointSpreadPayout
-                    : odds.AwayPointSpreadPayout
-                )}
-              </Text>
-            </View>
-          </View>
-        );
-      }
-    } else if (market == "MoneyLine") {
-      return (
-        <View>
-          <View style={[{ backgroundColor }, styles.oddsCellTextWrapper]}>
-            <Text style={[{ color }, styles.oddsCellText]}>
-              {mb_formatWithSign(
-                isHomeTeam ? odds.HomeMoneyLine : odds.AwayMoneyLine
-              )}
-            </Text>
-          </View>
-        </View>
-      );
-    } else if (market == "OverUnder") {
-      let isOver = !isHomeTeam;
-      if (betStyle == "modern") {
-        return (
-          <View>
-            <View style={[{ backgroundColor }, styles.oddsCellTextWrapper]}>
-              <Text style={[{ color }, styles.oddsCellText]}>
-                {isOver ? "Over" : "Under"}
-              </Text>
-              <Text style={[{ color }, styles.oddsCellText]}>
-                {mb_formatSpread(isOver ? odds.OverPayout : odds.UnderPayout)}
-              </Text>
-              <Text style={[{ color }, styles.oddsCellText]}>
-                {mb_formatWithSign(odds.OverUnder)}
-              </Text>
-            </View>
-          </View>
-        );
-      } else {
-        return (
-          <View>
-            <View style={[{ backgroundColor }, styles.oddsCellTextWrapper]}>
-              <Text style={[{ color }, styles.oddsCellText]}>
-                {isOver ? "Over" : "Under"}
-              </Text>
-              <Text style={[{ color }, styles.oddsCellText]}>
-                {mb_formatSpread(odds.OverUnder)}
-              </Text>
-              <Text style={[{ color }, styles.oddsCellText]}>
-                {mb_formatWithSign(isOver ? odds.OverPayout : odds.UnderPayout)}
-              </Text>
-            </View>
-          </View>
-        );
-      }
-    }
+  renderFirstColumn(future: BettingMarket, market: BettingOutcome) {
+    return (
+      <View style={styles.gameCellStyle}>
+        <Text style={styles.gameCellTextStyle}>
+          {future.BettingMarketType === "Team Future" &&
+            (future.TeamKey || market.Participant)}
+          {future.BettingMarketType === "Player Future" && future.PlayerName}
+        </Text>
+      </View>
+    );
   }
 
-  renderGameOddCell(game: Game, provider: string) {
-    let odds = game.PregameOdds.find(
-      (odd: GameOdd) =>
-        this.getProviderFromSportsbook(odd.Sportsbook) == provider
-    );
-
-    // Ignore any lines that are excessively stale
-    if (odds) {
-      const now = new Date().getTime();
-      if (new Date(odds.Created).getTime() + RUWT_STALE_ODDS_CUTOFF < now) {
-        odds = undefined;
-      }
-    }
-
+  renderTwoValueCell(filtered: SportBook[]) {
+    let backgroundColor = "#fff";
+    let color = "#101010";
     return (
-      <View style={styles.cellStyle}>
-        {odds && (
-          <View>
-            {/* {this.mb_populateOddsBoardCell(odds, false)}
-            {this.mb_populateOddsBoardCell(odds, true)} */}
+      <View style={{ paddingHorizontal: 8 }}>
+        <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
+          <Text style={[styles.oddsCellText, { color }]}>
+            {`${this.getSign(
+              filtered[0]?.PayoutAmerican
+            )}${this.numberWithCommas(
+              filtered[0]?.PayoutAmerican.toString()
+            )} `}
+            <Text style={[styles.oddsCellText, { color }]}>No</Text>
+          </Text>
+        </View>
+        <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
+          <Text style={[styles.oddsCellText, { color }]}>
+            {`${this.getSign(
+              filtered[1]?.PayoutAmerican
+            )}${this.numberWithCommas(
+              filtered[1]?.PayoutAmerican.toString()
+            )} `}
+            <Text style={[styles.oddsCellText, { color }]}>Yes</Text>
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
+  renderOneValueCell(filtered: SportBook[]) {
+    let backgroundColor = "#fff";
+    let color = "#101010";
+    return (
+      <View style={{ paddingHorizontal: 8 }}>
+        <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
+          <Text style={[styles.oddsCellText, { color }]}>
+            {`${this.getSign(
+              filtered[0]?.PayoutAmerican
+            )}${this.numberWithCommas(
+              filtered[0]?.PayoutAmerican.toString()
+            )} `}
+          </Text>
+        </View>
+      </View>
+    );
+  }
+  renderOverCell(filtered: SportBook[], market: BettingOutcome) {
+    let backgroundColor = "#fff";
+    let color = "#101010";
+    return (
+      <View style={styles.gameCellStyle}>
+        <View style={{ paddingHorizontal: 8 }}>
+          <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
+            <Text style={[styles.oddsCellText, { color }]}>{`${
+              market.Participant
+            } ${this.numberWithCommas(
+              filtered[0].PayoutAmerican.toString()
+            )}`}</Text>
           </View>
-        )}
-        {/* Add an explicit Bet CTA for some customers */}
-        {RUWT_ENABLE_OUTBOUND_LINKS && odds && (
-          <TouchableWithNavigation url={odds.SportsbookUrl}>
-            <Text style={styles.oddsBetButton}>Make a Bet</Text>
-          </TouchableWithNavigation>
-        )}
+          <Text style={[styles.oddsBetButton]}>Make a Bet!</Text>
+        </View>
+      </View>
+    );
+  }
+
+  renderNoTypeCell(filtered: SportBook[], market: BettingOutcome) {
+    let backgroundColor = "#fff";
+    let color = "#101010";
+    return (
+      <View style={styles.gameCellStyle}>
+        <View style={{ paddingHorizontal: 8 }}>
+          <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
+            <Text style={[styles.oddsCellText, { color }]}>{`${this.getSign(
+              filtered[0].PayoutAmerican
+            )}${this.numberWithCommas(
+              filtered[0].PayoutAmerican.toString()
+            )}`}</Text>
+          </View>
+        </View>
+        <Text style={[styles.oddsBetButton]}>Make a Bet!</Text>
       </View>
     );
   }
@@ -591,6 +561,9 @@ export default class FutureComponent extends React.Component<FutureComponentProp
     let widthArr = Array(providers.length);
     widthArr.fill(dataColumnWidth);
     widthArr[0] = headerColumnWidth;
+
+    let backgroundColor = "#fff";
+    let color = "#101010";
 
     return (
       <View style={styles.container}>
@@ -613,16 +586,7 @@ export default class FutureComponent extends React.Component<FutureComponentProp
                       key={_index}
                       data={providers.map((provider: string, index: number) => {
                         if (index == 0 && !provider) {
-                          return (
-                            <View style={styles.gameCellStyle}>
-                              <Text style={styles.gameCellTextStyle}>
-                                {future.BettingMarketType === "Team Future" &&
-                                  (future.TeamKey || market.Participant)}
-                                {future.BettingMarketType === "Player Future" &&
-                                  future.PlayerName}
-                              </Text>
-                            </View>
-                          );
+                          return this.renderFirstColumn(future, market);
                         } else {
                           const filtered = market.SportsBooks.filter(
                             (sportbook: SportBook) =>
@@ -631,87 +595,27 @@ export default class FutureComponent extends React.Component<FutureComponentProp
                               )
                           );
                           if (filtered?.length > 0) {
-                            if (market.BettingOutcomeType == "Yes") {
+                            if (
+                              market.BettingOutcomeType == "Yes" ||
+                              market.BettingOutcomeType == "No"
+                            ) {
                               return (
                                 <View style={styles.gameCellStyle}>
-                                  {filtered.length == 2 && (
-                                    <View>
-                                      <Text style={styles.oddsCellText}>
-                                        {`${this.getSign(
-                                          filtered[0]?.PayoutAmerican
-                                        )}${this.numberWithCommas(
-                                          filtered[0]?.PayoutAmerican.toString()
-                                        )} `}
-                                        <Text style={{ color: "gray" }}>
-                                          No
-                                        </Text>
-                                      </Text>
-
-                                      <Text style={styles.oddsCellText}>
-                                        {`${this.getSign(
-                                          filtered[1]?.PayoutAmerican
-                                        )}${this.numberWithCommas(
-                                          filtered[1]?.PayoutAmerican.toString()
-                                        )} `}
-                                        <Text style={{ color: "gray" }}>
-                                          Yes
-                                        </Text>
-                                      </Text>
-                                    </View>
-                                  )}
-                                  {filtered.length == 1 && (
-                                    <Text style={styles.oddsCellText}>
-                                      {`${this.getSign(
-                                        filtered[0]?.PayoutAmerican
-                                      )}${this.numberWithCommas(
-                                        filtered[0]?.PayoutAmerican.toString()
-                                      )} `}
-                                    </Text>
-                                  )}
+                                  {filtered.length == 2 &&
+                                    this.renderTwoValueCell(filtered)}
+                                  {filtered.length == 1 &&
+                                    this.renderOneValueCell(filtered)}
                                   <Text style={[styles.oddsBetButton]}>
-                                    {future.BettingMarketType ===
-                                      "Team Future" && "Bet This Team!"}
-                                    {future.BettingMarketType ===
-                                      "Player Future" && "Bet This Player!"}
+                                    Make a Bet!
                                   </Text>
                                 </View>
                               );
                             }
                             if (market.BettingOutcomeType == "Over") {
-                              return (
-                                <View style={styles.gameCellStyle}>
-                                  <Text style={styles.oddsCellText}>{`${
-                                    market.Participant
-                                  } ${this.numberWithCommas(
-                                    filtered[0].PayoutAmerican.toString()
-                                  )}`}</Text>
-                                  <Text style={[styles.oddsBetButton]}>
-                                    {future.BettingMarketType ===
-                                      "Team Future" && "Bet This Team!"}
-                                    {future.BettingMarketType ===
-                                      "Player Future" && "Bet This Player!"}
-                                  </Text>
-                                </View>
-                              );
+                              return this.renderOverCell(filtered, market);
                             }
                             if (!!!market.BettingOutcomeType) {
-                              return (
-                                <View style={styles.gameCellStyle}>
-                                  <Text
-                                    style={styles.oddsCellText}
-                                  >{`${this.getSign(
-                                    filtered[0].PayoutAmerican
-                                  )}${this.numberWithCommas(
-                                    filtered[0].PayoutAmerican.toString()
-                                  )}`}</Text>
-                                  <Text style={[styles.oddsBetButton]}>
-                                    {future.BettingMarketType ===
-                                      "Team Future" && "Bet This Team!"}
-                                    {future.BettingMarketType ===
-                                      "Player Future" && "Bet This Player!"}
-                                  </Text>
-                                </View>
-                              );
+                              return this.renderNoTypeCell(filtered, market);
                             }
                           }
                           return null;
@@ -792,7 +696,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     height: 20,
     marginBottom: 6,
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",

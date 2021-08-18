@@ -18,17 +18,17 @@ export default function HomeScreen() {
   const [trendingNews, settrendingNews] = useState<NewsItemData[]>([]);
   const [sportData, setsportData] = useState<League[]>([]);
   const bgcolor = useThemeColor({}, "background");
-  const { navigate } =
+  const navigation =
     useNavigation<BottomTabNavigationProp<BottomTabParamList>>();
 
   useEffect(() => {
-    API.getNews("", 5).then((result) => settrendingNews(result));
-    const sports = ["NFL", "NBA", "NCAAF", "MLB"];
+    API.getNews("", 5, null).then((result) => settrendingNews(result));
+    const sports = ["NFL", "NBA", "CFB", "MLB"];
     const filtered = API.getSportsForOdds().filter((value) =>
       sports.includes(value.Name)
     );
     setsportData(filtered);
-  }, []);
+  }, [navigation]);
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: bgcolor }]}>
@@ -51,7 +51,10 @@ export default function HomeScreen() {
           return (
             <TouchableOpacity
               onPress={() =>
-                navigate("Odds", { screen: "OddsScreen", params: { index } })
+                navigation.navigate("Odds", {
+                  screen: "OddsScreen",
+                  params: { index },
+                })
               }
               key={index}
             >

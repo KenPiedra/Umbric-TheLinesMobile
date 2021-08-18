@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
     height: 48,
     flexDirection: "row",
     borderRadius: 8,
-    borderWidth: 0,
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#fff",
   },
   image: {
     width: 46,
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     marginLeft: 8,
+    color: "#000",
   },
 });
 

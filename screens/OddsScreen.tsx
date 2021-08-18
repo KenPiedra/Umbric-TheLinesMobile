@@ -62,7 +62,6 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
 
   constructor(props: ViewProps) {
     super(props);
-
     this.setType = this.setType.bind(this);
     this.setLocation = this.setLocation.bind(this);
   }
@@ -78,10 +77,6 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
         this.loadGameData();
       }
     );
-  }
-
-  componentDidUpdate() {
-    this.onLeagueChanged(this.props.route.params.index);
   }
 
   onLeagueChanged(i: number) {

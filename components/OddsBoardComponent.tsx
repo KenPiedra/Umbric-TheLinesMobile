@@ -639,7 +639,6 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
     let widthArr = Array(providers.length);
     widthArr.fill(dataColumnWidth);
     widthArr[0] = headerColumnWidth;
-    console.log(games);
 
     return (
       <View style={styles.container}>
