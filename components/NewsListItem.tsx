@@ -21,6 +21,7 @@ export interface NewsItemDataProps {
 
 interface NewsListItemProps extends ViewProps {
   data: NewsItemDataProps;
+  onClick: () => void;
 }
 
 export default class NewsListItem extends React.Component<NewsListItemProps> {
@@ -31,15 +32,15 @@ export default class NewsListItem extends React.Component<NewsListItemProps> {
   render() {
     const PostedAt = moment(this.props.data.PostedAtIso).format("MMM Do YYYY");
     return (
-      <TouchableWithoutFeedback
-        onPress={() => this.openNews(this.props.data.DetailLink)}
-      >
+      <TouchableWithoutFeedback onPress={this.props.onClick}>
         <View style={styles.container}>
           <Image style={styles.thumb} source={{ uri: this.props.data.Thumb }} />
           <View style={styles.desc}>
-            <Text style={styles.newsFeed}>{this.props.data.Author}</Text>
             <Text style={styles.newsTitle}>{this.props.data.Title}</Text>
-            <Text style={styles.newsDate}>{PostedAt}</Text>
+            <View style={{ marginTop: 10 }}>
+              <Text style={styles.newsFeed}>{this.props.data.Author}</Text>
+              <Text style={styles.newsDate}>{PostedAt}</Text>
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -80,8 +81,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
     letterSpacing: 1.5,
-    marginTop: 8,
-    marginBottom: 8,
     textTransform: "uppercase",
   },
   newsTitle: {
@@ -96,6 +95,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
     lineHeight: 18,
-    marginTop: 8,
   },
 });

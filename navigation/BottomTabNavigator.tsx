@@ -13,6 +13,7 @@ import useColorScheme from "../hooks/useColorScheme";
 import HomeScreen from "../screens/HomeScreen";
 import OddsScreen from "../screens/OddsScreen";
 import NewsScreen from "../screens/NewsScreen";
+import NewDetailScreen from "../screens/NewsDetailScreen";
 import SportsbooksScreen from "../screens/SportsbooksScreen";
 import PodcastScreen from "../screens/PodcastScreen";
 import {
@@ -22,26 +23,88 @@ import {
   NewsParamList,
   SportsbooksParamList,
   PodcastParamList,
+  HideStackParmList,
+  HowToBetParamList,
+  StateBetGuideParamList,
 } from "../types";
 import {
-  HomeIcon,
+  // HomeIcon,
   OddsIcon,
   NewsIcon,
-  SportsbooksIcon,
+  // SportsbooksIcon,
   PodcastIcon,
+  HowToBet,
+  BetGuid,
+  Futures,
 } from "../components/SvgIcons";
 
 import HamburgerIcon from "../components/HamburgerIcon";
 import BackIcon from "../components/BackIcon";
-import { ViewProps } from "react-native";
 import PodcastPlayScreen from "../screens/PodcastPlayScreen";
+import HowToBetScreen from "../screens/HowToBetScreen";
+import StateBettingGuideScreen from "../screens/StateBettingGuideScreen";
+import FutureScreen from "../screens/FutureScreen";
+import StateBettingGuideMenuScreen from "../screens/StateBettingGuideMenuScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+
+const StateBetGuideStack = createStackNavigator<StateBetGuideParamList>();
+const StateBetNavigation = () => {
+  return (
+    <StateBetGuideStack.Navigator>
+      <StateBetGuideStack.Screen
+        name="StateBetGuideMenu"
+        component={StateBettingGuideMenuScreen}
+        options={{
+          title: "US Sports Betting",
+          // headerLeft: (props) => <HamburgerIcon {...props} />,
+        }}
+      />
+      <StateBetGuideStack.Screen
+        name="StateBetGuideHome"
+        component={StateBettingGuideScreen}
+        options={{
+          title: "US Sports Betting",
+          headerLeft: (props) => <BackIcon />,
+        }}
+      />
+    </StateBetGuideStack.Navigator>
+  );
+};
+const HowToBetStack = createStackNavigator<HowToBetParamList>();
+const HowToBetNavigator = () => {
+  return (
+    <HowToBetStack.Navigator>
+      <HowToBetStack.Screen
+        name="HowToBetScreen"
+        component={HowToBetScreen}
+        options={{
+          title: "How to Bet",
+          // headerLeft: (props) => <HamburgerIcon {...props} />,
+        }}
+      />
+    </HowToBetStack.Navigator>
+  );
+};
+const StackHide = createStackNavigator<HideStackParmList>();
+const HideNavigator = () => {
+  return (
+    <StackHide.Navigator>
+      <StackHide.Screen
+        name="Futures"
+        component={FutureScreen}
+        options={{
+          title: "Futures",
+          // headerLeft: (props) => <HamburgerIcon {...props} />,
+        }}
+      />
+    </StackHide.Navigator>
+  );
+};
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
-
   return (
     <BottomTab.Navigator
       initialRouteName="Odds"
@@ -65,19 +128,33 @@ export default function BottomTabNavigator() {
           height: 81 + insets.bottom,
         },
       }}
+      screenOptions={({ route }) => ({
+        tabBarButton: ["Hidden"].includes(route.name)
+          ? () => {
+              return null;
+            }
+          : undefined,
+      })}
     >
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Odds"
         component={OddsNavigator}
         options={{
           tabBarIcon: ({ color }) => <OddsIcon color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Futures"
+        component={HideNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <Futures color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -87,18 +164,32 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <NewsIcon color={color} />,
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Sportsbooks"
         component={SportsbooksNavigator}
         options={{
           tabBarIcon: ({ color }) => <SportsbooksIcon color={color} />,
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Podcast"
         component={PodcastNavigator}
         options={{
           tabBarIcon: ({ color }) => <PodcastIcon color={color} />,
+        }}
+      />
+      {/* <BottomTab.Screen
+        name="State Guides"
+        component={StateBetNavigation}
+        options={{
+          tabBarIcon: ({ color }) => <BetGuid color={color} />,
+        }}
+      /> */}
+      <BottomTab.Screen
+        name="How To Bet"
+        component={HowToBetNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <HowToBet color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -117,7 +208,7 @@ export function HomeNavigator() {
         component={HomeScreen}
         options={{
           headerTitle: "Home",
-          headerLeft: (props) => <HamburgerIcon {...props} />,
+          // headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
       />
     </HomeStack.Navigator>
@@ -134,7 +225,7 @@ export function OddsNavigator() {
         component={OddsScreen}
         options={{
           headerTitle: "Odds",
-          headerLeft: (props) => <HamburgerIcon {...props} />,
+          // headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
         initialParams={{ index: 0 }}
       />
@@ -152,7 +243,16 @@ export function NewsNavigator() {
         component={NewsScreen}
         options={{
           headerTitle: "News",
-          headerLeft: (props) => <HamburgerIcon {...props} />,
+          // headerLeft: (props) => <HamburgerIcon {...props} />,
+        }}
+        initialParams={{ index: 0 }}
+      />
+      <NewsStack.Screen
+        name="NewsDetail"
+        component={NewDetailScreen}
+        options={{
+          headerTitle: "News",
+          headerLeft: (props) => <BackIcon />,
         }}
       />
     </NewsStack.Navigator>
@@ -169,7 +269,7 @@ export function SportsbooksNavigator() {
         component={SportsbooksScreen}
         options={{
           headerTitle: "Sportsbooks",
-          headerLeft: (props) => <HamburgerIcon {...props} />,
+          // headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
       />
     </SportsbooksStack.Navigator>
@@ -186,7 +286,7 @@ export function PodcastNavigator() {
         component={PodcastScreen}
         options={{
           headerTitle: "Podcast",
-          headerLeft: (props) => <HamburgerIcon {...props} />,
+          // headerLeft: (props) => <HamburgerIcon {...props} />,
         }}
       />
       <PodcastStack.Screen

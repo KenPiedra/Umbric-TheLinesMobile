@@ -12,17 +12,28 @@ import { WebView } from "react-native-webview";
 import { RouteProp, useRoute } from "@react-navigation/core";
 
 import { Text, View, useThemeColor } from "../components/Themed";
-import { StateBetGuideParmList } from "../types";
+import { StateBetGuideParamList } from "../types";
 
 // create a component
 const StateBettingGuide = () => {
   // const color = useThemeColor({}, "text");
   // const bgcolor = useThemeColor({}, "background");
   const { params } =
-    useRoute<RouteProp<StateBetGuideParmList, "StateBetGuide">>();
+    useRoute<RouteProp<StateBetGuideParamList, "StateBetGuideHome">>();
+  const jscode = `
+      document.querySelectorAll(".container")[0].remove();
+      document.querySelectorAll(".site-content")[0].setAttribute('style', 'top: -62px');
+      true;
+  `;
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <WebView source={{ uri: params.link }} />
+      <WebView
+        source={{ uri: params.link }}
+        injectedJavaScript={jscode}
+        injectedJavaScriptBeforeContentLoaded={jscode}
+        onMessage={(event) => {}}
+      />
       {/* <ScrollView style={[{ backgroundColor: bgcolor }, styles.container]}>
         <Text style={styles.smallTitle}>some heading</Text>
         <Text style={styles.title}>Single Line Header</Text>

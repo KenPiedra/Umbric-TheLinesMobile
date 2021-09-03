@@ -48,7 +48,6 @@ export default function PodcastListItem(props: PodcastListItemProps) {
   return (
     <TouchableHighlight onPress={() => _linkToBrowser()}>
       <View style={styles.container}>
-        <Image style={styles.thumb} source={{ uri: Thumb }} />
         <View style={styles.desc}>
           <Text style={styles.title} numberOfLines={1}>
             {Title}

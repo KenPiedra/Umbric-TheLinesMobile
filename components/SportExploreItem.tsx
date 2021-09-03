@@ -1,22 +1,43 @@
 //import liraries
-import React, { Component } from "react";
-import { StyleSheet, Image } from "react-native";
-import { League } from "../types";
+import React from "react";
+import { StyleSheet, Image, TouchableOpacity } from "react-native";
+import { DrawerStackParmList, League } from "../types";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
 import { View, Text, useThemeColor } from "./Themed";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { setDrawerItemIndex } from "../actions/appAction";
+
 type SportExploreItemProps = {
   item: League;
 };
+
 // create a component
 const SportExploreItem = (props: SportExploreItemProps) => {
+  const dispatch = useDispatch();
   const { item } = props;
   const colorMain = useThemeColor({}, "text");
+  const navigation = useNavigation<DrawerNavigationProp<DrawerStackParmList>>();
+  const obj = { MLB: 3, NBA: 1, NFL: 2, CFB: 4 };
   if (item) {
     return (
-      <View style={[styles.container, { borderColor: colorMain }]}>
-        <Image source={item.Image} style={styles.image} resizeMode="contain" />
-        <Text style={styles.text}>{item.Name}</Text>
-      </View>
+      <TouchableOpacity
+        style={{ flex: 1 }}
+        onPress={() => {
+          navigation.openDrawer();
+          dispatch(setDrawerItemIndex(obj[item.Name]));
+        }}
+      >
+        <View style={[styles.container, { borderColor: colorMain }]}>
+          <Image
+            source={item.Image}
+            style={styles.image}
+            resizeMode="contain"
+          />
+          <Text style={styles.text}>{item.Name}</Text>
+        </View>
+      </TouchableOpacity>
     );
   } else return null;
 };
@@ -24,9 +45,9 @@ const SportExploreItem = (props: SportExploreItemProps) => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    height: 48,
+    height: 46,
     flexDirection: "row",
-    borderRadius: 8,
+    borderRadius: 10,
     flex: 1,
     alignItems: "center",
     backgroundColor: "#fff",

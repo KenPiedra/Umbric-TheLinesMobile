@@ -1,40 +1,40 @@
 //import liraries
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { useNavigation } from "@react-navigation/native";
 import React, { Component } from "react";
 import { StyleSheet, ScrollView, SafeAreaView } from "react-native";
 
 import { View, useThemeColor, Text } from "../../components/Themed";
+import { DrawerStackParmList } from "../../types";
 import DrawerHeader from "./components/header";
 import MenuItem from "./components/MenuItem";
 import { MenuItemProps } from "./index";
 
-type NBAScreenProps = {
+type MLBScreenProps = {
   handleBack: () => void;
 };
 // create a component
-const NBAScreen = (props: NBAScreenProps) => {
+const MLBScreen = (props: MLBScreenProps) => {
+  const navigation = useNavigation<DrawerNavigationProp<DrawerStackParmList>>();
   const bgColor = useThemeColor({}, "background");
   const tintColor = useThemeColor({}, "inactive");
   const backendData: MenuItemProps[] = [
-    { name: "Futures", hasNav: false },
-    { name: "Power Rankings", hasNav: false },
-    { name: "Game Previews", hasNav: false },
-    { name: "Odds", hasNav: false },
-    { name: "News", hasNav: false },
-  ];
-  const subBackendData = [
-    { name: "NBA Finals", hasNav: false },
+    { name: "World Series", hasNav: false },
     { name: "MVP", hasNav: false },
-    { name: "Rookie", hasNav: false },
+    { name: "Cy Young", hasNav: false },
+    { name: "Win Totals", hasNav: false },
   ];
+
+  const handleOnClick = () => {};
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ paddingHorizontal: 16 }}>
         <DrawerHeader handleBack={props.handleBack} />
       </View>
       <ScrollView style={[styles.container, { backgroundColor: bgColor }]}>
-        <Text style={[{ color: tintColor }, styles.title]}>NBA</Text>
+        <Text style={[{ color: tintColor }, styles.title]}>MLB</Text>
         {backendData.map((item, index) => {
-          return <MenuItem item={item} key={index} onClick={() => {}} />;
+          return <MenuItem item={item} key={index} onClick={handleOnClick} />;
         })}
       </ScrollView>
     </SafeAreaView>
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default NBAScreen;
+export default MLBScreen;

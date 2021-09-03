@@ -89,7 +89,6 @@ export default function ScrollableTabNavigator(props: ScrollableTabViewProps) {
 
   return (
     <ScrollableTabView
-      initialPage={0}
       tabBarActiveTextColor={Colors[colorScheme].text}
       tabBarInactiveTextColor={Colors[colorScheme].inactive}
       tabBarTextStyle={styles.tabbartext}

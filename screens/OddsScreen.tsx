@@ -80,6 +80,8 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
   }
 
   onLeagueChanged(i: number) {
+    console.log("i value", i);
+    console.log("active league value", this.state.activeLeague);
     if (this.state.activeLeague !== i) {
       this.setState({ activeLeague: i }, () => {
         this.loadGameData();
@@ -129,8 +131,9 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
         <ScrollableTabNavigator
           initialPage={this.props.route.params.index}
           onChangeTab={({ i }: { i: number }) => this.onLeagueChanged(i)}
+          locked={true}
         >
-          {state.leagues.map((league, index) => (
+          {state.leagues.map((league) => (
             <TabView
               style={styles.view}
               key={league.Value}
@@ -145,15 +148,6 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
                     setValue={this.setType}
                   />
                 </View>
-                <View style={{ width: 28 }} />
-                <View style={styles.select}>
-                  <Text style={styles.selectLabel}>State</Text>
-                  <DropDownPicker
-                    value={state.location}
-                    items={state.locations}
-                    setValue={this.setLocation}
-                  />
-                </View>
               </View>
               {state.isLoadingGameData ? (
                 <LoadingSpinner />
@@ -162,7 +156,6 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
                   data={state.oddsBoardData}
                   league={league.Name}
                   market={state.type}
-                  location={state.location}
                 />
               )}
             </TabView>

@@ -1,9 +1,17 @@
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ScrollView,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import { Table, Row } from "react-native-table-component";
-import { SvgUri } from "react-native-svg";
 import { Text, TouchableWithNavigation, View, ViewProps } from "./Themed";
 import { Game, GameOdd } from "../types";
+import * as API from "../services/api";
+import { SportBookItemType } from "../types/Sportsbooks";
 
 type BetStyle = "modern" | "vegas" | "classic" | undefined;
 type Market = "Spread" | "MoneyLine" | "OverUnder" | undefined;
@@ -12,11 +20,16 @@ interface OddsBoardProps extends ViewProps {
   betStyle: BetStyle;
   market: Market;
   league: string;
-  location: string;
   data: Game[];
   showConsensus: boolean;
 }
 
+type OddBoardState = {
+  showSecondCol: boolean;
+  providers: SportBookItemType[];
+  games: Game[];
+  rendering: boolean;
+};
 /**
  * Following values came from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2
  */
@@ -59,238 +72,65 @@ function mb_formatSpread(value: number) {
   return "";
 }
 
-const SportsbookToProvider: { [key: string]: string } = {
-  PointsBet: "POINTSBET",
-  BetMGM: "MGM",
-  WilliamHill: "WILLIAM_HILL",
-  DraftKings: "DRAFTKINGS",
-  FanDuel: "FANDUEL",
-  RiversCasino: "BET_RIVERS",
-  Unibet: "UNIBET",
-  SugarHouse: "SUGAR_HOUSE",
-  "888SportNJ": "SPORT_888",
-  // '': 'BET_AMERICA',
-  // '': 'CAESARS',
-  // '': 'CANTOR',
-  // '': 'CIRCA',
-  // '': 'COAST',
-  // '': 'GOLDEN_NUGGET',
-  // '': 'MIRAGE',
-  // '': 'SOUTH_POINT',
-  // '': 'WESTGATE',
-  // '': 'WYNN',
-  // '': 'FOXBET',
-  // '': 'RESORTS',
-};
-
-export default class OddsBoardComponent extends React.Component<OddsBoardProps> {
+export default class OddsBoardComponent extends React.Component<
+  OddsBoardProps,
+  OddBoardState
+> {
   static defaultProps = {
     betStyle: "classic",
     showConsensus: false,
   };
-
-  /**
-   * Decoded from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 4880
-   */
-  mb_getCurrentLocation(location?: string): string {
-    if (this.props.location) {
-      return this.props.location.toUpperCase();
-    } else if (location) {
-      return location.toUpperCase();
-    } else {
-      return "NJ";
-    }
+  state = {
+    showSecondCol: false,
+    providers: [],
+    games: [],
+    rendering: false,
+  };
+  componentDidMount() {
+    this.setState({ rendering: true });
+    this.getOddsBoardData();
   }
+  async mb_getProvidersForLocation() {
+    let providers: SportBookItemType[] = await API.getSportsbooks();
+    const filtered: SportBookItemType[] = providers.filter(
+      (item: SportBookItemType) => !!item.logo
+    );
+    const ruleAry = {
+      DraftKings: 1,
+      BetMGM: 2,
+      Caesars: 3,
+      FanDuel: 4,
+      UNIBET: 5,
+      PointsBet: 6,
+      FoxBet: 7,
+      SugarHouse: 8,
+      "888Sportsbook": 9,
+    };
 
-  /**
-   * Decoded from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 4897
-   */
-  mb_getProvidersForLocation(location: string) {
-    //If a location isn't explicitly specified, get the user preference
-    if (!location) {
-      location = this.mb_getCurrentLocation();
-    }
-
-    //Set the list of providers based on the location
-    let providers = [];
-    location = location.toUpperCase();
-    if (location == "CO") {
-      providers = [
-        "POINTSBET",
-        "MGM",
-        "WILLIAM_HILL",
-        "DRAFTKINGS",
-        "FANDUEL",
-        "BET_RIVERS_CO",
-      ];
-    } else if (location == "DC") {
-      providers = ["MGM"];
-    } else if (location == "IA") {
-      providers = [
-        "POINTSBET",
-        "MGM",
-        "WILLIAM_HILL",
-        "DRAFTKINGS",
-        "FANDUEL",
-        "BET_RIVERS_IA",
-      ];
-    } else if (location == "IL") {
-      providers = ["POINTSBET", "DRAFTKINGS", "FANDUEL", "BET_RIVERS_IL"];
-      // if (RUWT_SITE_ID == "actionrush") {
-      //   providers.splice(1, 0, "WILLIAM_HILL");
-      // }
-    } else if (location == "IN") {
-      providers = [
-        "POINTSBET",
-        "MGM",
-        "WILLIAM_HILL",
-        "UNIBET",
-        "DRAFTKINGS",
-        "FANDUEL",
-        "BET_RIVERS_IN",
-        "BET_AMERICA",
-      ];
-    } else if (location == "MI") {
-      providers = [
-        "DRAFTKINGS",
-        "FANDUEL",
-        "MGM",
-        "POINTSBET",
-        "WILLIAM_HILL",
-        "BET_RIVERS_MI",
-      ];
-    } else if (location == "NJ") {
-      providers = [
-        "POINTSBET",
-        "MGM",
-        "WILLIAM_HILL",
-        "UNIBET",
-        "DRAFTKINGS",
-        "FANDUEL",
-        "SUGAR_HOUSE_NJ",
-        "BET_AMERICA",
-      ];
-    } else if (location == "NV" && RUWT_SITE_FAMILY_CATENA) {
-      providers = ["MGM", "WILLIAM_HILL"];
-    } else if (location == "NV") {
-      providers = [
-        "CAESARS_NV",
-        "CANTOR_NV",
-        "CIRCA_NV",
-        "COAST_NV",
-        "GOLDEN_NUGGET_NV",
-        "MIRAGE_NV",
-        "SOUTH_POINT_NV",
-        "WESTGATE_NV",
-        "WILLIAM_HILL_NV",
-        "WYNN_NV",
-      ];
-    } else if (location == "PA") {
-      providers = [
-        "MGM",
-        "UNIBET",
-        "DRAFTKINGS",
-        "FANDUEL",
-        "BET_RIVERS_PA",
-        "BET_AMERICA",
-      ];
-    } else if (location == "TN") {
-      providers = ["MGM", "DRAFTKINGS", "FANDUEL"];
-      if (RUWT_SITE_FAMILY_CATENA) {
-        providers.push("WILLIAM_HILL");
+    let nicNames: string[] = [];
+    for (let i = 0; i < filtered.length; i++) {
+      const element = filtered[i];
+      if (!nicNames.includes(element.nice_name)) {
+        nicNames.push(element.nice_name);
+      } else {
+        filtered.splice(i, 1);
+        continue;
       }
-    } else if (location == "VA") {
-      providers = [
-        "MGM",
-        "WILLIAM_HILL",
-        "DRAFTKINGS",
-        "FANDUEL",
-        "BET_RIVERS_VA",
-      ];
-      if (RUWT_SITE_FAMILY_CATENA) {
-        providers.push("UNIBET");
+      element.sortId = ruleAry[element.nice_name]
+        ? ruleAry[element.nice_name]
+        : 100;
+    }
+    filtered.sort((a, b) => {
+      if (!!!a.sortId && !!!b.sortId) {
+        return 1;
+      } else if (!!!a.sortId && b.sortId) {
+        return -1;
+      } else if (a.sortId && b.sortId) {
+        return a.sortId - b.sortId;
       }
-    } else if (location == "WV") {
-      providers = ["MGM", "WILLIAM_HILL", "DRAFTKINGS", "FANDUEL"];
-    } else {
-      providers = [
-        "POINTSBET",
-        "MGM",
-        "WILLIAM_HILL",
-        "UNIBET",
-        "DRAFTKINGS",
-        "FANDUEL",
-        "BET_RIVERS_PA",
-        "SUGAR_HOUSE_NJ",
-        "BET_AMERICA",
-      ];
-    }
-
-    // //If a subset of allowed providers is set, filter
-    // //out providers in this location that don't match.
-    // var allowedProviders = null;
-    // if (allowedProviders) {
-    //   var intersection = [];
-    //   for (let i = 0; i < allowedProviders.length; i++) {
-    //     for (var j=0; j<providers.length; j++) {
-    //       if ((providers[j] == allowedProviders[i]) || providers[j].match(allowedProviders[i] + "_[A-Z]{2}")) {
-    //         intersection.push(providers[j]);
-    //       }
-    //     }
-    //   }
-    //   providers = intersection;
-    // }
-
-    //Remove any excluded providers
-    var excludedProviders = ["BET_AMERICA"];
-    if (excludedProviders) {
-      var intersection = providers.slice();
-      for (var i = 0; i < excludedProviders.length; i++) {
-        for (var j = 0; j < providers.length; j++) {
-          if (
-            providers[j] == excludedProviders[i] ||
-            providers[j].match(excludedProviders[i] + "_[A-Z]{2}")
-          ) {
-            intersection.splice(intersection.indexOf(providers[j]), 1);
-          }
-        }
-      }
-      providers = intersection;
-    }
-
-    //If some providers are prioritized, move them to the front of the list
-    var prioritizedProviders = [
-      "DRAFTKINGS",
-      "WILLIAM_HILL",
-      "FANDUEL",
-      "FOXBET",
-      "MGM",
-      "POINTSBET",
-      "SUGAR_HOUSE",
-      "UNIBET",
-    ];
-    if (prioritizedProviders) {
-      var intersection = providers.slice();
-      for (var i = prioritizedProviders.length - 1; i >= 0; i--) {
-        for (var j = 0; j < providers.length; j++) {
-          if (
-            providers[j] == prioritizedProviders[i] ||
-            providers[j].match(prioritizedProviders[i] + "_[A-Z]{2}")
-          ) {
-            intersection.splice(intersection.indexOf(providers[j]), 1);
-            intersection.unshift(providers[j]);
-          }
-        }
-      }
-      providers = intersection;
-    }
-
-    // Prepend the Consensus line
-    if (this.props.showConsensus) {
-      providers.unshift("CONSENSUS");
-    }
-
-    return providers;
+      return 1;
+    });
+    return filtered;
   }
 
   mb_hasGameStarted(game: Game): boolean {
@@ -306,63 +146,21 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
     return false;
   }
 
-  /**
-   * Decoded from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 5001
-   */
-  mb_getProviderPromo(provider: string): string {
-    if (provider == "BET_AMERICA_NJ") {
-      return "$1,000 Risk-Free Bet";
-    } else if (provider.indexOf("BET_AMERICA") == 0) {
-      return "Bet $50, Get $50";
-    } else if (provider.indexOf("BET_RIVERS") == 0) {
-      return "$250 Deposit Match";
-    } else if (provider.indexOf("CAESARS") == 0) {
-      return "$10 Cash + $300 Deposit Match";
-    } else if (provider.indexOf("DRAFTKINGS") == 0) {
-      return "$1,050 Bonus";
-    } else if (provider.indexOf("FANDUEL") == 0) {
-      return "$1,000 Risk-Free Bet";
-    } else if (provider.indexOf("FOXBET") == 0) {
-      return "$500 Risk-Free Bet + $500 Deposit Bonus";
-    } else if (provider.indexOf("MGM") == 0) {
-      return "$600 Risk-Free Bet";
-    } else if (provider.indexOf("POINTSBET") == 0) {
-      return "$2,000 Risk-Free Bets";
-    } else if (provider.indexOf("RESORTS") == 0) {
-      return "$250 Risk-Free Bet";
-    } else if (provider.indexOf("SPORT_888") == 0) {
-      return "$500 Risk-Free Bet";
-    } else if (provider.indexOf("SUGAR_HOUSE") == 0) {
-      return "$250 Deposit Match";
-    } else if (provider.indexOf("UNIBET") == 0) {
-      return "$600 Risk-Free Bet";
-    } else if (provider.indexOf("WILLIAM_HILL") == 0) {
-      return "$500 Risk-Free Bet";
-    } else {
-      return "Sign up Now!";
-    }
-  }
-
-  /**
-   * Please refer https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 1957
-   */
-  getOddsBoardData(): { providers: string[]; games: Game[] } {
-    let providers = this.mb_getProvidersForLocation(this.props.location);
+  async getOddsBoardData() {
+    let providers = await this.mb_getProvidersForLocation();
 
     // Calculate the end date of the window of games to display
     let endDate = new Date();
     if (this.props.data.length > 0) {
       let game = this.props.data[0];
       // By default, the end date will be a week after the first game
-      endDate.setTime(
-        new Date(game.DateTime).getTime() + 1000 * 60 * 60 * 24 * 6.5
-      );
+      endDate.setTime(new Date(game.Day).getTime() + 1000 * 60 * 60 * 24 * 6.5);
     }
 
     // Filter and trim full list of games
     let games = this.props.data.filter((game: Game): boolean => {
       // Ignore games too far out in the future
-      if (new Date(game.DateTime) > endDate) {
+      if (new Date(game.Day) > endDate) {
         return false;
       }
 
@@ -377,18 +175,30 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
         return false;
       }
 
-      //Only include this game if it has odds posted from one of the providers
-      //we want to display
+      // Only include this game if it has odds posted from one of the providers
+      // we want to display
       for (let odd of game.PregameOdds) {
-        if (providers.indexOf(odd.Sportsbook.toUpperCase()) !== -1) {
+        if (
+          providers
+            .map((provider) => provider.SportsDataId)
+            .includes(odd.SportsbookId)
+        ) {
           return true;
         }
       }
 
       return false;
     });
-
-    return { providers, games };
+    // Add empty string into providers for row header cell
+    const virtualProvider = {
+      _id: -1,
+      SportsDataId: -1,
+      Sportsbook: "",
+      list_offer: false,
+      nice_name: "",
+    };
+    providers.unshift(virtualProvider);
+    this.setState({ providers, games, rendering: false });
   }
 
   renderNoOdds() {
@@ -401,67 +211,65 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
     );
   }
 
-  /**
-   * Decoded from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 5001
-   *
-   * Create an anchor link for the specified provider and location.
-   * Consensus and books in Nevada will return links without hrefs.
-   */
-  getProviderRedirect(provider: string, location: string) {
-    // Exit if we don't have a URL to set on this link
-    if (
-      !provider ||
-      provider == "CONSENSUS" ||
-      (provider.match(".+_NV") && !RUWT_SITE_FAMILY_CATENA)
-    ) {
-      return;
-    }
-
-    // Return the location-tagged URL for the provider, with the customer's domain
-    if (RUWT_ENABLE_OUTBOUND_LINKS) {
+  renderImage(id: number) {
+    if (id === 7) {
       return (
-        RUWT_REDIRECT_URL +
-        provider.toLowerCase() +
-        (!/.+_[a-z]{2}$/.test(provider.toLowerCase())
-          ? "_" + location.toLowerCase()
-          : "")
+        <Image
+          source={require("../assets/images/DraftKings.png")}
+          style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+        />
       );
     }
-  }
-
-  getProviderLogo(provider: string, location: string): string {
-    if (!provider) return "";
-
-    let logoName = provider.replace(/_[A-Z]{2}$/, "");
-    if (logoName == "BET_AMERICA" && (location == "IN" || location == "PA")) {
-      logoName = "twinspires";
+    if (id === 21) {
+      return (
+        <Image
+          source={require("../assets/images/BetMGM.png")}
+          style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+        />
+      );
     }
-    return `https://go.metabet.io/img/sportsbooks/landscape/${logoName.toLowerCase()}.svg`;
+    if (id === 8) {
+      return (
+        <Image
+          source={require("../assets/images/FanDuel.png")}
+          style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+        />
+      );
+    }
+    if (id === 23) {
+      return (
+        <Image
+          source={require("../assets/images/PointsBet.png")}
+          style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+        />
+      );
+    }
+    return null;
   }
-
-  renderProviderCell(provider: string) {
-    let providerRedirect = this.getProviderRedirect(
-      provider,
-      this.props.location
-    );
-    let providerLogoUrl = this.getProviderLogo(provider, this.props.location);
-
+  renderProviderCell(provider: SportBookItemType) {
+    const isSVG = provider.logo && provider.logo.slice(-4).includes("svg");
     return (
       <View style={styles.cellStyle}>
-        {provider && provider != "CONSENSUS" ? (
-          <TouchableWithNavigation url={providerRedirect}>
+        {provider && provider.logo ? (
+          <TouchableWithNavigation url={provider.review_link}>
             <View>
               <View style={styles.providerLogo}>
-                <SvgUri
-                  width="100%"
-                  height="100%"
-                  uri={providerLogoUrl}
-                  preserveAspectRatio="xMidYMid meet"
-                />
+                {isSVG ? (
+                  this.renderImage(provider._id)
+                ) : (
+                  <Image
+                    source={{ uri: provider.logo }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      resizeMode: "contain",
+                    }}
+                  />
+                )}
               </View>
-              <Text style={styles.providerPromo}>
-                {this.mb_getProviderPromo(provider)}
-              </Text>
+              <View style={{ height: 40 }}>
+                <Text style={styles.providerPromo}>{provider.bonus_text}</Text>
+              </View>
             </View>
           </TouchableWithNavigation>
         ) : (
@@ -476,7 +284,9 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
       let hour = parseInt(datetime.substring(11, 13));
       let minute = datetime.substring(14, 16);
       let AP = hour < 12 ? "A" : "P";
-      hour = hour % 12;
+      if (hour != 12) {
+        hour = hour % 12;
+      }
       return `${hour}:${minute}${AP}`;
     };
 
@@ -489,24 +299,6 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
         </Text>
       </View>
     );
-  }
-
-  getProviderFromSportsbook(
-    sportsbook: string,
-    providers?: string[]
-  ): string | undefined {
-    // Remove location code
-    sportsbook = sportsbook.replace(/_[A-Z]{2}$/, "");
-
-    let provider: string | undefined = SportsbookToProvider[sportsbook];
-    if (!provider && providers) {
-      sportsbook = sportsbook.toUpperCase();
-      provider = providers.find(
-        (provider: string) => sportsbook == provider.replace("_", "")
-      );
-    }
-
-    return provider;
   }
 
   /**
@@ -591,11 +383,13 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
     }
   }
 
-  renderGameOddCell(game: Game, provider: string) {
-    let odds = game.PregameOdds.find(
-      (odd: GameOdd) =>
-        this.getProviderFromSportsbook(odd.Sportsbook) == provider
-    );
+  renderGameOddCell(game: Game, provider: SportBookItemType) {
+    let odds = game.PregameOdds.find((odd: GameOdd) => {
+      return (
+        provider.nice_name.includes(odd.Sportsbook) ||
+        odd.Sportsbook == provider.Sportsbook
+      );
+    });
 
     // Ignore any lines that are excessively stale
     if (odds) {
@@ -604,7 +398,6 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
         odds = undefined;
       }
     }
-
     return (
       <View style={styles.cellStyle}>
         {odds && (
@@ -624,52 +417,129 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
   }
 
   render() {
-    const { providers, games } = this.getOddsBoardData();
-
+    const { providers, games } = this.state;
+    const { showSecondCol } = this.state;
     // Show an empty message and exit if we don't have games to show
-    if (games.length == 0) {
+    if (games.length == 0 || providers.length == 0) {
+      if (this.state.rendering) {
+        return (
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <ActivityIndicator size="large" />
+          </View>
+        );
+      }
       return this.renderNoOdds();
     }
-
-    // Add empty string into providers for row header cell
-    providers.unshift("");
-
     const headerColumnWidth = 84,
       dataColumnWidth = 106;
     let widthArr = Array(providers.length);
     widthArr.fill(dataColumnWidth);
     widthArr[0] = headerColumnWidth;
-
+    const rowHeight = 100;
     return (
       <View style={styles.container}>
-        <ScrollView horizontal>
-          <View>
-            <Table borderStyle={styles.borderStyle}>
-              <Row
-                data={providers.map((provider: string) =>
-                  this.renderProviderCell(provider)
-                )}
-                widthArr={widthArr}
-                style={styles.rowStyle}
-              />
-            </Table>
-            <ScrollView style={styles.dataWrapper}>
+        {showSecondCol && (
+          <View style={{ width: headerColumnWidth }}>
+            <View
+              style={[
+                styles.borderStyle,
+                { height: 101, width: headerColumnWidth },
+              ]}
+            />
+            <ScrollView
+              ref={"headerScroll"}
+              scrollEventThrottle={16}
+              style={[styles.dataWrapper, { width: headerColumnWidth }]}
+              onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) => {
+                if (!!!this.refs.mainScroll) {
+                  return;
+                }
+                this.refs.mainScroll.scrollTo({
+                  y: e.nativeEvent.contentOffset.y,
+                  animated: false,
+                });
+              }}
+            >
               <Table borderStyle={styles.borderStyle}>
                 {games.map((game: Game, index: number) => (
                   <Row
                     key={index}
-                    data={providers.map((provider: string, index: number) => {
-                      if (index == 0 && !provider) {
-                        return this.renderGameHeaderCell(game);
-                      } else {
-                        return this.renderGameOddCell(game, provider);
-                      }
-                    })}
-                    widthArr={widthArr}
+                    data={[this.renderGameHeaderCell(game)]}
+                    style={{ height: rowHeight }}
                   />
                 ))}
               </Table>
             </ScrollView>
+          </View>
+        )}
+        <ScrollView
+          horizontal
+          ref={"horizontal"}
+          scrollEventThrottle={16}
+          onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) => {
+            console.log(new Date(), e.nativeEvent.contentOffset.x);
+            if (
+              e.nativeEvent.contentOffset.x > headerColumnWidth &&
+              !showSecondCol
+            ) {
+              this.setState({ showSecondCol: true });
+            }
+            if (
+              e.nativeEvent.contentOffset.x < headerColumnWidth &&
+              showSecondCol
+            ) {
+              this.setState({ showSecondCol: false });
+            }
+          }}
+        >
+          <View>
+            <View style={{ flexDirection: "row" }}>
+              <Table borderStyle={styles.borderStyle}>
+                <Row
+                  data={providers.map((provider: SportBookItemType) =>
+                    this.renderProviderCell(provider)
+                  )}
+                  widthArr={widthArr}
+                  style={styles.rowStyle}
+                />
+              </Table>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <ScrollView
+                style={styles.dataWrapper}
+                ref={"mainScroll"}
+                scrollEventThrottle={16}
+                onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) => {
+                  if (!!!this.refs.headerScroll) {
+                    return;
+                  }
+                  this.refs.headerScroll.scrollTo({
+                    y: e.nativeEvent.contentOffset.y,
+                    animated: false,
+                  });
+                }}
+              >
+                <Table borderStyle={styles.borderStyle}>
+                  {games.map((game: Game, index: number) => (
+                    <Row
+                      key={index}
+                      data={providers.map(
+                        (provider: SportBookItemType, index: number) => {
+                          if (index == 0) {
+                            return this.renderGameHeaderCell(game);
+                          } else {
+                            return this.renderGameOddCell(game, provider);
+                          }
+                        }
+                      )}
+                      widthArr={widthArr}
+                      style={{ height: rowHeight }}
+                    />
+                  ))}
+                </Table>
+                <View style={{ height: rowHeight }} />
+              </ScrollView>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -680,6 +550,7 @@ export default class OddsBoardComponent extends React.Component<OddsBoardProps> 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "row",
   },
   emptyOdds: {
     alignItems: "center",
@@ -697,7 +568,9 @@ const styles = StyleSheet.create({
   dataWrapper: {
     marginTop: -1,
   },
-  rowStyle: {},
+  rowStyle: {
+    height: 100,
+  },
   cellStyle: {
     padding: 8,
   },
@@ -720,7 +593,7 @@ const styles = StyleSheet.create({
   gameCellStyle: {
     paddingTop: 8,
     paddingBottom: 8,
-    paddingLeft: 24,
+    alignItems: "center",
   },
   gameCellTextStyle: {
     fontWeight: "800",

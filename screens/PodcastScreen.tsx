@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
 
-import { Text, View } from "../components/Themed";
+import { Text, View, TabView, SmallLoadingSpinner } from "../components/Themed";
 import PodcastListItem from "../components/PodcastListItem";
 import ScrollableTabNavigator from "../navigation/ScrollableTabNavigator";
 import * as API from "../services/api";
@@ -33,28 +33,28 @@ export default class PodcastScreen extends React.Component<
     refreshing: false,
   };
 
-  _fetchPodcasts = (lastItemTime?: Date) => {
+  _fetchPodcasts = (PostedAt: string | null) => {
     let categoryId = this.state.categories[this.state.activeCategory].Id;
     const ItemsToLoad = 10;
-    API.getPodcasts(categoryId, ItemsToLoad, lastItemTime)
+    API.getPodcasts(categoryId, ItemsToLoad, PostedAt)
       .then((items) => {
         let newData = this.state.refreshing
           ? items
           : [...this.state.data, ...items];
-        this.setState((prevState, nextProps) => ({
+        this.setState({
           data: newData,
           noMoreLoad: items.length < ItemsToLoad,
-        }));
+        });
       })
       .catch((err) => {
         console.error(err);
       })
       .finally(() => {
-        this.setState((prevState, nextProps) => ({
+        this.setState({
           loading: false,
           loadingMore: false,
           refreshing: false,
-        }));
+        });
       });
   };
 
@@ -62,12 +62,10 @@ export default class PodcastScreen extends React.Component<
     if (!this.state.noMoreLoad) {
       let lastItemTime: any = null;
       if (this.state.data.length > 0) {
-        lastItemTime = this.state.data.slice(-1)[0]["PostedAt"];
+        lastItemTime = this.state.data.slice(-1)[0]["PostedAtIso"];
       }
-
-      this.setState(
-        (prevState, nextProps) => ({ loadingMore: true }),
-        () => this._fetchPodcasts(lastItemTime)
+      this.setState({ loadingMore: true }, () =>
+        this._fetchPodcasts(lastItemTime)
       );
     }
   }
@@ -78,7 +76,7 @@ export default class PodcastScreen extends React.Component<
         refreshing: true,
       },
       () => {
-        this._fetchPodcasts();
+        this._fetchPodcasts(null);
       }
     );
   };
@@ -108,21 +106,51 @@ export default class PodcastScreen extends React.Component<
         <ScrollableTabNavigator
           onChangeTab={({ i }: { i: number }) => this.onCategoryChanged(i)}
         >
-          {this.state.categories.map((category, index) => (
-            <FlatList
-              key={index}
-              tabLabel={category.Name}
-              contentContainerStyle={styles.wrap}
-              data={this.state.data}
-              initialNumToRender={10}
-              renderItem={({ item }) => <PodcastListItem data={item} />}
-              keyExtractor={(item, index) => index.toString()}
-              onEndReached={() => this._handleLoadMore()}
-              onEndReachedThreshold={0.5}
-              onRefresh={this._handleRefresh}
-              refreshing={this.state.refreshing}
-            />
-          ))}
+          {this.state.categories.map((category, index) =>
+            this.state.data.length > 0 || this.state.refreshing ? (
+              <FlatList
+                key={index}
+                tabLabel={category.Name}
+                contentContainerStyle={styles.wrap}
+                data={this.state.data}
+                initialNumToRender={10}
+                renderItem={({ item }) => <PodcastListItem data={item} />}
+                keyExtractor={(item, index) => index.toString()}
+                onEndReached={() => {
+                  console.log("reached end");
+                  if (!this.state.loadingMore) {
+                    this._handleLoadMore();
+                  }
+                }}
+                onEndReachedThreshold={0.5}
+                onRefresh={this._handleRefresh}
+                refreshing={this.state.refreshing}
+                ListFooterComponent={() =>
+                  this.state.loadingMore && !this.state.refreshing ? (
+                    <View style={styles.loadingMore}>
+                      <SmallLoadingSpinner />
+                    </View>
+                  ) : null
+                }
+              />
+            ) : (
+              <TabView
+                style={styles.view}
+                key={category.Id}
+                tabLabel={category.Name}
+              >
+                <View style={styles.emptyOdds}>
+                  <Text style={styles.errorText}>
+                    {index === 0
+                      ? `We don't have any Podcasts`
+                      : `We don't have any Podcast for ${
+                          this.state.categories[this.state.activeCategory]?.Id
+                        }.`}
+                  </Text>
+                </View>
+              </TabView>
+            )
+          )}
         </ScrollableTabNavigator>
       </View>
     );
@@ -143,10 +171,27 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 30,
   },
-  wrap: {
-    // flex: 1,
-    // flexDirection: 'column',
-    // height: '100%',
-    // width: '100%',
+
+  emptyOdds: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+  errorText: {
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: "center",
+    width: "80%",
+  },
+  view: {
+    flex: 1,
+    justifyContent: "flex-start",
+    overflow: "scroll",
+  },
+  loadingMore: {
+    width: "100%",
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

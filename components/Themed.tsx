@@ -45,7 +45,7 @@ export type TabViewProps = ViewProps & {
   tabLabel: string;
 };
 export type TouchableWithNavigationProps = ViewProps & {
-  url: string;
+  url: string | undefined;
 };
 
 export function DropDownPicker(props: DropDownPickerProps) {
@@ -76,6 +76,20 @@ export function LoadingSpinner(props: any) {
     <ActivityIndicator
       color={color}
       size="large"
+      style={{ flex: 1 }}
+      {...otherProps}
+    />
+  );
+}
+
+export function SmallLoadingSpinner(props: any) {
+  const { lightColor, darkColor, ...otherProps } = props;
+  const color = useThemeColor({}, "text");
+
+  return (
+    <ActivityIndicator
+      color={color}
+      size="small"
       style={{ flex: 1 }}
       {...otherProps}
     />

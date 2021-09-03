@@ -5,28 +5,39 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { View, useThemeColor, Text } from "../../../components/Themed";
 import SubMenuItem from "./SubMenuItem";
+import { BottomTabParamList, DrawerNavParamList } from "../../../types";
+import { MenuItemProps } from "..";
 // create a component
 type SubItem = {
   name: string;
 };
-type MenuItemProps = {
-  hasNav: boolean;
-  title: string;
-  link?: string;
-  onClick: () => void;
+
+type MenuProps = {
+  item: MenuItemProps;
+  onClick: (
+    route?: keyof DrawerNavParamList | keyof BottomTabParamList | string
+  ) => void;
   subMenu?: Array<SubItem>;
 };
-const MenuItem = (props: MenuItemProps) => {
+const MenuItem = (props: MenuProps) => {
   const tintColor = useThemeColor({}, "inactive");
   const [isOpen, setisOpen] = useState(false);
+  const { item, onClick } = props;
   return (
     <View>
       <TouchableOpacity
-        onPress={props.onClick}
+        onPress={() => {
+          if (item.nav) {
+            props.onClick(item.nav);
+          }
+          if (item.link) {
+            props.onClick(item.link);
+          }
+        }}
         style={[styles.container, { borderBottomColor: tintColor }]}
       >
-        <Text>{props.title}</Text>
-        {props.hasNav && (
+        <Text>{item.name}</Text>
+        {item.hasNav && (
           <Ionicons
             color={tintColor}
             size={24}
@@ -42,7 +53,7 @@ const MenuItem = (props: MenuItemProps) => {
             <SubMenuItem
               title={item.name}
               key={index}
-              onClick={() => props.onClick(index)}
+              onClick={() => props.onClick("FutureStack")}
             />
           );
         })}

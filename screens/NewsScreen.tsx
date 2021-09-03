@@ -1,16 +1,13 @@
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
-import { StackScreenProps } from "@react-navigation/stack";
 
-import { Text, View } from "../components/Themed";
+import { Text, View, SmallLoadingSpinner } from "../components/Themed";
 import NewsListItem from "../components/NewsListItem";
 import ScrollableTabNavigator from "../navigation/ScrollableTabNavigator";
 import * as API from "../services/api";
-import { RootStackParamList } from "../types";
+import { NewsItemData } from "../types/News";
 
-export default class NewsScreen extends React.Component<{
-  navigation: StackScreenProps<RootStackParamList, "NotFound">;
-}> {
+export default class NewsScreen extends React.Component {
   state = {
     activeCategory: -1,
     categories: [],
@@ -30,10 +27,17 @@ export default class NewsScreen extends React.Component<{
         let newData = this.state.refreshing
           ? newItems
           : [...this.state.data, ...newItems];
-        this.setState((prevState, nextProps) => ({
-          data: newData,
+        let filtered = newData.filter(
+          (item, index, self) =>
+            index ===
+            self.findIndex(
+              (t) => t.Title === item.Title && t.Author === item.Author
+            )
+        );
+        this.setState({
+          data: filtered,
           noMoreLoad: newItems.length < ItemsToLoad,
-        }));
+        });
       })
       .catch((err) => {
         console.error(err);
@@ -53,11 +57,7 @@ export default class NewsScreen extends React.Component<{
       if (this.state.data.length > 0) {
         lastItemTime = this.state.data.slice(-1)[0]["PostedAtIso"];
       }
-      console.log("###", lastItemTime);
-      this.setState(
-        (prevState, nextProps) => ({ loadingMore: true }),
-        () => this._fetchNews(lastItemTime)
-      );
+      this.setState({ loadingMore: true }, () => this._fetchNews(lastItemTime));
     }
   }
 
@@ -73,18 +73,16 @@ export default class NewsScreen extends React.Component<{
   };
 
   componentDidMount() {
-    this.setState((prevState, nextProps) => ({
-      categories: API.getNewsCategories(),
-    }));
+    this.setState({ categories: API.getNewsCategories() });
   }
 
   onCategoryChanged(i: number) {
     if (this.state.activeCategory !== i) {
       this.setState(
-        () => ({
+        {
           activeCategory: i,
           data: [],
-        }),
+        },
         () => {
           this._handleRefresh();
         }
@@ -97,7 +95,9 @@ export default class NewsScreen extends React.Component<{
       <View style={styles.container}>
         <Text style={styles.title}>News</Text>
         <ScrollableTabNavigator
-          onChangeTab={({ i }: { i: number }) => this.onCategoryChanged(i)}
+          onChangeTab={({ i }: { i: number }) => {
+            this.onCategoryChanged(i);
+          }}
         >
           {this.state.categories.map((category, index) => (
             <FlatList
@@ -107,24 +107,31 @@ export default class NewsScreen extends React.Component<{
               data={this.state.data}
               initialNumToRender={10}
               renderItem={({ item, index }) => (
-                <NewsListItem key={index} data={item} />
+                <NewsListItem
+                  key={index}
+                  data={item}
+                  onClick={() => {
+                    this.props.navigation.navigate("NewsDetail", {
+                      link: item.DetailLink,
+                    });
+                  }}
+                />
               )}
               keyExtractor={(item, index) => index.toString()}
-              onEndReached={() => this._handleLoadMore()}
+              onMomentumScrollEnd={() => this._handleLoadMore()}
               onEndReachedThreshold={0.5}
               onRefresh={this._handleRefresh}
               refreshing={this.state.refreshing}
+              ListFooterComponent={() =>
+                this.state.loadingMore && !this.state.refreshing ? (
+                  <View style={styles.loadingMore}>
+                    <SmallLoadingSpinner />
+                  </View>
+                ) : null
+              }
             />
           ))}
         </ScrollableTabNavigator>
-      </View>
-    );
-  }
-
-  renderNewsItem(item: any) {
-    return (
-      <View style={styles.newsitem}>
-        <Text>{item.Title}</Text>
       </View>
     );
   }
@@ -155,5 +162,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 0.5,
     margin: 8,
+  },
+  loadingMore: {
+    width: "100%",
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

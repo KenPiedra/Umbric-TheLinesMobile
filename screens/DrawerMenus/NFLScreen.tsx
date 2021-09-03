@@ -1,42 +1,52 @@
 //import liraries
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import React, { Component } from "react";
 import { StyleSheet, ScrollView, SafeAreaView } from "react-native";
 
 import { View, useThemeColor, Text } from "../../components/Themed";
-import { DrawerStackParmList } from "../../types";
+import { BottomTabParamList, DrawerNavParamList } from "../../types";
 import DrawerHeader from "./components/header";
 import MenuItem from "./components/MenuItem";
+import { MenuItemProps } from "./index";
 
 type NFLScreenProps = {
   handleBack: () => void;
 };
+
 // create a component
 const NFLScreen = (props: NFLScreenProps) => {
-  const navigation = useNavigation<DrawerNavigationProp<DrawerStackParmList>>();
+  const navigation = useNavigation<DrawerNavigationProp<DrawerNavParamList>>();
+  const bottomeNavigation =
+    useNavigation<BottomTabNavigationProp<BottomTabParamList>>();
   const bgColor = useThemeColor({}, "background");
   const tintColor = useThemeColor({}, "inactive");
-  const subBackendData = [
-    { name: "Super Bowl" },
-    { name: "Win Total" },
-    { name: "MVP" },
-    { name: "Rookie" },
-  ];
-  const backendData = [
+
+  const backendData: MenuItemProps[] = [
     { name: "Power Rankings", hasNav: false },
-    { name: "Futures", hasNav: false },
+    { name: "Futures", hasNav: false, nav: "FutureStack" },
     { name: "Game Previews", hasNav: false },
     { name: "NFL Player Props", hasNav: false },
     { name: "Odds", hasNav: false },
-    { name: "News", hasNav: false },
+    { name: "News", hasNav: false, nav: "News" },
   ];
 
-  const handleOnClick = () => {
-    navigation.navigate("FutureStack", {
-      screen: "Future",
-      params: { index: 0 },
-    });
+  const handleOnClick = (
+    route: keyof DrawerStackParmList | keyof BottomTabParamList
+  ) => {
+    if (route == "FutureStack") {
+      navigation.navigate("BottomNav");
+      bottomeNavigation.navigate("Hidden", {
+        screen: "Future",
+        params: { link: 0 },
+      });
+    } else if (route == "News") {
+      bottomeNavigation.navigate<keyof BottomTabParamList>("News", {
+        screen: "NewsScreen",
+        params: { index: 4 },
+      });
+    }
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -46,14 +56,7 @@ const NFLScreen = (props: NFLScreenProps) => {
       <ScrollView style={[styles.container, { backgroundColor: bgColor }]}>
         <Text style={[{ color: tintColor }, styles.title]}>NFL</Text>
         {backendData.map((item, index) => {
-          return (
-            <MenuItem
-              title={item.name}
-              hasNav={item.hasNav}
-              key={index}
-              onClick={handleOnClick}
-            />
-          );
+          return <MenuItem item={item} key={index} onClick={handleOnClick} />;
         })}
       </ScrollView>
     </SafeAreaView>

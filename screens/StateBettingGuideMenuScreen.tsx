@@ -1,29 +1,31 @@
 //import liraries
 import React, { Component } from "react";
-import { StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
-import { View, useThemeColor, Text } from "../../components/Themed";
-import DrawerHeader from "./components/header";
-import MenuItem from "./components/MenuItem";
-import { DrawerNavParamList, BottomTabParamList } from "../../types/Navigation";
-import { MenuItemProps } from ".";
+import { View, useThemeColor, Text } from "../components/Themed";
+// import MenuItem from "./components/MenuItem";
+import { StateBetGuideParamList } from "../types/Navigation";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 type BettingGuideStatesProps = {
   handleBack: () => void;
 };
 // create a component
-const BettingGuideStates = (props: BettingGuideStatesProps) => {
+const StateBettingGuideMenu = (props: BettingGuideStatesProps) => {
   const bgColor = useThemeColor({}, "background");
   const tintColor = useThemeColor({}, "inactive");
-  const drawernavigation =
-    useNavigation<DrawerNavigationProp<DrawerNavParamList>>();
   const navigation =
-    useNavigation<BottomTabNavigationProp<BottomTabParamList>>();
+    useNavigation<StackNavigationProp<StateBetGuideParamList>>();
 
-  const backendData: MenuItemProps[] = [
+  const backendData = [
     {
       name: "NJ Sports Betting",
       hasNav: false,
@@ -92,27 +94,18 @@ const BettingGuideStates = (props: BettingGuideStatesProps) => {
   ];
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ paddingHorizontal: 16 }}>
-        <DrawerHeader handleBack={props.handleBack} />
-      </View>
       <ScrollView style={[styles.container, { backgroundColor: bgColor }]}>
-        <Text style={[{ color: tintColor }, styles.title]}>
-          US Sports Betting Guides
-        </Text>
         {backendData.map((item, index) => {
           return (
-            <MenuItem
-              item={item}
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("StateBetGuideHome", { link: item.link })
+              }
               key={index}
-              onClick={() => {
-                console.log("SDGSDGS&&&&&&");
-                drawernavigation.navigate("BottomNav");
-                navigation.navigate("Hidden", {
-                  screen: "StateBetGuide",
-                  params: { link: item.link },
-                });
-              }}
-            />
+              style={[styles.item, { borderBottomColor: tintColor }]}
+            >
+              <Text style={styles.itemText}>{item.name}</Text>
+            </TouchableOpacity>
           );
         })}
       </ScrollView>
@@ -124,14 +117,23 @@ const BettingGuideStates = (props: BettingGuideStatesProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
   },
   title: {
     marginVertical: 32,
     fontSize: 12,
     fontWeight: "600",
   },
+  item: {
+    height: 50,
+    borderBottomWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  itemText: {
+    marginLeft: 16,
+  },
 });
 
 //make this component available to the app
-export default BettingGuideStates;
+export default StateBettingGuideMenu;

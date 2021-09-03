@@ -8,44 +8,33 @@ import { View, useThemeColor, Text } from "../../components/Themed";
 import { DrawerStackParmList } from "../../types";
 import DrawerHeader from "./components/header";
 import MenuItem from "./components/MenuItem";
+import { MenuItemProps } from "./index";
 
-type MLBScreenProps = {
+type CFBScreenProps = {
   handleBack: () => void;
 };
 // create a component
-const MLBScreen = (props: MLBScreenProps) => {
+const CFBScreen = (props: CFBScreenProps) => {
   const navigation = useNavigation<DrawerNavigationProp<DrawerStackParmList>>();
   const bgColor = useThemeColor({}, "background");
   const tintColor = useThemeColor({}, "inactive");
-  const backendData = [
+  const backendData: MenuItemProps[] = [
     { name: "World Series", hasNav: false },
     { name: "MVP", hasNav: false },
     { name: "Cy Young", hasNav: false },
     { name: "Win Totals", hasNav: false },
   ];
 
-  const handleOnClick = () => {
-    navigation.navigate("FutureStack", {
-      screen: "Future",
-      params: { index: 0 },
-    });
-  };
+  const handleOnClick = () => {};
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ paddingHorizontal: 16 }}>
         <DrawerHeader handleBack={props.handleBack} />
       </View>
       <ScrollView style={[styles.container, { backgroundColor: bgColor }]}>
-        <Text style={[{ color: tintColor }, styles.title]}>NFL</Text>
+        <Text style={[{ color: tintColor }, styles.title]}>CFB</Text>
         {backendData.map((item, index) => {
-          return (
-            <MenuItem
-              title={item.name}
-              hasNav={item.hasNav}
-              key={index}
-              onClick={handleOnClick}
-            />
-          );
+          return <MenuItem item={item} key={index} onClick={handleOnClick} />;
         })}
       </ScrollView>
     </SafeAreaView>
@@ -66,4 +55,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default MLBScreen;
+export default CFBScreen;

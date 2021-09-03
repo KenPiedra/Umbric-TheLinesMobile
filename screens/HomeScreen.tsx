@@ -33,7 +33,7 @@ export default function HomeScreen() {
   return (
     <ScrollView style={[styles.container, { backgroundColor: bgcolor }]}>
       <Text style={styles.explore}>Explore</Text>
-      <SearchBox placeholder="Search The Lines" />
+      {/* <SearchBox placeholder="Search The Lines" />
       <Text style={styles.sport}>Sports</Text>
       <View style={{ flexDirection: "row" }}>
         <SportExploreItem item={sportData[0]} />
@@ -44,7 +44,7 @@ export default function HomeScreen() {
         <SportExploreItem item={sportData[2]} />
         <View style={{ width: 15 }} />
         <SportExploreItem item={sportData[3]} />
-      </View>
+      </View> */}
       <Text style={styles.upcoming}>Upcoming Events</Text>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {leagues.map((item, index) => {
@@ -70,7 +70,10 @@ export default function HomeScreen() {
             <TouchableOpacity
               key={index}
               onPress={() => {
-                navigate("News", { screen: "NewsScreen", params: { index } });
+                navigation.navigate("News", {
+                  screen: "NewsScreen",
+                  params: { index: 0 },
+                });
               }}
             >
               <NewsExploreItem item={item} />

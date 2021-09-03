@@ -9,7 +9,6 @@ import {
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 import { Text, View } from "../components/Themed";
-import HamburgerIcon from "../components/HamburgerIcon";
 
 export default function HowToBetScreen() {
   const scaleHeight = ({ source, desiredWidth }: any) => {
@@ -56,11 +55,7 @@ export default function HowToBetScreen() {
 
           <View style={styles.infoWrap}>
             <View>
-              <Icon
-                name="map-marker-outline"
-                style={styles.infoIcon}
-                size={24}
-              />
+              <Icon name="star-outline" style={styles.infoIcon} size={24} />
             </View>
             <View style={styles.infoText}>
               <Text style={styles.title}>Accumulator</Text>

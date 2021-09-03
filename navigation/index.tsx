@@ -3,17 +3,22 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import React, { Component } from 'react';
-import { ColorSchemeName } from 'react-native';
-import { connect } from 'react-redux';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import React, { Component } from "react";
+import { ColorSchemeName } from "react-native";
+import { connect } from "react-redux";
 
-import NotFoundScreen from '../screens/NotFoundScreen';
-import LoginScreen from '../screens/LoginScreen';
-import { RootStackParamList } from '../types';
-import RootStackNavigator from './RootNavigator';
-import LinkingConfiguration from './LinkingConfiguration';
+import NotFoundScreen from "../screens/NotFoundScreen";
+import LoginScreen from "../screens/LoginScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
+import { RootStackParamList } from "../types";
+import LinkingConfiguration from "./LinkingConfiguration";
+import DrawerNavigator from "./DrawerNavigator";
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
@@ -22,8 +27,12 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={RootStackNavigator} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="Root" component={DrawerNavigator} />
+      <Stack.Screen
+        name="NotFound"
+        component={NotFoundScreen}
+        options={{ title: "Oops!" }}
+      />
     </Stack.Navigator>
   );
 }
@@ -31,14 +40,14 @@ function RootNavigator() {
 function AuthNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Auth" component={LoginScreen} />
+      <Stack.Screen name="Auth" component={WelcomeScreen} />
     </Stack.Navigator>
   );
 }
 
 interface NavigationProps {
-  colorScheme: ColorSchemeName,
-  isAuthenticated: boolean,
+  colorScheme: ColorSchemeName;
+  isAuthenticated: boolean;
 }
 
 class Navigation extends Component<NavigationProps> {
@@ -47,18 +56,14 @@ class Navigation extends Component<NavigationProps> {
   }
 
   render() {
-    const { colorScheme , isAuthenticated} = this.props;
+    const { colorScheme, isAuthenticated } = this.props;
 
     return (
       <NavigationContainer
         linking={LinkingConfiguration}
-        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          {
-            isAuthenticated ?
-            <RootNavigator />
-            :
-            <AuthNavigator />
-          }
+        theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      >
+        {isAuthenticated ? <RootNavigator /> : <AuthNavigator />}
       </NavigationContainer>
     );
   }
@@ -68,8 +73,6 @@ const mapStateToProps = (state: any) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: any) => ({});
 
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation)
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

@@ -2,15 +2,23 @@ import * as React from "react";
 import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import { View, Text } from "../../components/Themed";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
-import { DrawerContentScrollView } from "@react-navigation/drawer";
+import {
+  DrawerContentScrollView,
+  DrawerNavigationProp,
+} from "@react-navigation/drawer";
 import { useNavigation, DrawerActions } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { BottomTabParamList, DrawerNavParamList } from "../../types";
 
 type CustomDrawerContentProps = {
   handleClick: (i: number) => void;
 };
 
 function CustomDrawerContent(props: CustomDrawerContentProps) {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<BottomTabNavigationProp<BottomTabParamList>>();
+  const drawerNavigation =
+    useNavigation<DrawerNavigationProp<DrawerNavParamList>>();
   const _closeDrawer = () => {
     navigation.dispatch(DrawerActions.closeDrawer());
   };
@@ -23,7 +31,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.menuAvatar}>
+        {/* <View style={styles.menuAvatar}>
           <Image
             source={{
               uri: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png",
@@ -34,11 +42,11 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
             <Text style={styles.menuAvatarName}>Justin Smith</Text>
             <Text style={styles.menuAvatarEdit}>Edit Profile</Text>
           </View>
-        </View>
+        </View> */}
 
         <View style={[styles.menuGroup, { paddingTop: 32 }]}>
           <Text style={styles.menuTitle}>Quick Menu</Text>
-          <TouchableOpacity onPress={() => props.handleClick(1)}>
+          {/* <TouchableOpacity onPress={() => props.handleClick(1)}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>NBA</Text>
               <Icon
@@ -47,7 +55,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
                 size={24}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity onPress={() => props.handleClick(2)}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>NFL</Text>
@@ -58,7 +66,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.handleClick(3)}>
+          {/* <TouchableOpacity onPress={() => props.handleClick(3)}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>MLB</Text>
               <Icon
@@ -67,12 +75,29 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
                 size={24}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          {/* <TouchableOpacity onPress={() => props.handleClick(4)}>
+            <View style={styles.menuItem}>
+              <Text style={styles.menuItemText}>CFB</Text>
+              <Icon
+                name="chevron-right"
+                style={styles.menuItemIcon}
+                size={24}
+              />
+            </View>
+          </TouchableOpacity> */}
         </View>
 
         <View style={styles.menuGroup}>
           <Text style={styles.menuTitle}>Main Menu</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Odds")}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Odds", {
+                screen: "OddsScreen",
+                params: { index: 0 },
+              })
+            }
+          >
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>All Odds</Text>
               <Icon
@@ -82,7 +107,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Sportsbooks")}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("Sportsbooks")}>
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>Sportsbooks</Text>
               <Icon
@@ -91,9 +116,12 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
                 size={24}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
-            onPress={() => navigation.navigate("HowToBetStack")}
+            onPress={() => {
+              drawerNavigation.navigate("BottomNav");
+              navigation.navigate("How To Bet");
+            }}
           >
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>How to Bet</Text>
@@ -104,17 +132,28 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.handleClick(6)}>
+          {/* <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("State Guides");
+            }}
+          >
             <View style={styles.menuItem}>
-              <Text style={styles.menuItemText}>US State Guide</Text>
+              <Text style={styles.menuItemText}>US Sports Betting</Text>
               <Icon
                 name="chevron-right"
                 style={styles.menuItemIcon}
                 size={24}
               />
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("News")}>
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("News", {
+                screen: "NewsScreen",
+                params: { index: 0 },
+              })
+            }
+          >
             <View style={styles.menuItem}>
               <Text style={styles.menuItemText}>News</Text>
               <Icon
@@ -136,7 +175,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.menuGroup}>
+        {/* <View style={styles.menuGroup}>
           <TouchableOpacity>
             <View style={styles.menuItem}>
               <Text style={[styles.menuItemText, { color: "#2CAF4D" }]}>
@@ -149,7 +188,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
               />
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </DrawerContentScrollView>
   );
