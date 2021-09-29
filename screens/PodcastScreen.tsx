@@ -102,7 +102,6 @@ export default class PodcastScreen extends React.Component<
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Podcast</Text>
         <ScrollableTabNavigator
           onChangeTab={({ i }: { i: number }) => this.onCategoryChanged(i)}
         >

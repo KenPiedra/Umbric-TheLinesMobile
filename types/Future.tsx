@@ -2,6 +2,7 @@ export type SportBook = {
   SportsbookID: number;
   SportsbookName: string;
   PayoutAmerican: number;
+  Value: number | null;
 };
 
 export type BettingOutcome = {
@@ -23,6 +24,7 @@ export type BettingOutcome = {
   GlobalTeamID: null | number;
   SportsbookUrl: null | string;
   SportsBooks: SportBook[];
+  SportsBook?: { Name: string; SportsbookID: number };
 };
 
 export type BettingMarket = {

@@ -93,7 +93,6 @@ export default class NewsScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>News</Text>
         <ScrollableTabNavigator
           onChangeTab={({ i }: { i: number }) => {
             this.onCategoryChanged(i);

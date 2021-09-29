@@ -4,12 +4,13 @@ import DropDownPicker, {
   DropDownPickerProps,
   ItemType,
 } from "react-native-dropdown-picker";
-import axios from "axios";
 
 import { Text, View, LoadingSpinner } from "../components/Themed";
 import * as API from "../services/api";
 import { BettingMarket } from "../types/Future";
 import FutureComponent from "../components/FutureComponent";
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
 
 interface FutureScreenState {
   futureData: BettingMarket[];
@@ -548,35 +549,12 @@ export default class FutureScreen extends React.Component<
       type: this.state.types[0].value,
       location: this.state.locations[0].value,
     });
-
-    // const url = `https://us1.catenaus.com/api/v2/app/oddsfeed/nfl/futures`;
-    // axios({ url, method: "get", responseType: "json" }).then((data: any) => {
-    //   const bettingTypesPlayer: string[] = [];
-    //   const bettingTypesTeam: string[] = [];
-
-    //   console.log(data.data.slice(1));
-    //   data.data.slice(1).map((item) => {
-    //     if (item.BettingMarketType == "Player Future") {
-    //       if (!bettingTypesPlayer.includes(item.BettingBetType)) {
-    //         bettingTypesPlayer.push(item.BettingBetType);
-    //       }
-    //     }
-    //     if (item.BettingMarketType == "Team Future") {
-    //       if (!bettingTypesTeam.includes(item.BettingBetType)) {
-    //         bettingTypesTeam.push(item.BettingBetType);
-    //       }
-    //     }
-    //   });
-    //   console.log(bettingTypesTeam);
-    //   console.log(bettingTypesPlayer);
-    // });
   }
 
   loadGameData() {
     this.setState({ isLoadingGameData: true, futureData: [] });
     API.getFutureData(this.state.type)
       .then((data) => {
-        console.log("%%%%%", data);
         this.setState({ futureData: data });
       })
       .catch((err) => {
@@ -615,6 +593,7 @@ export default class FutureScreen extends React.Component<
             <View style={styles.selectGroup}>
               <Text style={styles.selectLabel}>Type</Text>
               <DropDownPicker
+                listMode="SCROLLVIEW"
                 zIndex={2000}
                 categorySelectable={false}
                 value={type}
@@ -624,23 +603,18 @@ export default class FutureScreen extends React.Component<
                 setValue={(callback) =>
                   this.setState((state) => ({ type: callback(state.type) }))
                 }
+                selectedItemContainerStyle={{}}
+                selectedItemLabelStyle={{
+                  color: "#2CAF4D",
+                }}
                 onChangeValue={() => this.loadGameData()}
+                scrollViewProps={{
+                  persistentScrollbar: true,
+                  showsVerticalScrollIndicator: true,
+                  indicatorStyle: "black",
+                  scrollIndicatorInsets: { right: 5 },
+                }}
               />
-              {/* <View style={{ height: 14 }} />
-              <Text style={styles.selectLabel}>State</Text>
-              <DropDownPicker
-                zIndex={1000}
-                value={location}
-                items={locations}
-                open={isLocationOpen}
-                setOpen={(open) => this.setState({ isLocationOpen: open })}
-                setValue={(callback) =>
-                  this.setState((state) => ({
-                    location: callback(state.location),
-                  }))
-                }
-                onChangeValue={() => this.loadGameData()}
-              /> */}
             </View>
             <View style={{ height: 20 }} />
             {isLoadingGameData ? (

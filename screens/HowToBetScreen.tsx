@@ -27,19 +27,7 @@ export default function HowToBetScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        {/* <View style={styles.videoWrap}>
-          <Image
-            source={{
-              uri: "https://ethicseducationforchildren.org/images/generic-video-thumbnail.jpg",
-            }}
-            style={[
-              styles.videoThumb,
-              { width: imageWidth, height: imageWidth * 0.6 },
-            ]}
-          />
-        </View> */}
         <View style={styles.contentWrap}>
-          <Text style={[styles.title, { paddingBottom: 16 }]}>How to Bet</Text>
           <Text style={styles.normalText}>
             Legal sports betting is expanding quickly in the US, and bettors are
             eager to put a couple sawbucks on that first NFL game … or tonight’s

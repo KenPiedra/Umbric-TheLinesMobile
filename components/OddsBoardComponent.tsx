@@ -29,22 +29,14 @@ type OddBoardState = {
   providers: SportBookItemType[];
   games: Game[];
   rendering: boolean;
+  mainScrollPosition: number;
+  loadingMore: boolean;
+  noLoadMore: boolean;
+  loadNum: number;
 };
-/**
- * Following values came from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2
- */
-const RUWT_ENABLE_OUTBOUND_LINKS = true;
-const RUWT_REDIRECT_URL = "https://thelines.go.metabet.io/bet/";
-const RUWT_SITE_FAMILY_CATENA = true;
+
 const RUWT_STALE_ODDS_CUTOFF = 1000 * 60 * 60 * 24 * 60;
 
-/**
- * Decoded from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 5142
- * @param value number
- * @returns the passed-in numerical value with an appeded plus sign
- * if positive, to properly display positive spreads and money lines.
- * If the value isn't numerical, the empty string will be returned.
- */
 function mb_formatWithSign(value: number) {
   if (value != null && !isNaN(value)) {
     return (value > 0 ? "+" : "") + value;
@@ -52,14 +44,6 @@ function mb_formatWithSign(value: number) {
   return "";
 }
 
-/**
- * Decoded from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 5154
- * @param value number
- * @returns the passed in numerical spread values and appended plus sign
- * if positive, and rounds the number to the closest 0.5 value.
- * If the spread is even, "PK" will be returned.
- * If the value isn't numerical, the empty string will be returned.
- */
 function mb_formatSpread(value: number) {
   if (value != null && !isNaN(value)) {
     value = Math.round(value * 2) / 2;
@@ -85,20 +69,150 @@ export default class OddsBoardComponent extends React.Component<
     providers: [],
     games: [],
     rendering: false,
+    mainScrollPosition: 0,
+    loadingMore: false,
+    noLoadMore: false,
+    loadNum: 0,
   };
+
   componentDidMount() {
     this.setState({ rendering: true });
-    this.getOddsBoardData();
+    this.getData();
   }
-  async mb_getProvidersForLocation() {
-    let providers: SportBookItemType[] = await API.getSportsbooks();
+
+  componentDidUpdate(props: OddsBoardProps) {
+    if (this.props.data !== props.data) {
+      this.setState(
+        {
+          rendering: true,
+          loadingMore: false,
+          noLoadMore: false,
+          loadNum: 0,
+          games: [],
+        },
+        () => this.getData()
+      );
+    }
+  }
+
+  getData() {
+    const num = 7;
+    const { loadNum, games } = this.state;
+    let providers = this.mb_getProvidersForLocation();
+    let filtered = this.props.data.filter((game: Game): boolean => {
+      if (this.mb_isGameFinished(game)) {
+        return false;
+      }
+      for (let odd of game.PregameOdds) {
+        if (
+          providers
+            .map((provider) => provider.SportsDataId)
+            .includes(odd.SportsbookId)
+        ) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+    for (let i = 0; i < providers.length; i++) {
+      const element = providers[i];
+      switch (element.SportsDataId) {
+        case 7:
+          element.review_link =
+            "https://sportsbook.draftkings.com/acq-50-free-bet";
+          break;
+        case 21:
+          element.review_link =
+            "https://promo.nj.betmgm.com/en/promo/geolocator?orh=promo.betmgm.com&wm=7038459";
+          break;
+        case 19:
+          element.review_link =
+            "https://www.williamhill.com/us/nj/welcome?AR=a-894b-191&bc=LEGALRF&utm_offer=LEGALRF&siteid=894&af_c_id=LEGALRF";
+          break;
+        case 8:
+          element.review_link =
+            "https://account.sportsbook.fanduel.com/join/select-state";
+          break;
+        case 23:
+          element.review_link =
+            "https://join.pointsbet.com/catena-2rf/?utm_source=Unbounce_Catena_Media&utm_medium=Digital_Affiliate_Revenue_Share&utm_campaign=Risk_Free_2_1500_500_Catena_Media&utm_term=Unbounce&utm_content=Catena_Media&promo=BETBONUS";
+          break;
+        case 10:
+          element.review_link =
+            "https://www.playsugarhouse.com/?page=landing&cbc=PLAY250&btag=a_493b_250c_&siteid=493#home";
+          break;
+        case 25:
+          element.review_link =
+            "https://nj.unibet.com/p/30free/?utm_source=affiliate&utm_medium=affiliate&utm_campaign=affiliate&btag=a_1251b_385c_142603101";
+          break;
+        case 13:
+          element.review_link =
+            "https://www.888sport.com/online-sports-betting-promotions/";
+          break;
+        default:
+          break;
+      }
+    }
+    const moreData = filtered.slice(loadNum * num, loadNum * num + num);
+    console.log("load more $$$$$", moreData);
+    // Add empty string into providers for row header cell
+    const virtualProvider = {
+      _id: -1,
+      SportsDataId: -1,
+      Sportsbook: "",
+      list_offer: false,
+      nice_name: "",
+    };
+    providers.unshift(virtualProvider);
+    const _games = [...games, ...moreData];
+    const _providers = providers.filter((provider) => {
+      if (provider.SportsDataId == -1) {
+        return true;
+      }
+      for (let index = 0; index < _games.length; index++) {
+        const game = _games[index];
+        let odds = game.PregameOdds.find((odd: GameOdd) => {
+          return (
+            provider.nice_name.includes(odd.Sportsbook) ||
+            odd.Sportsbook == provider.Sportsbook
+          );
+        });
+
+        // Ignore any lines that are excessively stale
+        if (odds) {
+          const now = new Date().getTime();
+          if (new Date(odds.Created).getTime() + RUWT_STALE_ODDS_CUTOFF < now) {
+            odds = undefined;
+          }
+        }
+        const populateOdds1 =
+          odds && this.mb_populateOddsBoardCell(odds, false);
+        const populateOdds2 = odds && this.mb_populateOddsBoardCell(odds, true);
+        if (odds && populateOdds1 && populateOdds2) {
+          return true;
+        }
+      }
+      return false;
+    });
+    this.setState({
+      providers: _providers,
+      rendering: false,
+      games: _games,
+      noLoadMore: num > moreData.length,
+      loadNum: loadNum + 1,
+    });
+  }
+
+  mb_getProvidersForLocation() {
+    let providers: SportBookItemType[] = API.getSportsbooks();
     const filtered: SportBookItemType[] = providers.filter(
       (item: SportBookItemType) => !!item.logo
     );
     const ruleAry = {
       DraftKings: 1,
       BetMGM: 2,
-      Caesars: 3,
+      "Caesars Sportsbook": 3,
       FanDuel: 4,
       UNIBET: 5,
       PointsBet: 6,
@@ -144,61 +258,6 @@ export default class OddsBoardComponent extends React.Component<
       return true;
     }
     return false;
-  }
-
-  async getOddsBoardData() {
-    let providers = await this.mb_getProvidersForLocation();
-
-    // Calculate the end date of the window of games to display
-    let endDate = new Date();
-    if (this.props.data.length > 0) {
-      let game = this.props.data[0];
-      // By default, the end date will be a week after the first game
-      endDate.setTime(new Date(game.Day).getTime() + 1000 * 60 * 60 * 24 * 6.5);
-    }
-
-    // Filter and trim full list of games
-    let games = this.props.data.filter((game: Game): boolean => {
-      // Ignore games too far out in the future
-      if (new Date(game.Day) > endDate) {
-        return false;
-      }
-
-      // // Ignore games that have started, if we're not showing
-      // // games that are in progress
-      // if (!RUWT_ODDS_BOARD_SHOW_IN_PROGRESS_GAMES && this.hasGameStarted(game)) {
-      //   continue;
-      // }
-
-      // Ignore games that have already ended
-      if (this.mb_isGameFinished(game)) {
-        return false;
-      }
-
-      // Only include this game if it has odds posted from one of the providers
-      // we want to display
-      for (let odd of game.PregameOdds) {
-        if (
-          providers
-            .map((provider) => provider.SportsDataId)
-            .includes(odd.SportsbookId)
-        ) {
-          return true;
-        }
-      }
-
-      return false;
-    });
-    // Add empty string into providers for row header cell
-    const virtualProvider = {
-      _id: -1,
-      SportsDataId: -1,
-      Sportsbook: "",
-      list_offer: false,
-      nice_name: "",
-    };
-    providers.unshift(virtualProvider);
-    this.setState({ providers, games, rendering: false });
   }
 
   renderNoOdds() {
@@ -249,33 +308,31 @@ export default class OddsBoardComponent extends React.Component<
   renderProviderCell(provider: SportBookItemType) {
     const isSVG = provider.logo && provider.logo.slice(-4).includes("svg");
     return (
-      <View style={styles.cellStyle}>
+      <TouchableWithNavigation url={provider.affiliate_link}>
         {provider && provider.logo ? (
-          <TouchableWithNavigation url={provider.review_link}>
-            <View>
-              <View style={styles.providerLogo}>
-                {isSVG ? (
-                  this.renderImage(provider._id)
-                ) : (
-                  <Image
-                    source={{ uri: provider.logo }}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      resizeMode: "contain",
-                    }}
-                  />
-                )}
-              </View>
-              <View style={{ height: 40 }}>
-                <Text style={styles.providerPromo}>{provider.bonus_text}</Text>
-              </View>
+          <View style={[{ alignItems: "center" }, styles.cellStyle]}>
+            <View style={styles.providerLogo}>
+              {isSVG ? (
+                this.renderImage(provider._id)
+              ) : (
+                <Image
+                  source={{ uri: provider.logo }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    resizeMode: "contain",
+                  }}
+                />
+              )}
             </View>
-          </TouchableWithNavigation>
+            <View style={{ height: 40 }}>
+              <Text style={styles.providerPromo}>{provider.bonus_text}</Text>
+            </View>
+          </View>
         ) : (
           <View />
         )}
-      </View>
+      </TouchableWithNavigation>
     );
   }
 
@@ -289,21 +346,24 @@ export default class OddsBoardComponent extends React.Component<
       }
       return `${hour}:${minute}${AP}`;
     };
-
+    let formatDay = (day: string) => {
+      let date = new Date(day);
+      console.log(date);
+      let mm = date.getMonth() + 1;
+      let dd = date.getDate();
+      return [mm, (dd > 9 ? "" : "0") + dd].join("/");
+    };
     return (
       <View style={styles.gameCellStyle}>
         <Text style={styles.gameCellTextStyle}>{game.AwayTeamName}</Text>
         <Text style={styles.gameCellTextStyle}>{game.HomeTeamName}</Text>
         <Text style={styles.gameCellTextStyle}>
-          {formatPlayTime(game.DateTime)}
+          {`${formatDay(game.Day)},${formatPlayTime(game.DateTime)}`}
         </Text>
       </View>
     );
   }
 
-  /**
-   * Decoded from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2, Line 2318
-   */
   mb_populateOddsBoardCell(odds: GameOdd, isHomeTeam: boolean) {
     let backgroundColor = "#fff"; // useThemeColor({}, 'text');
     let color = "#101010"; // useThemeColor({}, 'background');
@@ -314,6 +374,14 @@ export default class OddsBoardComponent extends React.Component<
       if (betStyle == "modern") {
       } else if (betStyle == "vegas") {
       } else {
+        if (
+          !!!odds.HomePointSpread ||
+          !!!odds.AwayPointSpread ||
+          !!!odds.HomePointSpreadPayout ||
+          !!!odds.AwayPointSpreadPayout
+        ) {
+          return null;
+        }
         return (
           <View>
             <View style={[{ backgroundColor }, styles.oddsCellTextWrapper]}>
@@ -334,6 +402,9 @@ export default class OddsBoardComponent extends React.Component<
         );
       }
     } else if (market == "MoneyLine") {
+      if (!!!odds.HomeMoneyLine || !!!odds.AwayMoneyLine) {
+        return null;
+      }
       return (
         <View>
           <View style={[{ backgroundColor }, styles.oddsCellTextWrapper]}>
@@ -346,13 +417,16 @@ export default class OddsBoardComponent extends React.Component<
         </View>
       );
     } else if (market == "OverUnder") {
+      if (!!!odds.OverPayout || !!!odds.OverUnder || !!!odds.UnderPayout) {
+        return null;
+      }
       let isOver = !isHomeTeam;
       if (betStyle == "modern") {
         return (
           <View>
             <View style={[{ backgroundColor }, styles.oddsCellTextWrapper]}>
               <Text style={[{ color }, styles.oddsCellText]}>
-                {isOver ? "Over" : "Under"}
+                {isOver ? "O" : "U"}
               </Text>
               <Text style={[{ color }, styles.oddsCellText]}>
                 {mb_formatSpread(isOver ? odds.OverPayout : odds.UnderPayout)}
@@ -368,7 +442,7 @@ export default class OddsBoardComponent extends React.Component<
           <View>
             <View style={[{ backgroundColor }, styles.oddsCellTextWrapper]}>
               <Text style={[{ color }, styles.oddsCellText]}>
-                {isOver ? "Over" : "Under"}
+                {isOver ? "O" : "U"}
               </Text>
               <Text style={[{ color }, styles.oddsCellText]}>
                 {mb_formatSpread(odds.OverUnder)}
@@ -398,27 +472,34 @@ export default class OddsBoardComponent extends React.Component<
         odds = undefined;
       }
     }
+
+    const populateOdds1 = odds && this.mb_populateOddsBoardCell(odds, false);
+    const populateOdds2 = odds && this.mb_populateOddsBoardCell(odds, true);
+
     return (
-      <View style={styles.cellStyle}>
-        {odds && (
-          <View>
-            {this.mb_populateOddsBoardCell(odds, false)}
-            {this.mb_populateOddsBoardCell(odds, true)}
-          </View>
-        )}
-        {/* Add an explicit Bet CTA for some customers */}
-        {RUWT_ENABLE_OUTBOUND_LINKS && odds && (
-          <TouchableWithNavigation url={odds.SportsbookUrl}>
-            <Text style={styles.oddsBetButton}>Make a Bet</Text>
-          </TouchableWithNavigation>
-        )}
-      </View>
+      <TouchableWithNavigation url={provider.affiliate_link}>
+        <View style={styles.cellStyle}>
+          {odds && (
+            <View>
+              {populateOdds1}
+              {populateOdds2}
+            </View>
+          )}
+          {odds && populateOdds1 && populateOdds2 && (
+            <View>
+              <Text style={styles.oddsBetButton}>Make a Bet</Text>
+            </View>
+          )}
+        </View>
+      </TouchableWithNavigation>
     );
   }
 
   render() {
+    console.log("Odd component", this.state);
     const { providers, games } = this.state;
     const { showSecondCol } = this.state;
+
     // Show an empty message and exit if we don't have games to show
     if (games.length == 0 || providers.length == 0) {
       if (this.state.rendering) {
@@ -430,8 +511,8 @@ export default class OddsBoardComponent extends React.Component<
       }
       return this.renderNoOdds();
     }
-    const headerColumnWidth = 84,
-      dataColumnWidth = 106;
+    const headerColumnWidth = 95;
+    const dataColumnWidth = 106;
     let widthArr = Array(providers.length);
     widthArr.fill(dataColumnWidth);
     widthArr[0] = headerColumnWidth;
@@ -448,6 +529,15 @@ export default class OddsBoardComponent extends React.Component<
             />
             <ScrollView
               ref={"headerScroll"}
+              onContentSizeChange={(contentWidth, contentHeight) => {
+                if (!!!this.refs.headerScroll) {
+                  return;
+                }
+                this.refs.headerScroll.scrollTo({
+                  y: this.state.mainScrollPosition,
+                  animated: false,
+                });
+              }}
               scrollEventThrottle={16}
               style={[styles.dataWrapper, { width: headerColumnWidth }]}
               onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -477,7 +567,6 @@ export default class OddsBoardComponent extends React.Component<
           ref={"horizontal"}
           scrollEventThrottle={16}
           onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) => {
-            console.log(new Date(), e.nativeEvent.contentOffset.x);
             if (
               e.nativeEvent.contentOffset.x > headerColumnWidth &&
               !showSecondCol
@@ -510,12 +599,26 @@ export default class OddsBoardComponent extends React.Component<
                 ref={"mainScroll"}
                 scrollEventThrottle={16}
                 onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) => {
+                  if (
+                    e.nativeEvent.layoutMeasurement.height +
+                      e.nativeEvent.contentOffset.y >=
+                    e.nativeEvent.contentSize.height - 20
+                  ) {
+                    if (!this.state.noLoadMore) {
+                      this.getData();
+                    }
+                  }
                   if (!!!this.refs.headerScroll) {
                     return;
                   }
                   this.refs.headerScroll.scrollTo({
                     y: e.nativeEvent.contentOffset.y,
                     animated: false,
+                  });
+                }}
+                onMomentumScrollEnd={(e) => {
+                  this.setState({
+                    mainScrollPosition: e.nativeEvent.contentOffset.y,
                   });
                 }}
               >
@@ -572,7 +675,9 @@ const styles = StyleSheet.create({
     height: 100,
   },
   cellStyle: {
-    padding: 8,
+    paddingHorizontal: 8,
+    flex: 1,
+    justifyContent: "center",
   },
   providerLogo: {
     backgroundColor: "white",
@@ -599,7 +704,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     fontSize: 12,
     lineHeight: 12,
-    letterSpacing: 1.5,
     paddingTop: 4,
     paddingBottom: 4,
     textTransform: "uppercase",

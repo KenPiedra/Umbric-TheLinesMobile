@@ -19,6 +19,7 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import { RootStackParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import DrawerNavigator from "./DrawerNavigator";
+import BottomTabNavigator from "./BottomTabNavigator";
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
@@ -27,7 +28,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={DrawerNavigator} />
+      <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

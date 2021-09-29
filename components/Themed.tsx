@@ -124,13 +124,11 @@ export function TabView(props: TabViewProps) {
 }
 
 export function TouchableWithNavigation(props: TouchableWithNavigationProps) {
-  const { url, ...otherProps } = props;
-
+  const { url, children, ...otherProps } = props;
   return (
     <TouchableWithoutFeedback
       {...otherProps}
       onPress={async () => {
-        console.log(url);
         if (url) {
           const supported = await Linking.canOpenURL(url);
           if (supported) {
@@ -140,6 +138,8 @@ export function TouchableWithNavigation(props: TouchableWithNavigationProps) {
           }
         }
       }}
-    />
+    >
+      {children}
+    </TouchableWithoutFeedback>
   );
 }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1057064596430",
+    "firebase_url": "https://the-lines-mobile-default-rtdb.firebaseio.com",
+    "project_id": "the-lines-mobile",
+    "storage_bucket": "the-lines-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057064596430:android:a56aec6cc29c04bf60b19f",
+        "android_client_info": {
+          "package_name": "com.thelines.oddsfeed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057064596430-j5ika7l6r15c7e18l54olcuslp84moac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKT0KdgreOuTLo8uOHDIK3_zchIttQMQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057064596430-j5ika7l6r15c7e18l54olcuslp84moac.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1057064596430-aj3boo2tg0lrl9v3c7gbdlp7e1ns0rbk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.thelines.oddsfeed"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

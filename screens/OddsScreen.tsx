@@ -16,7 +16,9 @@ import * as API from "../services/api";
 interface OddsScreenState {
   activeLeague: number;
   leagues: League[];
+  allData: Game[][];
   oddsBoardData: Game[];
+  isLoadingAll: boolean;
   isLoadingGameData: boolean;
   type: any;
   types: any[];
@@ -47,9 +49,11 @@ const BET_LOCATIONS = [
 
 export default class OddsScreen extends React.Component<{}, OddsScreenState> {
   state: Readonly<OddsScreenState> = {
-    activeLeague: this.props.route.params.index,
+    activeLeague: 0,
     leagues: [],
+    allData: [],
     oddsBoardData: [],
+    isLoadingAll: false,
     isLoadingGameData: false,
     type: null,
     types: BET_MARKETS,
@@ -69,12 +73,23 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
   componentDidMount() {
     this.setState(
       {
+        isLoadingAll: true,
         type: this.state.types[0].value,
         location: this.state.locations[0].value,
         leagues: API.getSportsForOdds(),
       },
       () => {
-        this.loadGameData();
+        API.getOddsData(this.state.leagues)
+          .then((data: Game[][]) => {
+            this.setState(() => ({ allData: data, oddsBoardData: data[0] }));
+          })
+          .catch((err) => {
+            console.error(err);
+            this.setState(() => ({ allData: [] }));
+          })
+          .finally(() => {
+            this.setState(() => ({ isLoadingAll: false }));
+          });
       }
     );
   }
@@ -83,9 +98,7 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
     console.log("i value", i);
     console.log("active league value", this.state.activeLeague);
     if (this.state.activeLeague !== i) {
-      this.setState({ activeLeague: i }, () => {
-        this.loadGameData();
-      });
+      this.setState({ activeLeague: i, oddsBoardData: this.state.allData[i] });
     }
   }
 
@@ -101,66 +114,50 @@ export default class OddsScreen extends React.Component<{}, OddsScreenState> {
     }));
   }
 
-  loadGameData() {
-    this.setState({ isLoadingGameData: true, oddsBoardData: [] });
-
-    // Check league name
+  loadGameData(i: number) {
     if (this.state.activeLeague >= this.state.leagues.length) return;
-    const leagueName = this.state.leagues[this.state.activeLeague].Name;
-
-    // Retrieve game data for selected leage
-    console.log(`Retrieving game odds feed for ${leagueName}`);
-    API.getOddsData(leagueName)
-      .then((data: Game[]) => {
-        this.setState(() => ({ oddsBoardData: data }));
-      })
-      .catch((err) => {
-        console.error(err);
-        this.setState(() => ({ oddsBoardData: [] }));
-      })
-      .finally(() => {
-        this.setState(() => ({ isLoadingGameData: false }));
-      });
+    this.setState({});
+    // Check league name
   }
 
   render() {
     const state = this.state;
-
+    console.log("Odd screen", state);
     return (
       <View style={styles.container}>
-        <ScrollableTabNavigator
-          initialPage={this.props.route.params.index}
-          onChangeTab={({ i }: { i: number }) => this.onLeagueChanged(i)}
-          locked={true}
-        >
-          {state.leagues.map((league) => (
-            <TabView
-              style={styles.view}
-              key={league.Value}
-              tabLabel={league.Name}
-            >
-              <View style={styles.selectGroup}>
-                <View style={styles.select}>
-                  <Text style={styles.selectLabel}>Type</Text>
-                  <DropDownPicker
-                    value={state.type}
-                    items={state.types}
-                    setValue={this.setType}
-                  />
+        {state.isLoadingAll ? (
+          <LoadingSpinner />
+        ) : (
+          <ScrollableTabNavigator
+            onChangeTab={({ i }: { i: number }) => this.onLeagueChanged(i)}
+            locked={true}
+          >
+            {state.leagues.map((league, index) => (
+              <TabView
+                style={styles.view}
+                key={index.toString()}
+                tabLabel={league.Name}
+              >
+                <View style={styles.selectGroup}>
+                  <View style={styles.select}>
+                    <Text style={styles.selectLabel}>Type</Text>
+                    <DropDownPicker
+                      value={state.type}
+                      items={state.types}
+                      setValue={this.setType}
+                    />
+                  </View>
                 </View>
-              </View>
-              {state.isLoadingGameData ? (
-                <LoadingSpinner />
-              ) : (
+
                 <OddsBoardComponent
                   data={state.oddsBoardData}
                   league={league.Name}
                   market={state.type}
                 />
-              )}
-            </TabView>
-          ))}
-        </ScrollableTabNavigator>
+              </TabView>
+            ))}
+          </ScrollableTabNavigator>
+        )}
       </View>
     );
   }

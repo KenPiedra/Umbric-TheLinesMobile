@@ -43,6 +43,7 @@ type FutureComponentState = {
   providers: SportBookItemType[];
   futures: BettingMarket[];
   rendering: boolean;
+  mainScrollPosition: number;
 };
 /**
  * Following values came from https://go.metabet.io/js/global.js?siteID=thelines&ver=5.7.2
@@ -66,6 +67,7 @@ export default class FutureComponent extends React.Component<
     providers: new Array<SportBookItemType>(),
     futures: new Array<BettingMarket>(),
     rendering: false,
+    mainScrollPosition: 0,
   };
 
   componentDidMount() {
@@ -93,7 +95,7 @@ export default class FutureComponent extends React.Component<
     const ruleAry = {
       DraftKings: 1,
       BetMGM: 2,
-      Caesars: 3,
+      "Caesars Sportsbook": 3,
       FanDuel: 4,
       UNIBET: 5,
       PointsBet: 6,
@@ -133,6 +135,45 @@ export default class FutureComponent extends React.Component<
    */
   async getFutureData() {
     let providers = await this.mb_getProvidersForLocation();
+    for (let i = 0; i < providers.length; i++) {
+      const element = providers[i];
+      switch (element.SportsDataId) {
+        case 7:
+          element.review_link =
+            "https://sportsbook.draftkings.com/acq-50-free-bet";
+          break;
+        case 21:
+          element.review_link =
+            "https://promo.nj.betmgm.com/en/promo/geolocator?orh=promo.betmgm.com&wm=7038459";
+          break;
+        case 19:
+          element.review_link =
+            "https://www.williamhill.com/us/nj/welcome?AR=a-894b-191&bc=LEGALRF&utm_offer=LEGALRF&siteid=894&af_c_id=LEGALRF";
+          break;
+        case 8:
+          element.review_link =
+            "https://account.sportsbook.fanduel.com/join/select-state";
+          break;
+        case 23:
+          element.review_link =
+            "https://join.pointsbet.com/catena-2rf/?utm_source=Unbounce_Catena_Media&utm_medium=Digital_Affiliate_Revenue_Share&utm_campaign=Risk_Free_2_1500_500_Catena_Media&utm_term=Unbounce&utm_content=Catena_Media&promo=BETBONUS";
+          break;
+        case 10:
+          element.review_link =
+            "https://www.playsugarhouse.com/?page=landing&cbc=PLAY250&btag=a_493b_250c_&siteid=493#home";
+          break;
+        case 25:
+          element.review_link =
+            "https://nj.unibet.com/p/30free/?utm_source=affiliate&utm_medium=affiliate&utm_campaign=affiliate&btag=a_1251b_385c_142603101";
+          break;
+        case 13:
+          element.review_link =
+            "https://www.888sport.com/online-sports-betting-promotions/";
+          break;
+        default:
+          break;
+      }
+    }
     // Add empty string into providers for row header cell
     const virtualProvider = {
       _id: -1,
@@ -142,7 +183,80 @@ export default class FutureComponent extends React.Component<
       nice_name: "",
     };
     providers.unshift(virtualProvider);
-    this.setState({ providers: providers, futures: this.props.data });
+    if (this.props.data.length == 1) {
+      const sorted = this.props.data[0].BettingOutcomes.sort(
+        (a: BettingOutcome, b: BettingOutcome) => {
+          for (let index = 1; index < providers.length; index++) {
+            const element = providers[index];
+            if (
+              !a.SportsBooks.map((item) => item.SportsbookID).includes(
+                element.SportsDataId
+              ) ||
+              !b.SportsBooks.map((item) => item.SportsbookID).includes(
+                element.SportsDataId
+              )
+            ) {
+              continue;
+            } else {
+              const aSportBook = a.SportsBooks.find(
+                (s) => s.SportsbookID === element.SportsDataId
+              );
+              const bSportBook = b.SportsBooks.find(
+                (s) => s.SportsbookID === element.SportsDataId
+              );
+              if (aSportBook && bSportBook) {
+                if (aSportBook.PayoutAmerican < bSportBook.PayoutAmerican) {
+                  return -1;
+                }
+                if (aSportBook.PayoutAmerican == bSportBook.PayoutAmerican) {
+                  return a.Participant < b.Participant ? -1 : 1;
+                }
+              }
+              break;
+            }
+          }
+          return 1;
+        }
+      );
+      this.props.data[0].BettingOutcomes = sorted;
+    }
+    const futures = [...this.props.data];
+    const _providers = providers.filter((provider) => {
+      for (let index = 0; index < futures.length; index++) {
+        const future = futures[index];
+        const temp =
+          future.BettingBetTypeID == 11
+            ? [future.BettingOutcomes[0]]
+            : future.BettingOutcomes;
+        for (let _index = 0; _index < temp.length; _index++) {
+          const market = temp[_index];
+          let filtered;
+          if (provider.SportsDataId == -1) {
+            return true;
+          } else {
+            if (future.BettingBetTypeID !== 11) {
+              filtered = market.SportsBooks.filter((sportbook: SportBook) => {
+                if (!sportbook.SportsbookName || !provider.nice_name) {
+                  return false;
+                }
+                return provider.nice_name
+                  .toLowerCase()
+                  .includes(sportbook.SportsbookName.toLowerCase());
+              });
+            } else {
+              filtered = future.BettingOutcomes.filter((item) => {
+                return item.SportsBook?.SportsbookID == provider.SportsDataId;
+              });
+            }
+            if (filtered.length == 0) {
+              return false;
+            }
+          }
+        }
+      }
+      return true;
+    });
+    this.setState({ providers: _providers, futures });
   }
 
   renderNoOdds() {
@@ -194,33 +308,31 @@ export default class FutureComponent extends React.Component<
   renderProviderCell(provider: SportBookItemType) {
     const isSVG = provider.logo && provider.logo.slice(-4).includes("svg");
     return (
-      <View style={styles.cellStyle}>
+      <TouchableWithNavigation url={provider.affiliate_link}>
         {provider && provider.logo ? (
-          <TouchableWithNavigation url={provider.review_link}>
-            <View>
-              <View style={styles.providerLogo}>
-                {isSVG ? (
-                  this.renderImage(provider._id)
-                ) : (
-                  <Image
-                    source={{ uri: provider.logo }}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      resizeMode: "contain",
-                    }}
-                  />
-                )}
-              </View>
-              <View style={{ height: 40 }}>
-                <Text style={styles.providerPromo}>{provider.bonus_text}</Text>
-              </View>
+          <View style={styles.gameCellStyle}>
+            <View style={styles.providerLogo}>
+              {isSVG ? (
+                this.renderImage(provider._id)
+              ) : (
+                <Image
+                  source={{ uri: provider.logo }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    resizeMode: "contain",
+                  }}
+                />
+              )}
             </View>
-          </TouchableWithNavigation>
+            <View style={{ height: 40 }}>
+              <Text style={styles.providerPromo}>{provider.bonus_text}</Text>
+            </View>
+          </View>
         ) : (
           <View />
         )}
-      </View>
+      </TouchableWithNavigation>
     );
   }
 
@@ -245,9 +357,7 @@ export default class FutureComponent extends React.Component<
           <Text style={[styles.oddsCellText, { color }]}>
             {`${this.getSign(
               filtered[0]?.PayoutAmerican
-            )}${this.numberWithCommas(
-              filtered[0]?.PayoutAmerican.toString()
-            )} `}
+            )}${filtered[0]?.PayoutAmerican.toString()} `}
             <Text style={[styles.oddsCellText, { color }]}>No</Text>
           </Text>
         </View>
@@ -255,9 +365,7 @@ export default class FutureComponent extends React.Component<
           <Text style={[styles.oddsCellText, { color }]}>
             {`${this.getSign(
               filtered[1]?.PayoutAmerican
-            )}${this.numberWithCommas(
-              filtered[1]?.PayoutAmerican.toString()
-            )} `}
+            )}${filtered[1]?.PayoutAmerican.toString()} `}
             <Text style={[styles.oddsCellText, { color }]}>Yes</Text>
           </Text>
         </View>
@@ -274,49 +382,102 @@ export default class FutureComponent extends React.Component<
           <Text style={[styles.oddsCellText, { color }]}>
             {`${this.getSign(
               filtered[0]?.PayoutAmerican
-            )}${this.numberWithCommas(
-              filtered[0]?.PayoutAmerican.toString()
-            )} `}
+            )}${filtered[0]?.PayoutAmerican.toString()} `}
           </Text>
         </View>
       </View>
     );
   }
-  renderOverCell(filtered: SportBook[], market: BettingOutcome) {
+  renderOverCell(
+    filtered: SportBook[],
+    market: BettingOutcome,
+    provider: SportBookItemType
+  ) {
     let backgroundColor = "#fff";
     let color = "#101010";
+    const value = filtered[0].Value
+      ? filtered[0].Value
+      : market.Participant.slice(5).replace(",", ".");
+    if (!!!value) {
+      return null;
+    }
     return (
-      <View style={styles.gameCellStyle}>
-        <View style={{ paddingHorizontal: 8 }}>
-          <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
-            <Text style={[styles.oddsCellText, { color }]}>{`${
-              market.Participant
-            } ${this.numberWithCommas(
-              filtered[0].PayoutAmerican.toString()
-            )}`}</Text>
-          </View>
-          <Text style={[styles.oddsBetButton]}>Make a Bet!</Text>
+      <View style={{ paddingHorizontal: 8 }}>
+        <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
+          <Text
+            style={[styles.oddsCellText, { color }]}
+          >{`O ${value} ${this.getSign(filtered[0].PayoutAmerican)}${
+            filtered[0].PayoutAmerican
+          }`}</Text>
+        </View>
+        <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
+          <Text style={[styles.oddsCellText, { color }]}>
+            <Text
+              style={[styles.oddsCellText, { color }]}
+            >{`U ${value} ${this.getSign(filtered[1].PayoutAmerican)}${
+              filtered[1].PayoutAmerican
+            }`}</Text>
+          </Text>
         </View>
       </View>
     );
   }
 
-  renderNoTypeCell(filtered: SportBook[], market: BettingOutcome) {
+  renderUnderCell(
+    filtered: SportBook[],
+    market: BettingOutcome,
+    provider: SportBookItemType
+  ) {
+    let backgroundColor = "#fff";
+    let color = "#101010";
+    const value = filtered[0].Value
+      ? filtered[0].Value
+      : market.Participant.slice(5).replace(",", ".");
+    if (!!!value) {
+      return null;
+    }
+    return (
+      <View style={{ paddingHorizontal: 8 }}>
+        <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
+          <Text
+            style={[styles.oddsCellText, { color }]}
+          >{`O ${value} ${this.getSign(filtered[1].PayoutAmerican)}${
+            filtered[1].PayoutAmerican
+          }`}</Text>
+        </View>
+        <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
+          <Text style={[styles.oddsCellText, { color }]}>
+            <Text
+              style={[styles.oddsCellText, { color }]}
+            >{`U ${value} ${this.getSign(filtered[0].PayoutAmerican)}${
+              filtered[0].PayoutAmerican
+            }`}</Text>
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
+  renderNoTypeCell(
+    filtered: SportBook[],
+    market: BettingOutcome,
+    provider: SportBookItemType
+  ) {
     let backgroundColor = "#fff";
     let color = "#101010";
     return (
-      <View style={styles.gameCellStyle}>
-        <View style={{ paddingHorizontal: 8 }}>
+      <TouchableWithNavigation url={provider.affiliate_link}>
+        <View style={styles.gameCellStyle}>
           <View style={[styles.oddsCellTextWrapper, { backgroundColor }]}>
             <Text style={[styles.oddsCellText, { color }]}>{`${this.getSign(
               filtered[0].PayoutAmerican
-            )}${this.numberWithCommas(
-              filtered[0].PayoutAmerican.toString()
-            )}`}</Text>
+            )}${filtered[0].PayoutAmerican.toString()}`}</Text>
+          </View>
+          <View>
+            <Text style={styles.oddsBetButton}>Make a Bet</Text>
           </View>
         </View>
-        <Text style={[styles.oddsBetButton]}>Make a Bet!</Text>
-      </View>
+      </TouchableWithNavigation>
     );
   }
 
@@ -365,6 +526,15 @@ export default class FutureComponent extends React.Component<
                 }
                 this.refs.mainScroll.scrollTo({
                   y: e.nativeEvent.contentOffset.y,
+                  animated: false,
+                });
+              }}
+              onContentSizeChange={(contentWidth, contentHeight) => {
+                if (!!!this.refs.headerScroll) {
+                  return;
+                }
+                this.refs.headerScroll.scrollTo({
+                  y: this.state.mainScrollPosition,
                   animated: false,
                 });
               }}
@@ -425,10 +595,19 @@ export default class FutureComponent extends React.Component<
                   animated: false,
                 });
               }}
+              onMomentumScrollEnd={(e) => {
+                this.setState({
+                  mainScrollPosition: e.nativeEvent.contentOffset.y,
+                });
+              }}
             >
               <Table borderStyle={styles.borderStyle}>
                 {futures.map((future: BettingMarket, index: number) => {
-                  return future.BettingOutcomes.map((market, _index) => (
+                  const temp =
+                    future.BettingBetTypeID == 11
+                      ? [future.BettingOutcomes[0]]
+                      : future.BettingOutcomes;
+                  return temp.map((market, _index) => (
                     <Row
                       key={_index}
                       style={{ height: rowHeight }}
@@ -437,44 +616,142 @@ export default class FutureComponent extends React.Component<
                           if (index == 0) {
                             return this.renderFirstColumn(future, market);
                           } else {
-                            const filtered = market.SportsBooks.filter(
-                              (sportbook: SportBook) => {
-                                if (
-                                  !sportbook.SportsbookName ||
-                                  !provider.nice_name
-                                ) {
-                                  return false;
+                            if (future.BettingBetTypeID !== 11) {
+                              const filtered = market.SportsBooks.filter(
+                                (sportbook: SportBook) => {
+                                  if (
+                                    !sportbook.SportsbookName ||
+                                    !provider.nice_name
+                                  ) {
+                                    return false;
+                                  }
+                                  return provider.nice_name
+                                    .toLowerCase()
+                                    .includes(
+                                      sportbook.SportsbookName.toLowerCase()
+                                    );
                                 }
-                                return sportbook.SportsbookName.toLowerCase().includes(
-                                  provider.nice_name.toLowerCase()
-                                );
+                              );
+                              if (filtered?.length > 0) {
+                                if (
+                                  market.BettingOutcomeType == "Yes" ||
+                                  market.BettingOutcomeType == "No"
+                                ) {
+                                  return (
+                                    <TouchableWithNavigation
+                                      url={provider.affiliate_link}
+                                    >
+                                      <View style={styles.gameCellStyle}>
+                                        {filtered.length == 2 &&
+                                          this.renderTwoValueCell(filtered)}
+                                        {filtered.length == 1 &&
+                                          this.renderOneValueCell(filtered)}
+                                        <Text style={[styles.oddsBetButton]}>
+                                          Make a Bet!
+                                        </Text>
+                                      </View>
+                                    </TouchableWithNavigation>
+                                  );
+                                }
+                                if (market.BettingOutcomeType == "Over") {
+                                  const OverCell = this.renderOverCell(
+                                    filtered,
+                                    market,
+                                    provider
+                                  );
+                                  if (OverCell) {
+                                    return (
+                                      <TouchableWithNavigation
+                                        url={provider.affiliate_link}
+                                      >
+                                        <View style={styles.gameCellStyle}>
+                                          {OverCell}
+                                          <Text style={[styles.oddsBetButton]}>
+                                            Make a Bet!
+                                          </Text>
+                                        </View>
+                                      </TouchableWithNavigation>
+                                    );
+                                  }
+                                  return null;
+                                }
+                                if (market.BettingOutcomeType == "Under") {
+                                  const UnderCell = this.renderUnderCell(
+                                    filtered,
+                                    market,
+                                    provider
+                                  );
+                                  if (UnderCell) {
+                                    return (
+                                      <TouchableWithNavigation
+                                        url={provider.affiliate_link}
+                                      >
+                                        <View style={styles.gameCellStyle}>
+                                          {UnderCell}
+                                          <Text style={[styles.oddsBetButton]}>
+                                            Make a Bet!
+                                          </Text>
+                                        </View>
+                                      </TouchableWithNavigation>
+                                    );
+                                  }
+                                  return null;
+                                }
+                                if (!!!market.BettingOutcomeType) {
+                                  return this.renderNoTypeCell(
+                                    filtered,
+                                    market,
+                                    provider
+                                  );
+                                }
                               }
-                            );
-                            if (filtered?.length > 0) {
-                              if (
-                                market.BettingOutcomeType == "Yes" ||
-                                market.BettingOutcomeType == "No"
-                              ) {
-                                return (
+                              return null;
+                            } else {
+                              const filtered = future.BettingOutcomes.filter(
+                                (item) => {
+                                  return (
+                                    item.SportsBook?.SportsbookID ==
+                                    provider.SportsDataId
+                                  );
+                                }
+                              );
+                              let backgroundColor = "#fff";
+                              let color = "#101010";
+                              if (filtered.length == 0) {
+                                return null;
+                              }
+                              return (
+                                <TouchableWithNavigation
+                                  url={provider.affiliate_link}
+                                >
                                   <View style={styles.gameCellStyle}>
-                                    {filtered.length == 2 &&
-                                      this.renderTwoValueCell(filtered)}
-                                    {filtered.length == 1 &&
-                                      this.renderOneValueCell(filtered)}
+                                    {filtered.map((outCome, index) => (
+                                      <View
+                                        key={index}
+                                        style={[
+                                          styles.oddsCellTextWrapper,
+                                          { backgroundColor },
+                                        ]}
+                                      >
+                                        <Text
+                                          style={[
+                                            styles.oddsCellText,
+                                            { color },
+                                          ]}
+                                        >{`${this.getSign(
+                                          outCome.PayoutAmerican
+                                        )}${outCome.PayoutAmerican} ${
+                                          outCome.BettingOutcomeType
+                                        }`}</Text>
+                                      </View>
+                                    ))}
                                     <Text style={[styles.oddsBetButton]}>
                                       Make a Bet!
                                     </Text>
                                   </View>
-                                );
-                              }
-                              if (market.BettingOutcomeType == "Over") {
-                                return this.renderOverCell(filtered, market);
-                              }
-                              if (!!!market.BettingOutcomeType) {
-                                return this.renderNoTypeCell(filtered, market);
-                              }
+                                </TouchableWithNavigation>
+                              );
                             }
-                            return null;
                           }
                         }
                       )}
@@ -483,7 +760,6 @@ export default class FutureComponent extends React.Component<
                   ));
                 })}
               </Table>
-              {/* <View style={{ height: rowHeight }} /> */}
             </ScrollView>
           </View>
         </ScrollView>
@@ -538,8 +814,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   gameCellStyle: {
-    paddingTop: 8,
-    paddingBottom: 8,
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 8,
   },
   gameCellTextStyle: {
     fontWeight: "800",
